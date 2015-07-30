@@ -3,18 +3,18 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
-description:
-author: John Doe
-language:
-timezone:
+title: Cosimahan's
+subtitle: 择高处立，就平处坐，向宽出行
+description: This is Cisoma's blog.
+author: Cosima
+language: zh-Hans
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://cosimahan.github.io
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :title
 permalink_defaults:
 
 # Directory
@@ -30,6 +30,7 @@ skip_render:
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post
+auto_spacing: false
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
