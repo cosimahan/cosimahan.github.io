@@ -37,4 +37,1285 @@
     
   </entry>
   
+  <entry>
+    <title><![CDATA[拿单片机做了个表]]></title>
+    <link href="http://cosimahan.github.io/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8"/>
+    <id>http://cosimahan.github.io/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8</id>
+    <published>2015-07-06T03:50:24.000Z</published>
+    <updated>2015-07-30T08:05:24.314Z</updated>
+    <content type="html"><![CDATA[<p>共使用6个按键、12位共阳数码管、4LED灯加一有源头蜂鸣器，按键占用一组I/O口，数码管、LED灯与蜂鸣器公用三组IO口。</p>
+<p>代码如下</p>
+<p>main.c</p>
+<p><pre class="lang:c decode:true" title="main.c">#include&lt;reg52.h&gt;</pre></p>
+<p>#include&lt;ch1.h&gt;</p>
+<p>#define uint unsigned int</p>
+<p>#define uchar unsigned char</p>
+<p>#define Pa P0//1-8</p>
+<p>#define Pb P3//tx,rx,6keys</p>
+<p>#define Pc P2//a-h</p>
+<p>#define Pd P1//9-12,led,beep..</p>
+<p>sbit bk0=Pb^0;sbit bk1=Pb^1;sbit bk2=Pb^2;sbit bk3=Pb^3;sbit bk4=Pb^4;sbit bk5=Pb^5;sbit bk6=Pb^6;sbit bk7=Pb^7;//bk:Pb’s Keys<br>sbit led=Pd^4;sbit beep=Pd^5;<br>uint i,t,p,num0=0,sec=0,minu=0,hour=0,day=1,mon=1,year=2015,num[12]={0},k=0,kl=0,s=0,ii=0,in[7]={0};<br>xdata uint ahour=18,aminu=0,ring=0,alarm=0,ka=0;<br>code uint map[]={0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x98,0xBF,0xFF,0xA3,0xAB,0x8E},dm[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};//map:0123456789-(null)onf</p>
+<p>uint md(){<br>    /<em><br>                                if(mon==1||mon==3||mon==5||mon==7||mon==8||mon==10||mon==12)return(31);<br>                                else if(mon==4||mon==6||mon==9||mon==11)return(30);<br>                                         else if(mon==2&amp;&amp;year%4==0&amp;&amp;(year%100!=0||year%400==0))return(29);<br>                                                    else return(28);
+    </em>/</p>
+<pre><code><span class="keyword">if</span>(mon==<span class="number">2</span>&amp;amp;&amp;amp;year%<span class="number">4</span>==<span class="number">0</span>&amp;amp;&amp;amp;(year%<span class="number">100</span>!=<span class="number">0</span>||year%<span class="number">400</span>==<span class="number">0</span>)){<span class="keyword">return</span>(<span class="number">29</span>);}
+<span class="keyword">else</span> <span class="keyword">return</span>(dm[mon]);
+</code></pre><p>}<br>void st(uint x){</p>
+<pre><code>/<span class="regexp">//</span><span class="regexp">//</span><span class="regexp">//</span><span class="regexp">//</span>
+            <span class="constant">SBUF=</span>x;
+            <span class="keyword">while</span>(!<span class="constant">TI)</span>  ;  
+    <span class="constant">TI=</span><span class="number">0</span>;  
+    delay(<span class="number">10</span>); 
+</code></pre><p>}</p>
+<p>void main(){<br>     TH0=(65536-10000)/256;<br>     TL0=(65536-10000)%256;<br>     EA=1;<br>     ET0=1;<br>     TR0=1;</p>
+<pre><code> TMOD=<span class="number">0x21</span>;
+
+    SCON = <span class="number">0x50</span>;   
+TH1 = <span class="number">0xFD</span>;  
+TL1 = <span class="number">0xFD</span>;  
+TR1 = <span class="number">1</span>;                          
+ES  = <span class="number">1</span>;
+
+i=<span class="number">9</span>;
+Pa=Pd=Pc=<span class="number">0x00</span>;
+delay(<span class="number">500</span>);<span class="keyword">while</span>(bk5==<span class="number">0</span>);ka=<span class="number">0</span>;
+Pa=Pd=Pc=<span class="number">0xFF</span>;
+
+<span class="keyword">while</span>(i++){
+    delay(<span class="number">20</span>);
+    <span class="comment">//Pb=0x00;//Pb=Pb*0x10;</span>
+    <span class="keyword">if</span>(i&amp;gt;<span class="number">0x7FF</span>)i=<span class="number">9</span>;
+    t=i%<span class="number">12</span>;p=<span class="number">0x01</span>;
+    <span class="keyword">while</span>(t--){
+        p*=<span class="number">2</span>;
+    }
+    Pc=<span class="number">0xFF</span>;<span class="comment">//0</span>
+    <span class="keyword">if</span>(p&amp;lt;<span class="number">0xFF</span>){
+        Pa=<span class="number">0xFF</span>-p;
+        Pd=<span class="number">0xFF</span>;
+        <span class="keyword">if</span>(ring&amp;amp;&amp;amp;num0/<span class="number">2</span>%<span class="number">2</span>&amp;amp;&amp;amp;num0&amp;gt;<span class="number">3</span>)beep=<span class="number">0</span>;
+        <span class="keyword">if</span>(k==<span class="number">0</span>){
+            <span class="keyword">if</span>(ka==<span class="number">1</span>)led=<span class="number">0</span>;
+            <span class="keyword">else</span> <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>){
+
+                    led=<span class="number">0</span>;
+
+            }
+        }
+
+    }
+    <span class="keyword">else</span> {
+        Pa=<span class="number">0xFF</span>;Pd=<span class="number">0xFF</span>-p/<span class="number">0x100</span>;
+        <span class="keyword">if</span>(ring&amp;amp;&amp;amp;num0/<span class="number">2</span>%<span class="number">2</span>&amp;amp;&amp;amp;num0&amp;gt;<span class="number">3</span>)beep=<span class="number">0</span>;
+        <span class="keyword">if</span>(k==<span class="number">0</span>){
+            <span class="keyword">if</span>(ka==<span class="number">1</span>)led=<span class="number">0</span>;
+            <span class="keyword">else</span> <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>){
+
+                    led=<span class="number">0</span>;
+
+            }
+        }
+    <span class="comment">//    if(num0/5%2&amp;amp;&amp;amp;k==0){</span>
+
+    <span class="comment">//            Pd-=0x10;</span>
+
+    <span class="comment">//    }</span>
+    }
+
+            Pc=<span class="built_in">map</span>[num[(i)%<span class="number">12</span>]];
+    <span class="comment">/*//
+        switch(num[(i)%12]){
+            case 0:Pc=0xC0;break;
+            case 1:Pc=0xF9;break;
+            case 2:Pc=0xA4;break;
+            case 3:Pc=0xB0;break;
+            case 4:Pc=0x99;break;
+            case 5:Pc=0x92;break;
+            case 6:Pc=0x82;break;
+            case 7:Pc=0xF8;break;
+            case 8:Pc=0x80;break;
+            case 9:Pc=0x98;break;
+            case 10:Pc=0xBF;break;
+            case 11:Pc=0xFF;break;
+
+        }
+        */</span><span class="comment">//</span>
+        <span class="keyword">if</span>(in[<span class="number">6</span>]==<span class="number">1</span>){
+            in[<span class="number">6</span>]=<span class="number">0</span>;
+            year=in[<span class="number">0</span>];
+            mon=in[<span class="number">1</span>];
+            day=in[<span class="number">2</span>];
+            hour=in[<span class="number">3</span>];
+            minu=in[<span class="number">4</span>];
+            sec=in[<span class="number">5</span>];
+
+        }
+        <span class="keyword">if</span>(in[<span class="number">6</span>]==<span class="number">2</span>){
+          in[<span class="number">6</span>]=<span class="number">0</span>;
+            st(year);
+            st(mon);
+            st(day);
+            st(hour);
+            st(minu);
+            st(sec);
+            st(<span class="number">1</span>);
+        }
+        <span class="comment">//</span>
+        <span class="keyword">if</span>(k){
+                num[<span class="number">0</span>]=year/<span class="number">1000</span>;<span class="comment">//k;//</span>
+                num[<span class="number">1</span>]=year/<span class="number">100</span>%<span class="number">10</span>;<span class="comment">//s;//</span>
+                num[<span class="number">2</span>]=year/<span class="number">10</span>%<span class="number">10</span>;<span class="comment">//kl;//</span>
+                num[<span class="number">3</span>]=year%<span class="number">10</span>;
+                num[<span class="number">4</span>]=<span class="number">10</span>;
+                num[<span class="number">5</span>]=mon/<span class="number">10</span>;
+                num[<span class="number">6</span>]=mon%<span class="number">10</span>;
+                num[<span class="number">7</span>]=<span class="number">10</span>;
+                num[<span class="number">8</span>]=day/<span class="number">10</span>;
+                num[<span class="number">9</span>]=day%<span class="number">10</span>;
+                num[<span class="number">10</span>]=<span class="number">11</span>;
+                num[<span class="number">11</span>]=<span class="number">11</span>;
+
+            <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+
+                <span class="comment">//if(){</span>
+
+                    <span class="keyword">if</span>(s==<span class="number">1</span>)num[<span class="number">0</span>]=num[<span class="number">1</span>]=num[<span class="number">2</span>]=num[<span class="number">3</span>]=<span class="number">11</span>;
+                    <span class="keyword">if</span>(s==<span class="number">2</span>)num[<span class="number">5</span>]=num[<span class="number">6</span>]=<span class="number">11</span>;
+                    <span class="keyword">if</span>(s==<span class="number">3</span>)num[<span class="number">8</span>]=num[<span class="number">9</span>]=<span class="number">11</span>;
+            <span class="comment">//    }</span>
+
+            }
+
+        }
+
+        <span class="keyword">else</span>{
+            <span class="keyword">if</span>(ka==<span class="number">0</span>){
+                num[<span class="number">0</span>]=<span class="number">11</span>;<span class="comment">//beep;//Pb/100;//k;//</span>
+                num[<span class="number">1</span>]=hour/<span class="number">10</span>;<span class="comment">//Pb/10%10;//s;//</span>
+                num[<span class="number">2</span>]=hour%<span class="number">10</span>;<span class="comment">//Pb%10;//kl;//</span>
+                num[<span class="number">3</span>]=<span class="number">11</span>;<span class="comment">//led;//</span>
+                num[<span class="number">4</span>]=<span class="number">11</span>;
+                num[<span class="number">5</span>]=minu/<span class="number">10</span>;<span class="comment">//Pd/100;//</span>
+                num[<span class="number">6</span>]=minu%<span class="number">10</span>;<span class="comment">//Pd/10%10;//</span>
+                num[<span class="number">7</span>]=<span class="number">11</span>;<span class="comment">//Pd%10;//</span>
+                num[<span class="number">8</span>]=<span class="number">11</span>;
+                num[<span class="number">9</span>]=sec/<span class="number">10</span>;
+                num[<span class="number">10</span>]=sec%<span class="number">10</span>;
+                num[<span class="number">11</span>]=<span class="number">11</span>;
+
+                <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+
+                <span class="comment">//    if(){</span>
+                        <span class="keyword">if</span>(s==<span class="number">1</span>)num[<span class="number">1</span>]=num[<span class="number">2</span>]=<span class="number">11</span>;
+                        <span class="keyword">if</span>(s==<span class="number">2</span>)num[<span class="number">5</span>]=num[<span class="number">6</span>]=<span class="number">11</span>;
+                        <span class="keyword">if</span>(s==<span class="number">3</span>)num[<span class="number">9</span>]=num[<span class="number">10</span>]=<span class="number">11</span>;
+                <span class="comment">//    }</span>
+
+                    }
+            }
+            <span class="keyword">else</span>{
+                num[<span class="number">0</span>]=<span class="number">11</span>;<span class="comment">//k;//Pb/100;//</span>
+                num[<span class="number">1</span>]=ahour/<span class="number">10</span>;<span class="comment">//s;//Pb/10%10;//</span>
+                num[<span class="number">2</span>]=ahour%<span class="number">10</span>;<span class="comment">//kl;//Pb%10;//</span>
+                num[<span class="number">3</span>]=<span class="number">11</span>;
+                num[<span class="number">4</span>]=<span class="number">11</span>;
+                num[<span class="number">5</span>]=aminu/<span class="number">10</span>;
+                num[<span class="number">6</span>]=aminu%<span class="number">10</span>;
+                num[<span class="number">7</span>]=<span class="number">11</span>;
+                num[<span class="number">8</span>]=<span class="number">11</span>;
+                <span class="keyword">if</span>(alarm){
+                    num[<span class="number">9</span>]=<span class="number">12</span>;
+                    num[<span class="number">10</span>]=<span class="number">13</span>;
+                    num[<span class="number">11</span>]=<span class="number">11</span>;
+                }
+                <span class="keyword">else</span>{
+                    num[<span class="number">9</span>]=<span class="number">12</span>;
+                    num[<span class="number">10</span>]=<span class="number">14</span>;
+                    num[<span class="number">11</span>]=<span class="number">14</span>;
+                }
+
+                <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+                    <span class="keyword">if</span>(s==<span class="number">1</span>)num[<span class="number">1</span>]=num[<span class="number">2</span>]=<span class="number">11</span>;
+                    <span class="keyword">if</span>(s==<span class="number">2</span>)num[<span class="number">5</span>]=num[<span class="number">6</span>]=<span class="number">11</span>;
+
+                }
+            }
+
+        }
+
+        <span class="comment">//alarm----</span>
+        <span class="keyword">if</span>(alarm==<span class="number">1</span>){
+            <span class="keyword">if</span>(hour==ahour&amp;amp;&amp;amp;minu==aminu&amp;amp;&amp;amp;sec==<span class="number">0</span>)ring=<span class="number">1</span>;
+            <span class="keyword">if</span>(minu-aminu&amp;gt;=<span class="number">10</span>&amp;amp;&amp;amp;minu-aminu&amp;lt;=<span class="number">65505</span>) ring=<span class="number">0</span>;
+        }
+        <span class="keyword">else</span> ring=<span class="number">0</span>;
+
+}
+</code></pre><p>}<br>void time0() interrupt 1{    //1s<br>  TH0=(65536-50000)/256;<br>   TL0=(65536-50000)%256;<br>   num0++;<br>   if(num0==20){<br>     num0=0;<br>       sec++;</p>
+<pre><code>        <span class="keyword">if</span>(sec==<span class="number">60</span>){
+            sec=<span class="number">0</span>;minu++;
+            <span class="keyword">if</span>(minu==<span class="number">60</span>){
+                minu=<span class="number">0</span>;hour++;
+                <span class="keyword">if</span>(hour==<span class="number">24</span>){
+                    hour=<span class="number">0</span>;day++;
+                    <span class="keyword">if</span>(day&amp;gt;md()){
+                        day=<span class="number">1</span>;mon++;
+                        <span class="keyword">if</span>(mon==<span class="number">13</span>){
+                            mon=<span class="number">1</span>;year++;
+                            <span class="keyword">if</span>(year&amp;gt;=<span class="number">10000</span>){
+                                year=<span class="number">0</span>;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    <span class="comment">//key----</span>
+
+    <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x08</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>-<span class="number">0x08</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x08</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>-<span class="number">0x08</span>){
+            kl=<span class="number">0</span>;
+            <span class="keyword">if</span>(s==<span class="number">0</span>){
+                <span class="keyword">if</span>(bk2==<span class="number">0</span>){
+                    k=<span class="number">1</span>;
+                }
+                <span class="keyword">else</span> k=<span class="number">0</span>;
+            }
+            <span class="keyword">if</span>(bk3==<span class="number">0</span>){
+                alarm=<span class="number">1</span>;
+            }
+            <span class="keyword">else</span> alarm=<span class="number">0</span>;
+        }
+    }
+<span class="comment">/*    if(Pb==0xFF-0x04&amp;amp;&amp;amp;kl==0&amp;amp;&amp;amp;s==0){
+        delay(1);
+        if(Pb==0xFF-0x04){
+            kl=1;
+            k=k==0?1:0;
+        }
+    }*/</span>
+
+    <span class="comment">//</span>
+
+    <span class="keyword">if</span>(bk7==<span class="number">0</span>&amp;amp;&amp;amp;kl==<span class="number">0</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(bk7==<span class="number">0</span>){
+            kl=<span class="number">1</span>;
+          s=((s==<span class="number">0</span>)?<span class="number">1</span>:((s==<span class="number">1</span>)?<span class="number">2</span>:((s==<span class="number">2</span>)&amp;amp;&amp;amp;(k==<span class="number">1</span>)?<span class="number">3</span>:<span class="number">0</span>)));
+            <span class="comment">/*
+            if(s==0)s=1;
+            else if(s==1)s=2;
+            else if(s==2&amp;amp;&amp;amp;k==1)s=3;
+            else s=0;
+            */</span>
+        }
+    }
+    <span class="keyword">if</span>(bk5==<span class="number">0</span>&amp;amp;&amp;amp;kl==<span class="number">0</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(bk5==<span class="number">0</span>){
+            kl=<span class="number">1</span>;
+            <span class="keyword">if</span>(s==<span class="number">0</span>)ka=((ka==<span class="number">0</span>)?<span class="number">1</span>:<span class="number">0</span>);
+            <span class="comment">/*
+            if(s==0)s=1;
+            else if(s==1)s=2;
+            else if(s==2&amp;amp;&amp;amp;k==1)s=3;
+            else s=0;
+            */</span>
+        }
+    }
+    <span class="comment">//</span>
+    <span class="keyword">if</span>((bk4==<span class="number">0</span>||bk6==<span class="number">0</span>)&amp;amp;&amp;amp;kl==<span class="number">0</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(bk4==<span class="number">0</span>||bk6==<span class="number">0</span>){
+            kl=<span class="number">1</span>;
+            <span class="keyword">if</span>(k){
+                <span class="keyword">if</span>(s==<span class="number">1</span>){
+
+                    <span class="keyword">if</span>(bk4==<span class="number">0</span>&amp;amp;&amp;amp;year&amp;lt;<span class="number">9999</span>)year++;
+                    <span class="keyword">if</span>(bk6==<span class="number">0</span>&amp;amp;&amp;amp;year&amp;gt;<span class="number">0</span>) year--;
+
+                }
+                <span class="keyword">if</span>(s==<span class="number">2</span>){
+                    <span class="keyword">if</span>(bk4==<span class="number">0</span>)mon++;
+                    <span class="keyword">else</span> mon--;
+                    <span class="keyword">if</span>(mon&amp;lt;<span class="number">1</span>)mon=<span class="number">12</span>;
+                    <span class="keyword">if</span>(mon&amp;gt;<span class="number">12</span>)mon=<span class="number">1</span>;
+                }
+                <span class="keyword">if</span>(s==<span class="number">3</span>){
+                    <span class="keyword">if</span>(bk4==<span class="number">0</span>){day++;}
+</code></pre><p>//                            if(((day&lt;31)&amp;&amp;(mon==1||mon==3||mon==5||mon==7||mon==8||mon==10||mon==12))||((day&lt;30)&amp;&amp;(mon==4||mon==6||mon==9||mon==11))||(((day&lt;29)&amp;&amp;(mon==2&amp;&amp;year%4==0&amp;&amp;(year%100!=0||year%400==0))))||((day&lt;28)&amp;&amp;(mon==2)));<br>//                            else day=0;<br>                            if(day&gt;md())day=1;<br>                            if(bk6==0)day–;<br>                            if(day&lt;1){day=md();<br>//                                if(mon==1||mon==3||mon==5||mon==7||mon==8||mon==10||mon==12)day=31;<br>//                                else if(mon==4||mon==6||mon==9||mon==11)day=30;<br>//                                   else if(mon==2&amp;&amp;year%4==0&amp;&amp;(year%100!=0||year%400==0))day=29;<br>//                                                    else day=28;////</p>
+<pre><code>                       }
+
+                       <span class="comment">/*if(day&amp;lt;1){
+                           if(mon==2){
+                               if(year%4!=0){
+                                   day=28;
+
+                               }
+                               if(year%100==0&amp;amp;&amp;amp;year%400!=0){
+                                   day=28;
+                               }
+                               else day=29;
+                           }
+                           if(mon==2||mon==4||mon==6||mon==9||mon==11)day=30;
+                           else day=31;
+                       }
+                   }
+                       if(day&amp;gt;=29){
+                           if(day==29&amp;amp;&amp;amp;mon==2&amp;amp;&amp;amp;(year%4!=0||(year%100==0&amp;amp;&amp;amp;year%400!=0))){
+                               day=0;
+                           }
+                           if(day==30&amp;amp;&amp;amp;mon==2){
+                               day=0;
+                           }
+                           if((day==31&amp;amp;&amp;amp;(mon==2||mon==4||mon==6||mon==9||mon==11))||day==32){
+                               day=0;
+                           }
+                   }*/</span>
+               }    
+           }
+               <span class="keyword">else</span>{
+                   <span class="keyword">if</span>(ka==<span class="number">0</span>){
+                           <span class="keyword">if</span>(s==<span class="number">1</span>){
+
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(hour&amp;lt;<span class="number">23</span>)hour++;<span class="keyword">else</span> hour=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(hour&amp;gt;<span class="number">0</span>)hour--;<span class="keyword">else</span> hour=<span class="number">23</span>;
+
+                           }
+                           <span class="keyword">if</span>(s==<span class="number">2</span>){
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(minu&amp;lt;<span class="number">59</span>)minu++;<span class="keyword">else</span> minu=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(minu&amp;gt;<span class="number">0</span>) minu--;<span class="keyword">else</span> minu=<span class="number">59</span>;
+
+                           sec=<span class="number">0</span>;
+                       }
+                   }
+                   <span class="keyword">else</span>{
+                       <span class="keyword">if</span>(s==<span class="number">1</span>){
+
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(ahour&amp;lt;<span class="number">23</span>)ahour++;<span class="keyword">else</span> ahour=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(ahour&amp;gt;<span class="number">0</span>)ahour--;<span class="keyword">else</span> ahour=<span class="number">23</span>;
+
+                           }
+                           <span class="keyword">if</span>(s==<span class="number">2</span>){
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(aminu&amp;lt;<span class="number">59</span>)aminu++;<span class="keyword">else</span> aminu=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(aminu&amp;gt;<span class="number">0</span>) aminu--;<span class="keyword">else</span> aminu=<span class="number">59</span>;
+
+                   }
+
+               }
+
+       }    
+   }    
+    <span class="keyword">if</span>((Pb==<span class="number">0xFF</span>-<span class="number">0x10</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x40</span>)&amp;amp;&amp;amp;kl==<span class="number">0</span>&amp;amp;&amp;amp;s==<span class="number">0</span>){
+           delay(<span class="number">1</span>);
+           <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>-<span class="number">0x10</span>){
+               kl=<span class="number">1</span>;
+               in[<span class="number">6</span>]=<span class="number">2</span>;
+           }
+           <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>-<span class="number">0x40</span>){
+               kl=<span class="number">1</span>;ii=<span class="number">7</span>;
+               <span class="keyword">while</span>(ii--)st(<span class="number">2</span>);
+           }
+
+    }
+
+}
+</code></pre><p>}</p>
+<p>void ser() interrupt 4<br>{<br>      if(RI == 1) {<br>      RI = 0;     </p>
+<pre><code>  in[ii] = SBUF<span class="comment">;</span>
+
+}
+
+    ii++<span class="comment">;</span>
+    ii=ii==7?0:ii<span class="comment">;</span>
+</code></pre><p>}<br><br>ch1.h</p>
+<p><pre class="lang:c decode:true " title="ch1.h">#define uint unsigned int</pre></p>
+<p>#define uchar unsigned char</p>
+<p>void delay(uint z)<br>{<br>    uint zz;<br>    while(z–){zz=z;while(zz–);}</p>
+<p>}<br>&nbsp;</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>共使用6个按键、12位共阳数码管、4LED灯加一有源头蜂鸣器，按键占用一组I/O口，数码管、LED灯与蜂鸣器公用三组IO口。</p>
+<p>代码如下</p>
+<p>main.c</p>
+<p><pre class="lang:c decode:true" title="ma]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[ACM省赛打了块铁，心塞塞]]></title>
+    <link href="http://cosimahan.github.io/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e"/>
+    <id>http://cosimahan.github.io/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e</id>
+    <published>2015-04-26T08:55:25.000Z</published>
+    <updated>2015-07-30T08:05:24.298Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://i.imgur.com/wx5cbLU.png" alt="T_T"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><img src="http://i.imgur.com/wx5cbLU.png" alt="T_T"></p>
+]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[把域名从 Godaddy 转到了 NameSilo]]></title>
+    <link href="http://cosimahan.github.io/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo"/>
+    <id>http://cosimahan.github.io/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo</id>
+    <published>2015-04-17T04:16:00.000Z</published>
+    <updated>2015-07-30T08:05:24.301Z</updated>
+    <content type="html"><![CDATA[<p>域名还不到一个月过期，发现续费好贵，也没有好用的优惠码，再加上朋友的域名被盗事件，便不想继续放在 Godaddy 那儿了。近日发现 NameSilo 价格尚可，送隐私保护，那就选它了，开工。</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/7BY2WDOF4@2BQQEW44ATJBW.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/7BY2WDOF4@2BQQEW44ATJBW-290x300.png" alt="NameSilo1"></a></p>
+<p>给 Godaddy 要转移码</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/JRL4T4Y20WM51U8F0DXVE.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo1-300x186.png" alt="namesilo1">   <img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/JRL4T4Y20WM51U8F0DXVE-300x157.png" alt="JR)L4T4Y20WM51U8F0)DXVE"></a></p>
+<p>&nbsp;</p>
+<p>收到邮件</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/AN_EQMO%4D7WVESHU@7ED.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo2-300x226.png" alt="namesilo2"></a></p>
+<p>该付款了，有优惠码可省1刀</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/G0AU06SBTF9RWFO5A1O2.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/G0AU06SBTF9RWFO5A1O2-300x272.png" alt="G0AU06SBT)F9}RW~FO5A1O2"></a></p>
+<p>&nbsp;</p>
+<p>价格还可以</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo5.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo5.png" alt="namesilo5"></a></p>
+<!--StartFragment -->
+<div>钱支付了，namesilo 这边还是订单待完成，Q<em>Q，先去写会代码等等吧</em></div><br><div></div><br>&nbsp;<br><div></div><br><div>写~</div><br><div></div><br>&nbsp;<br><div></div><br><div>代~</div><br><div></div><br>&nbsp;<br><div></div><br><div>码~</div><br><div></div><br><div></div><br>&nbsp;<br><div></div><br><div></div><br><div>收到客服回信</div><br><div></div><br><div>[![OD44OC0DGMFXMIK3@5<em>I[M](<a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3" target="_blank" rel="external">http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3</a></em>@5<em>IM-300x153.png)](<a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3" target="_blank" rel="external">http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3</a></em>@5_IM.png)</div><br><div></div><br>&nbsp;<br><div>继续继续</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/PT9O93L_5AW938LOE7QH.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/PT9O93L_5AW938LOE7QH-300x214.png" alt="PT&#96;9O93L(_5AW938L$OE7QH"></a></div><br><div></div><br>&nbsp;<br><div></div><br><div>在 Godaddy 域名状态已经变成了这样</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/86LK60N0_PZ259T88.png" target="_blank" rel="external">![86LK6<a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/86LK60N0_PZ259T88-300x62.png" target="_blank" rel="external">0N0&#96;_(P{&#96;Z(259T88</a></a></div><br>&nbsp;<br><div>手动确认</div><br>&nbsp;<br><div></div><br><div><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo3-300x155.png" alt="namesilo3">  <img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo4-300x191.jpg" alt="namesilo4"></div><br><div></div><br>&nbsp;<br><div>这样就不用等待了</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/3X_R91XA7R1PE7JAMK5IW.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/3X_R91XA7R1PE7JAMK5IW-300x152.png" alt="~3}X_R91XA7R1PE7JAMK5IW"></a></div><br><div></div><br><div></div><br>&nbsp;<br><div>在  NameSilo 的状态</div><br>&nbsp;<br><div></div><br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/05@LQDY8BGFUNQBI7VHM.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/05@LQDY8BGFUNQBI7VHM-300x32.png" alt="])05@LQDY8BGFUNQBI7VH(M"></a></div><br><div></div><br>&nbsp;<br><div>OK</div><br><div></div><br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/@THA2NY7XGOOXUZDX2@8.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/@THA2NY7XGOOXUZDX2@8-300x154.png" alt="@THA2NY7XGOOXUZ&#96;DX~2}@8"></a></div><br><div></div><br>&nbsp;<br><div></div><br><div>WHOIS 信息已经变了</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/20150417121552.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/20150417121552-300x200.png" alt="20150417121552"></a></div><br><div></div><br>&nbsp;<br><div></div><br><div>大功告成</div><br>&nbsp;<br><div></div>]]></content>
+    <summary type="html">
+    <![CDATA[<p>域名还不到一个月过期，发现续费好贵，也没有好用的优惠码，再加上朋友的域名被盗事件，便不想继续放在 Godaddy 那儿了。近日发现 NameSilo 价格尚可，送隐私保护，那就选它了，开工。</p>
+<p><a href="http://blog.cosimahan.com]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[总觉得该做点什么]]></title>
+    <link href="http://cosimahan.github.io/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88"/>
+    <id>http://cosimahan.github.io/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88</id>
+    <published>2015-04-14T04:50:31.000Z</published>
+    <updated>2015-07-30T08:05:24.301Z</updated>
+    <content type="html"><![CDATA[<p>大学一年级已经过去了一多半，回想这半年，我都干了些啥子嘛。接触的东西不少，但基本都是皮毛，也做了点东西，都是雕虫小技罢了，没有啥能拿的出手或能说的出口的。</p>
+<p>在学业上投入的精力不多，自然换来了低低的GPA，英语更是得到45分的期末卷面成绩，好在平时成绩占比较大，又加上我的英语老师是那么和蔼善良，最终没有挂科。</p>
+<p>唯一值得庆幸的是转到了喜欢的大类专业，美中不足是男女比例5:1，半年后八成要去cs吧，离程序猿的目标又近了一步，虽然有老师建议我去se，不过感觉我的兴趣范围挺广，不愿只做一只程序猿，希望现阶段能广泛涉猎些。</p>
+<p>不能碌碌无为下去了，这学期要啃完数据结构和操作系统原理，暑假看看Java，嗯，就这样好了。</p>
+<p>&nbsp;</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>大学一年级已经过去了一多半，回想这半年，我都干了些啥子嘛。接触的东西不少，但基本都是皮毛，也做了点东西，都是雕虫小技罢了，没有啥能拿的出手或能说的出口的。</p>
+<p>在学业上投入的精力不多，自然换来了低低的GPA，英语更是得到45分的期末卷面成绩，好在平时成绩占比较大，]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用C写了个一个支持长数字输入输出计算器]]></title>
+    <link href="http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8"/>
+    <id>http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8</id>
+    <published>2015-02-26T07:35:12.000Z</published>
+    <updated>2015-07-30T08:05:24.300Z</updated>
+    <content type="html"><![CDATA[<p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
+<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。</p>
+<p><pre class="lang:c++ decode:true " title="code">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main(){<br>    int a[10001],b[10001],o,oo,i,j;<br>    char c[20002],d;<br>    cout&lt;&lt;”Input equation like ‘1+1’, only support + and - .”&lt;&lt;endl;<br>    gets(c);<br>    for(i=0;c[i+1]&lt;’9’&amp;&amp;c[i+1]&gt;’0’&amp;&amp;i&lt;20001;i++){<br>        a[i]=c[i]-‘0’;<br>    }<br>    if(i==20001||i==0){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    i++;a[i]=’/0’;o=i;<br>    cin&gt;&gt;d;<br>    for(i=o,j=0;c[i+1]!=’0’&amp;&amp;i&lt;20002;i++,j++){<br>        b[j]=c[i]-‘0’;<br>    }<br>    if(i==20002){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    oo=j+1;<br>    if(d!=’+’||d!=’-‘){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    if(d==’+’){<br>        if(o&gt;=oo){<br>            for(i=o-1,j=oo-1;j&gt;=0;i–,j–){<br>                a[i]+=b[j];<br>                if(a[i]&gt;9&amp;&amp;i!=0){a[i]-=10;a[i-1]++;}<br>            }<br>            for(i=0;i&lt;o;i++){cout&lt;&lt;a[i];}<br>        }<br>        else{<br>             for(i=o-1,j=oo-1;i&gt;=0;i–,j–){<br>                b[j]+=a[i];<br>                if(b[j]&gt;9&amp;&amp;j!=0){b[j]-=10;b[j-1]++;}<br>            }<br>            for(i=0;i&lt;oo;i++){cout&lt;&lt;b[i];}<br>        }</p>
+<pre><code>}
+<span class="keyword">else</span>{
+    <span class="keyword">if</span>(o&amp;gt;=oo){
+        <span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span>;j&amp;gt;=<span class="number">0</span>;i--,j--){
+            a[i]-=b[j];
+            <span class="keyword">if</span>(a[i]&amp;lt;<span class="number">0</span>&amp;amp;&amp;amp;i!=<span class="number">0</span>){a[i]+=<span class="number">10</span>;a[i-<span class="number">1</span>]--;}
+        }
+        <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;o;i++){<span class="built_in">cout</span>&amp;lt;&amp;lt;a[i];}
+    }
+    <span class="keyword">else</span>{
+        <span class="built_in">cout</span>&amp;lt;&amp;lt;<span class="string">"INPUT ERROR "</span>; <span class="keyword">return</span> <span class="number">0</span>;
+    }
+
+} 
+</code></pre><p>}<br><br>&nbsp;</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
+<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。</p>
+<p><pre class="lang:c++ decode:true " title="code">#in]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[开始搞ACM]]></title>
+    <link href="http://cosimahan.github.io/e5-bc-80-e5-a7-8b-e6-90-9eacm"/>
+    <id>http://cosimahan.github.io/e5-bc-80-e5-a7-8b-e6-90-9eacm</id>
+    <published>2014-12-11T13:43:56.000Z</published>
+    <updated>2015-07-30T08:05:24.294Z</updated>
+    <content type="html"><![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
+<p>随手拿最近的一些水题放上来吧，当做纪念，可能几年后我成为了大神，人们来嘲笑我说，这么烂的代码竟然是他曾经写的。</p>
+<hr>
+<h4 id="Codeforces_Round_#237_(Div-_2)_-_Valera_and_Fruits">Codeforces Round #237 (Div. 2)  - Valera and Fruits</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Valera loves his garden, where <span class="tex-span"><em>n</em></span> fruit trees grow.</p>
+<p>This year he will enjoy a great harvest! On the <span class="tex-span"><em>i</em></span>-th tree <span class="tex-span"><em>b</em><sub class="lower-index"><em>i</em></sub></span> fruit grow, they will ripen on a day number <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span>. Unfortunately, the fruit on the tree get withered, so they can only be collected on day <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span> and day <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub> + 1</span> (all fruits that are not collected in these two days, become unfit to eat).</p>
+<p>Valera is not very fast, but there are some positive points. Valera is ready to work every day. In one day, Valera can collect no more than<span class="tex-span"><em>v</em></span> fruits. The fruits may be either from the same tree, or from different ones. What is the maximum amount of fruit Valera can collect for all time, if he operates optimally well?</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains two space-separated integers <span class="tex-span"><em>n</em></span> and <span class="tex-span"><em>v</em></span><span class="tex-span">(1 ≤ <em>n</em>, <em>v</em> ≤ 3000)</span> — the number of fruit trees in the garden and the number of fruits that Valera can collect in a day.</p>
+<p>Next <span class="tex-span"><em>n</em></span> lines contain the description of trees in the garden. The <span class="tex-span"><em>i</em></span>-th line contains two space-separated integers <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span> and <span class="tex-span"><em>b</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(1 ≤ <em>a</em><sub class="lower-index"><em>i</em></sub>, <em>b</em><sub class="lower-index"><em>i</em></sub> ≤ 3000)</span> — the day the fruits ripen on the <span class="tex-span"><em>i</em></span>-th tree and the number of fruits on the <span class="tex-span"><em>i</em></span>-th tree.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print a single integer — the maximum number of fruit that Valera can collect.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 3<br>1 5<br>2 3</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>8</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>5 10<br>3 20<br>2 20<br>1 20<br>4 20<br>5 20</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>60</pre><br><br><br></p>
+<div id="vj_hint" class="hiddable">
+
+<p>Hint</p>
+<div class="textBG">
+
+<p>In the first sample, in order to obtain the optimal answer, you should act as follows.</p>
+<ul>
+<li>On the first day collect <span class="tex-span">3</span> fruits from the <span class="tex-span">1</span>-st tree.</li>
+<li>On the second day collect <span class="tex-span">1</span> fruit from the <span class="tex-span">2</span>-nd tree and <span class="tex-span">2</span> fruits from the <span class="tex-span">1</span>-st tree.</li>
+<li>On the third day collect the remaining fruits from the <span class="tex-span">2</span>-nd tree.<br>In the second sample, you can only collect <span class="tex-span">60</span> fruits, the remaining fruit will simply wither.</li>
+</ul>
+<p></p></div><br></div><p></p>
+<p><pre class="lang:c decode:true">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include &lt;algorithm&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n,v,vv,a[3008],b[3008] ,i,ii,t,o,y,iy;<br>    while (scanf(“%d%d”, &amp;n, &amp;v) != EOF)<br>    {<br>        o = 0; vv = v; y = 0;<br>        for (i = 0; i &lt; n; i++)<br>        {<br>            cin &gt;&gt; a[i]&gt;&gt;b[i];<br>        }<br>        for (i = 0; i &lt; n; i++)<br>            for (ii = i + 1; ii &lt; n; ii++)<br>            {<br>                if (a[i]&gt;a[ii])<br>                {<br>                    t = a[i]; a[i] = a[ii]; a[ii] = t;<br>                    t = b[i]; b[i] = b[ii]; b[ii] = t;<br>                }</p>
+<pre><code>        }
+
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        <span class="keyword">if</span> (i != <span class="number">0</span>)
+        {
+            <span class="keyword">if</span> (a[i] != a[i - <span class="number">1</span>]) { v = vv; }
+
+        }
+        <span class="keyword">if</span> (v != <span class="number">0</span> &amp;amp;&amp;amp; i != <span class="number">0</span>)
+        {
+            <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+            {
+                <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
+                {
+                    <span class="keyword">if</span> (v &amp;lt;= b[iy])
+                    {
+                        o += v; b[iy] -= v; v = <span class="number">0</span>;
+                    }
+                    <span class="keyword">else</span> { o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; }
+                }
+            }
+        }
+        <span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &amp;gt; <span class="number">1</span>) v = vv;
+        <span class="keyword">if</span> (v != <span class="number">0</span>)
+        {
+            <span class="keyword">if</span> (v &amp;lt;= b[i])
+            {
+                o += v; b[i] -= v; v = <span class="number">0</span>;
+            }
+            <span class="keyword">else</span> { o += b[i]; v -= b[i]; b[i] = <span class="number">0</span>; }
+        }
+        <span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;amp;&amp;amp;i!=<span class="number">0</span>) y = i;
+
+    }
+
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+
+    v = vv; 
+
+    <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+    {
+        <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
+        {
+            <span class="keyword">if</span> (v &amp;lt;= b[iy])
+            {
+                o += v; b[iy] -= v; v = <span class="number">0</span>;
+            }
+            <span class="keyword">else</span> { o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; }
+        }
+    }
+
+    <span class="built_in">cout</span> &amp;lt;&amp;lt; o &amp;lt;&amp;lt; endl;
+
+}
+<span class="keyword">return</span>(<span class="number">0</span>);
+</code></pre><p>}<br><br>&nbsp;</p>
+<hr>
+<h4 id="Codefoces_436B-Om_Nom_and_Spiders">Codefoces 436B-Om Nom and Spiders</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Om Nom really likes candies and doesn’t like spiders as they frequently steal candies. One day Om Nom fancied a walk in a park. Unfortunately, the park has some spiders and Om Nom doesn’t want to see them at all.</p>
+<p><center><img src="http://espresso.codeforces.com/5be91a371adfaffc95d78b5f3caf8c1149be2c29.png" alt=""></center>The park can be represented as a rectangular <span class="tex-span"><em>n</em> × <em>m</em></span> field. The park has <span class="tex-span"><em>k</em></span> spiders, each spider at time 0 is at some cell of the field. The spiders move all the time, and each spider always moves in one of the four directions (left, right, down, up). In a unit of time, a spider crawls from his cell to the side-adjacent cell in the corresponding direction. If there is no cell in the given direction, then the spider leaves the park. The spiders do not interfere with each other as they move. Specifically, one cell can have multiple spiders at the same time.</p>
+<p>Om Nom isn’t yet sure where to start his walk from but he definitely wants:</p>
+<ul>
+<li>to start walking at time 0 at an upper row cell of the field (it is guaranteed that the cells in this row do not contain any spiders);</li>
+<li>to walk by moving down the field towards the lowest row (the walk ends when Om Nom leaves the boundaries of the park).<br>We know that Om Nom moves by jumping. One jump takes one time unit and transports the little monster from his cell to either a side-adjacent cell on the lower row or outside the park boundaries.</li>
+</ul>
+<p>Each time Om Nom lands in a cell he sees all the spiders that have come to that cell at this moment of time. Om Nom wants to choose the optimal cell to start the walk from. That’s why he wonders: for each possible starting cell, how many spiders will he see during the walk if he starts from this cell? Help him and calculate the required value for each possible starting cell.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains three integers <span class="tex-span"><em>n</em>, <em>m</em>, <em>k</em></span><span class="tex-span">(2 ≤ <em>n</em>, <em>m</em> ≤ 2000; 0 ≤ <em>k</em> ≤ <em>m</em>(<em>n</em> - 1))</span>.</p>
+<p>Each of the next <span class="tex-span"><em>n</em></span> lines contains <span class="tex-span"><em>m</em></span> characters — the description of the park. The characters in the <span class="tex-span"><em>i</em></span>-th line describe the <span class="tex-span"><em>i</em></span>-th row of the park field. If the character in the line equals “<span class="tex-font-style-tt">.</span>“, that means that the corresponding cell of the field is empty; otherwise, the character in the line will equal one of the four characters: “<span class="tex-font-style-tt">L</span>“ (meaning that this cell has a spider at time 0, moving left), “<span class="tex-font-style-tt">R</span>“ (a spider moving right), “<span class="tex-font-style-tt">U</span>“ (a spider moving up), “<span class="tex-font-style-tt">D</span>“ (a spider moving down).</p>
+<p>It is guaranteed that the first row doesn’t contain any spiders. It is guaranteed that the description of the field contains no extra characters. It is guaranteed that at time 0 the field contains exactly <span class="tex-span"><em>k</em></span> spiders.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print <span class="tex-span"><em>m</em></span> integers: the <span class="tex-span"><em>j</em></span>-th integer must show the number of spiders Om Nom will see if he starts his walk from the <span class="tex-span"><em>j</em></span>-th cell of the first row. The cells in any row of the field are numbered from left to right.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3 3 4<br>…<br>R.L<br>R.U</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 2 2</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>RL</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>1 1</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>LR</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 0</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3 4 8<br>….<br>RRLL<br>UUUU</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>1 3 3 1</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>UU</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 0</pre><br><br><br></p>
+<div id="vj_hint" class="hiddable">
+
+<p>Hint</p>
+<div class="textBG">
+
+<p>Consider the first sample. The notes below show how the spider arrangement changes on the field over time:</p>
+<p><pre>…        …        ..U       …<br>R.L   -&gt;   .*U   -&gt;   L.R   -&gt;  …<br>R.U        .R.        ..R       …</pre></p>
+<p><br>Character “<span class="tex-font-style-tt">*</span>“ represents a cell that contains two spiders at the same time.</p>
+<ul>
+<li>If Om Nom starts from the first cell of the first row, he won’t see any spiders.</li>
+<li>If he starts from the second cell, he will see two spiders at time 1.</li>
+<li><p>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></p></li></ul></div><br></div><br><pre class="lang:c decode:true">#include&lt;iostream&gt;<br>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main()<br>{<br>int n, m, k,i,j,fuck;<br>char in[2002][2002];<br>while (scanf(“%d%d%d”, &amp;n,&amp;m,&amp;k) != EOF)<br>{    <p></p>
+<pre><code>fuck = <span class="number">0</span>;
+<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; n; i++)
+    <span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+    {
+        cin &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; in[i][j];
+    }
+
+<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+{
+    <span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;<span class="keyword">lt</span>; n; i++)
+    {
+        <span class="keyword">if</span>(i+i&amp;<span class="keyword">lt</span>;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;
+        <span class="keyword">if</span> (j - i&amp;<span class="keyword">gt</span>;=<span class="number">0</span>&amp;amp;&amp;amp;j-i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;
+        <span class="keyword">if</span> (j + i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;
+    }
+    cout &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; fuck &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; <span class="string">' '</span>; fuck = <span class="number">0</span>;
+}
+cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;
+</code></pre><p>}<br>return(0);<br>}</p></pre><br>&nbsp;<p></p>
+
+
+<hr>
+<h4 id="Codeforces_435B_Pasha_Maximizes">Codeforces 435B Pasha Maximizes</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Pasha has a positive integer <span class="tex-span"><em>a</em></span> without leading zeroes. Today he decided that the number is too small and he should make it larger. Unfortunately, the only operation Pasha can do is to swap two adjacent decimal digits of the integer.</p>
+<p>Help Pasha count the maximum number he can get if he has the time to make at most <span class="tex-span"><em>k</em></span> swaps.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The single line contains two integers <span class="tex-span"><em>a</em></span> and <span class="tex-span"><em>k</em></span><span class="tex-span">(1 ≤ <em>a</em> ≤ 10<sup class="upper-index">18</sup>; 0 ≤ <em>k</em> ≤ 100)</span>.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print the maximum number that Pasha can get if he makes at most <span class="tex-span"><em>k</em></span> swaps.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>1990 1</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>9190</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>300 0</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>300</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>1034 2</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>3104</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre class="">9090000078001234 6</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">9907000008001234<br></pre><br><br><br></p>
+<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
+    <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+
+        xxx[x[i]]++;
+        yyy[y[i]]++;
+    }
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        u = n - xxx[y[i]] - <span class="number">1</span>;
+        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+    }
+
+}
+<span class="keyword">return</span>(<span class="number">0</span>);
+</code></pre><p>}<br>&nbsp;</p>
+<hr>
+<h4 id="codeforce_432B_-_Football_Kit">codeforce 432B - Football Kit</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Consider a football tournament where <span class="tex-span"><em>n</em></span> teams participate. Each team has two football kits: for home games, and for away games. The kit for home games of the <span class="tex-span"><em>i</em></span>-th team has color <span class="tex-span"><em>x</em><sub class="lower-index"><em>i</em></sub></span> and the kit for away games of this team has color <span class="tex-span"><em>y</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(<em>x</em><sub class="lower-index"><em>i</em></sub> ≠ <em>y</em><sub class="lower-index"><em>i</em></sub>)</span>.</p>
+<p>In the tournament, each team plays exactly one home game and exactly one away game with each other team (<span class="tex-span"><em>n</em>(<em>n</em> - 1)</span> games in total). The team, that plays the home game, traditionally plays in its home kit. The team that plays an away game plays in its away kit. However, if two teams has the kits of the same color, they cannot be distinguished. In this case the away team plays in its home kit.</p>
+<p>Calculate how many games in the described tournament each team plays in its home kit and how many games it plays in its away kit.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains a single integer <span class="tex-span"><em>n</em></span><span class="tex-span">(2 ≤ <em>n</em> ≤ 10<sup class="upper-index">5</sup>)</span> — the number of teams. Next <span class="tex-span"><em>n</em></span> lines contain the description of the teams. The <span class="tex-span"><em>i</em></span>-th line contains two space-separated numbers <span class="tex-span"><em>x</em><sub class="lower-index"><em>i</em></sub></span>, <span class="tex-span"><em>y</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(1 ≤ <em>x</em><sub class="lower-index"><em>i</em></sub>, <em>y</em><sub class="lower-index"><em>i</em></sub> ≤ 10<sup class="upper-index">5</sup>; <em>x</em><sub class="lower-index"><em>i</em></sub> ≠ <em>y</em><sub class="lower-index"><em>i</em></sub>)</span> — the color numbers for the home and away kits of the<span class="tex-span"><em>i</em></span>-th team.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>For each team, print on a single line two space-separated integers — the number of games this team is going to play in home and away kits, correspondingly. Print the answers for the teams in the order they appeared in the input.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2<br>1 2<br>2 1</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>2 0<br>2 0</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3<br>1 2<br>2 1<br>1 3</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">3 1<br>4 0<br>2 2</pre><br><br><br></p>
+<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
+    <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+
+        xxx[x[i]]++;
+        yyy[y[i]]++;
+    }
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        u = n - xxx[y[i]] - <span class="number">1</span>;
+        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+    }
+
+}
+<span class="keyword">return</span>(<span class="number">0</span>);
+</code></pre><p>}<br>&nbsp;</p>
+<hr>
+<h4 id="Codeforces_431B_Shower_Line">Codeforces 431B Shower Line</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Many students live in a dormitory. A dormitory is a whole new world of funny amusements and possibilities but it does have its drawbacks.</p>
+<p>There is only one shower and there are multiple students who wish to have a shower in the morning. That’s why every morning there is a line of five people in front of the dormitory shower door. As soon as the shower opens, the first person from the line enters the shower. After a while the first person leaves the shower and the next person enters the shower. The process continues until everybody in the line has a shower.</p>
+<p>Having a shower takes some time, so the students in the line talk as they wait. At each moment of time the students talk in pairs: the<span class="tex-span">(2<em>i</em> - 1)</span>-th man in the line (for the current moment) talks with the <span class="tex-span">(2<em>i</em>)</span>-th one.</p>
+<p>Let’s look at this process in more detail. Let’s number the people from 1 to 5. Let’s assume that the line initially looks as 23154 (person number 2 stands at the beginning of the line). Then, before the shower opens, 2 talks with 3, 1 talks with 5, 4 doesn’t talk with anyone. Then 2 enters the shower. While 2 has a shower, 3 and 1 talk, 5 and 4 talk too. Then, 3 enters the shower. While 3 has a shower, 1 and 5 talk, 4 doesn’t talk to anyone. Then 1 enters the shower and while he is there, 5 and 4 talk. Then 5 enters the shower, and then 4 enters the shower.</p>
+<p>We know that if students <span class="tex-span"><em>i</em></span> and <span class="tex-span"><em>j</em></span> talk, then the <span class="tex-span"><em>i</em></span>-th student’s happiness increases by <span class="tex-span"><em>g</em><sub class="lower-index"><em>ij</em></sub></span> and the <span class="tex-span"><em>j</em></span>-th student’s happiness increases by <span class="tex-span"><em>g</em><sub class="lower-index"><em>ji</em></sub></span>. Your task is to find such initial order of students in the line that the total happiness of all students will be maximum in the end. Please note that some pair of students may have a talk several times. In the example above students 1 and 5 talk while they wait for the shower to open and while 3 has a shower.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The input consists of five lines, each line contains five space-separated integers: the <span class="tex-span"><em>j</em></span>-th number in the <span class="tex-span"><em>i</em></span>-th line shows <span class="tex-span"><em>g</em><sub class="lower-index"><em>ij</em></sub></span> (<span class="tex-span">0 ≤ <em>g</em><sub class="lower-index"><em>ij</em></sub> ≤ 10<sup class="upper-index">5</sup></span>). It is guaranteed that <span class="tex-span"><em>g</em><sub class="lower-index"><em>ii</em></sub> = 0</span> for all <span class="tex-span"><em>i</em></span>.</p>
+<p>Assume that the students are numbered from 1 to 5.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print a single integer — the maximum possible total happiness of the students.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>0 0 0 0 9<br>0 0 0 0 0<br>0 0 0 0 0<br>0 0 0 0 0<br>7 0 0 0 0</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>32</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>0 43 21 18 2<br>3 0 21 11 65<br>5 2 0 1 4<br>54 62 12 0 99<br>87 64 81 33 0</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">620</pre><br><br><br></p>
+<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int o[5][5], i,j, ii, iii, a, b, c, d, e,m=0,max=0;<br>    while (scanf(“%d”, &amp;o[0][0]) != EOF)<br>    {<br>        for (i = 0; i &lt; 5; i++)<br>            for (j = 0; j &lt; 5; j++)<br>            {<br>                if (i == 0 &amp;&amp; j == 0)j++;<br>                cin &gt;&gt; o[i][j];<br>            }<br>        for (a = 0; a &lt; 5; a++)<br>            for (b = 0; b &lt; 5;b++)<br>                for (c = 0; c &lt; 5; c++)<br>                    for (d = 0; d &lt; 5; d++)<br>                        for (e = 0; e &lt; 5; e++)<br>                        {<br>                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)<br>                            m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) <em> 2 + (o[d][e] + o[e][d]) </em> 2;<br>                            if (m&gt;max) max = m;<br>                        }<br>        cout &lt;&lt; max&lt;&lt;endl;<br>    }<br>    return(0);<br>}<br>&nbsp;</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
+<p>随手拿最近的一些水题放上来吧，当做纪念，可能几年后我成为了大神，人们来嘲笑我说，这么烂的代码竟然是他曾经写的。</p>
+<hr>
+<h4 id="Codef]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[大一秋游1——中南百草原]]></title>
+    <link href="http://cosimahan.github.io/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f"/>
+    <id>http://cosimahan.github.io/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f</id>
+    <published>2014-10-26T09:25:57.000Z</published>
+    <updated>2015-07-30T08:05:24.286Z</updated>
+    <content type="html"><![CDATA[<p>这是大学里的第一次班级活动，特发此文以示纪念。</p>
+<p>真尽兴，整个景区几乎走遍了，娱乐设施玩遍了，中间还吃了顿自助烧烤，一天下来好累呀。</p>
+<p>没有拍照的习惯，只拍了几张，都是些失去本性的动物们，有的我也叫不出名字来。</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_104940.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_104940-300x225.jpg" alt="IMG_20141025_104940"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102325-e1415334508927.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102325-e1415334508927-300x225.jpg" alt="IMG_20141025_102325"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102257-e1415334434711.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102257-e1415334434711-300x225.jpg" alt="IMG_20141025_102257"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101355-e1415334543795.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101355-e1415334543795-300x225.jpg" alt="IMG_20141025_101355"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101239.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101239-300x225.jpg" alt="IMG_20141025_101239"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095709-e1415334687827.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095709-e1415334687827-300x225.jpg" alt="IMG_20141025_095709"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095339.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095339-300x225.jpg" alt="IMG_20141025_095339"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094433-e1415334812956.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094433-e1415334812956-225x300.jpg" alt="IMG_20141025_094433"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094317.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094317-300x225.jpg" alt="IMG_20141025_094317"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094305.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094305-300x225.jpg" alt="IMG_20141025_094305"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094256.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094256-300x225.jpg" alt="IMG_20141025_094256"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093947.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093947-300x225.jpg" alt="IMG_20141025_093947"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093858.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093858-300x225.jpg" alt="IMG_20141025_093858"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093640.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093640-300x225.jpg" alt="IMG_20141025_093640"></a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是大学里的第一次班级活动，特发此文以示纪念。</p>
+<p>真尽兴，整个景区几乎走遍了，娱乐设施玩遍了，中间还吃了顿自助烧烤，一天下来好累呀。</p>
+<p>没有拍照的习惯，只拍了几张，都是些失去本性的动物们，有的我也叫不出名字来。</p>
+<p><a href="htt]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[梦想是一定要有的，万一实现了呢]]></title>
+    <link href="http://cosimahan.github.io/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2"/>
+    <id>http://cosimahan.github.io/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2</id>
+    <published>2014-09-20T04:18:15.000Z</published>
+    <updated>2015-07-30T08:05:24.292Z</updated>
+    <content type="html"><![CDATA[<p>梦想是一定要有的，万一实现了呢</p>
+<p>——阿里巴巴</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>梦想是一定要有的，万一实现了呢</p>
+<p>——阿里巴巴</p>
+]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Windows 9: The new Start Menu in Action]]></title>
+    <link href="http://cosimahan.github.io/windows-9-the-new-start-menu-in-action"/>
+    <id>http://cosimahan.github.io/windows-9-the-new-start-menu-in-action</id>
+    <published>2014-09-13T01:34:50.000Z</published>
+    <updated>2015-07-30T08:05:24.280Z</updated>
+    <content type="html"><![CDATA[<iframe src="//www.youtube.com/embed/--wgAsHWNRE" width="640" height="390" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+<h3 id="My_comment:">My comment:</h3><p><span style="color: #616161;">MS made a compromise in the design of start menu, let Metro apps run as windows, but I don’t think it’s the best decision. PC is PC, pad also is pad, I feel awkward when I use a PC likes use a pad, don’t you think so?</span></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<iframe src="//www.youtube.com/embed/--wgAsHWNRE" width="640" height="390" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+<h3 ]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[初中者，蛋蛋后之地盤也]]></title>
+    <link href="http://cosimahan.github.io/e5-88-9d-e4-b8-ad-e8-80-85-ef-bc-8c-e8-9b-8b-e8-9b-8b-e5-90-8e-e4-b9-8b-e5-9c-b0-e7-9b-a4-e4-b9-9f"/>
+    <id>http://cosimahan.github.io/e5-88-9d-e4-b8-ad-e8-80-85-ef-bc-8c-e8-9b-8b-e8-9b-8b-e5-90-8e-e4-b9-8b-e5-9c-b0-e7-9b-a4-e4-b9-9f</id>
+    <published>2014-09-01T04:04:25.000Z</published>
+    <updated>2015-07-30T08:05:24.287Z</updated>
+    <content type="html"><![CDATA[<p>二〇一四·九·一，月曜。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>二〇一四·九·一，月曜。</p>
+]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[未成年的忧与乐]]></title>
+    <link href="http://cosimahan.github.io/e6-9c-aa-e6-88-90-e5-b9-b4-e7-9a-84-e5-bf-a7-e4-b8-8e-e4-b9-90"/>
+    <id>http://cosimahan.github.io/e6-9c-aa-e6-88-90-e5-b9-b4-e7-9a-84-e5-bf-a7-e4-b8-8e-e4-b9-90</id>
+    <published>2014-08-26T04:01:19.000Z</published>
+    <updated>2015-07-30T08:05:24.293Z</updated>
+    <content type="html"><![CDATA[<ul>
+<li><em>对违法犯罪的未成年人，应当依法从轻、减轻或者免除处罚</em><br>来源：《未成年人保护法》司法保护第五十四条。可惜这一点大部分都人“享受”不到呐。</li>
+<li><em>禁止不满16周岁的未成年人开业从事个体经营活动</em><br>来源：中华人民共和国国务院令 第364号《禁止使用童工规定》。出发点是好的，让祖国的花朵多接受教育学习知识，结果嘛，我就不多说了，看官心里都明白。</li>
+<li><em>国家机关、社会团体 、企业事业单位、民办非企业单位或者个体工商户均不得招用不满16周岁的未成年人</em><br>来源：中华人民共和国国务院令 第364号《禁止使用童工规定》。同上条，形如虚设。</li>
+<li><em>网络游戏虚拟货币交易服务企业应当遵守以下规定：不得为未成年人提供交易服务。</em><br>来源：中华人民共和国文化部令第49号《网络游戏管理暂行办法》第四章第二十条。哈哈哈哈这一条你看见哪家公司真正遵守过哈哈哈哈哈，小学生起码贡献三成收入哈哈哈哈哈。不过老子卖个号怎么就这么难呢，我都把身份证PS好了，又让我上传手持证件照，成心坑爹不让我卖，%@^$&amp;%&amp;*!。</li>
+<li><em>网络游戏经营单位应当按照国家规定，采取技术措施，禁止未成年人接触不适宜的游戏或者游戏功能，限制未成年人的游戏时间，预防未成年人沉迷网络。</em><br>来源：中华人民共和国文化部令第49号《网络游戏管理暂行办法》第四章第十六条。这一条抓的比较严呢，苦了一些不太机灵的小伙伴们。</li>
+<li>大家去都穿着校服去网吧，很欢乐呀。不过风声紧时不行，有一定几率被文化局逮到，会上电视哟，我不止一次在我们XX县新闻台上看见我同学了。</li>
+<li>在有些地方可能会被歧视，享受不到大人的待遇。这样的例子数不胜数，请自行脑补。</li>
+<li>去银行办卡开网银，满十八了吗，没有，满十六了吗，满了，监护人没来吧，嗯没来，哦那你能办个普通XXX借记卡，网银和XX业务不能办，还有XXX也白搭，监护人来了能行不，不能单独办只能和监护人的XX关联然后再······ 好在支付宝不嫌弃我是个小孩。</li>
+<li>我放暑假了，父母工作忙，派我回老家，那会火车票刚实行实名制，车站排队的人老长。我由于衣冠不整被怀疑想离家出走，车站那可爱的叔叔阿姨非常热心，和我交谈半天确定我没有心理问题后叮嘱我注意安全blabla，等到了售票大妈那儿被告知明天的票刚卖光，后天的也只剩无座的了，T_T 。</li>
+<li>乘坐一部分交通工具，身高1.2m内免票，1.2m至1.4m半价。我长得太快怎么办？</li>
+<li>一些公益事业的参与也会受到限制，小时候我父亲让我买张公益彩票，给我我纸条和钱，我去了人家不卖给我。还有一些本地活动要求志愿者需年满十八周岁，ect.</li>
+<li>谁能告诉我未成年人如何在正规宾馆开···开···开那啥？</li>
+</ul>
+<hr>
+<p>毕竟绝大部分未成年人没有<a href="http://baike.baidu.com/view/10761.htm" target="_blank" rel="external">完全民事行为能力</a>，我们理应受到保(xian)护(zhi)，这也是为了我们健康成长嘛，身在福中要知福。有忧桑有感动，这才是幸福的生活。日月如梭，流水飞快，懵懂顽童转眼长大成人，沿着求<span style="color: #333333;">学成家立业安身</span>的道路走下去，想到这里，突然又有些不想长大。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<ul>
+<li><em>对违法犯罪的未成年人，应当依法从轻、减轻或者免除处罚</em><br>来源：《未成年人保护法》司法保护第五十四条。可惜这一点大部分都人“享受”不到呐。</li>
+<li><em>禁止不满16周岁的未成年人开业从事个体经营活动</em><br>来源：中华人]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[电影《活着》观后感]]></title>
+    <link href="http://cosimahan.github.io/e7-94-b5-e5-bd-b1-e3-80-8a-e6-b4-bb-e7-9d-80-e3-80-8b-e8-a7-82-e5-90-8e-e6-84-9f"/>
+    <id>http://cosimahan.github.io/e7-94-b5-e5-bd-b1-e3-80-8a-e6-b4-bb-e7-9d-80-e3-80-8b-e8-a7-82-e5-90-8e-e6-84-9f</id>
+    <published>2014-08-09T13:45:12.000Z</published>
+    <updated>2015-07-30T08:05:24.277Z</updated>
+    <content type="html"><![CDATA[<p>「两个福贵的脚上都沾满了泥,走去时都微微晃动着身体。」从几个月前的试卷上，我对余华先生的《活着》产生了兴趣。今天看了张艺谋先生据此拍的电影，简单写写感受。</p>
+<p>电影相比原著，少了些超脱，多了点入世；少了些刻薄尖锐，多了点黑色幽默。温和的讽刺，让人哭笑不得，一次次的生死离别，让活着越来越有了分量。活着，真好！电影没有讲到最后，以祖孙三代四人剧终。ps：配乐实在大赞！</p>
+<p>几十年的动荡，将沧桑写在每个人物的脸上，一个个大时代小人物的身上，则浓缩了历史的发展。「小鸡长大了就是鹅，鹅长大了就是羊，羊长大了就是牛」，牛之后，日子真的会越来越好。这不仅是其所表达的，更是每个人的希冀。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>「两个福贵的脚上都沾满了泥,走去时都微微晃动着身体。」从几个月前的试卷上，我对余华先生的《活着》产生了兴趣。今天看了张艺谋先生据此拍的电影，简单写写感受。</p>
+<p>电影相比原著，少了些超脱，多了点入世；少了些刻薄尖锐，多了点黑色幽默。温和的讽刺，让人哭笑不得，一次次的]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[%e7%88%bd]]></title>
+    <link href="http://cosimahan.github.io/e7-88-bd"/>
+    <id>http://cosimahan.github.io/e7-88-bd</id>
+    <published>2014-07-28T08:29:43.000Z</published>
+    <updated>2015-07-30T08:05:24.282Z</updated>
+    <content type="html"><![CDATA[<h1 id="爽">爽</h1>]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="爽">爽</h1>]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[初日 AKB48]]></title>
+    <link href="http://cosimahan.github.io/e5-88-9d-e6-97-a5akb48"/>
+    <id>http://cosimahan.github.io/e5-88-9d-e6-97-a5akb48</id>
+    <published>2014-07-22T07:25:53.000Z</published>
+    <updated>2015-07-30T08:05:24.278Z</updated>
+    <content type="html"><![CDATA[<p><strong>歌，不燃，但歌词很好。</strong></p>
+<p><strong>谨以此歌，赠与即将迈入大学校门的自己。</strong></p>
+<iframe src="http://player.youku.com/embed/XMzAzNzk5OTY0" width="510" height="498" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+<pre><code>我正伫立在 
+憧憬已久的舞台上 
+被欢呼与掌声的热烈气氛所围绕 
+透过严格课程 
+克服自我极限 
+所迎来的今日 
+机会的帷幕在此刻揭开 
+
+曾有著只有自己跳不好
+在回家的路上 哭泣的日子 
+也有著唱不出自己的期许
+而失去自信的日子 
+每逢此刻 眼中只有钦羡著 
+对手所散发出的光芒 
+
+梦想就如同在汗水中 
+渐渐绽放的花朵 
+这份努力 
+绝对要贯彻始终 
+梦想就如同在汗水中 
+一直等待萌发的嫩芽 
+总有一天 
+美梦终会成真 
+
+聚光灯
+如此明亮眩目 
+好似经过漫漫长夜破晓而出的朝阳 
+对於前辈们 
+有著绝对不想输给她们的意志 
+期待编织出属於我们的表演 
+
+曾有著因为受伤而休养 
+懊悔哭泣的日子 
+也有著课业跟剧场训练 
+无法兼顾而想放弃的日子 
+但是总有从远方传来的安可声 
+默默支持著我 
+
+梦想就在那泪水尽头 
+破涕而笑的花朵 
+在奋斗之后终将盛开绽放 
+梦想就在那泪水尽头 
+坚持著不输风雨的信念 
+直到祈求的晴空展现天际 
+
+用生命奋力跳舞！ 
+用生命努力唱歌！ 
+铭记著初心
+全力投球！ 
+Oh！
+
+梦想就如同在汗水中 
+渐渐绽放的花朵 
+这份努力 
+绝对要贯彻始终 
+梦想就如同在汗水中 
+一直等待萌发的嫩芽 
+总有一天 
+美梦终会成真
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p><strong>歌，不燃，但歌词很好。</strong></p>
+<p><strong>谨以此歌，赠与即将迈入大学校门的自己。</strong></p>
+<iframe src="http://player.youku.com/embed/XMzAzNzk5OTY0" wi]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[三天不读口生，三天不练手生]]></title>
+    <link href="http://cosimahan.github.io/e4-b8-89-e5-a4-a9-e4-b8-8d-e8-af-bb-e5-8f-a3-e7-94-9f-ef-bc-8c-e4-b8-89-e5-a4-a9-e4-b8-8d-e7-bb-83-e6-89-8b-e7-94-9f"/>
+    <id>http://cosimahan.github.io/e4-b8-89-e5-a4-a9-e4-b8-8d-e8-af-bb-e5-8f-a3-e7-94-9f-ef-bc-8c-e4-b8-89-e5-a4-a9-e4-b8-8d-e7-bb-83-e6-89-8b-e7-94-9f</id>
+    <published>2014-07-03T12:52:24.000Z</published>
+    <updated>2015-07-30T08:05:24.269Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>三天不读口生，三天不练手生</p>
+<p><pre class="sort" style="color: #45484b;"><span style="font-weight: bold; color: #555555;">俗话说的一点不假，一段时间不做题，手的确生疏了许多。<br>今天做了点B站的晋级考核试题，正确率63%，看题目不错，贴在这里供各位有兴趣的练下手。（我没有答案）</span></pre><br>&nbsp;</p>
+</blockquote>
+<ul>
+<li><span style="color: #ffffff;">#1</span> 银魂中河上万齐是谁的音乐制作？</li>
+</ul>
+<div class="qselect"><input id="rdo00" name="c0" type="radio" value="0">庙门通 <input id="rdo01" name="c0" type="radio" value="1">寺门堵 <input id="rdo02" name="c0" type="radio" value="2">寺窗通 <input id="rdo03" name="c0" type="radio" value="3">寺门通</div><br><em>   <span style="color: #ffffff;">#2</span> 经过减数分裂的子细胞, 会有多少染色体<br><br><div class="qselect"><input id="rdo10" name="c1" type="radio" value="0">23 <input id="rdo11" name="c1" type="radio" value="1">一半 <input id="rdo12" name="c1" type="radio" value="2">46 <input id="rdo13" name="c1" type="radio" value="3">32</div>
+</em>   <span style="color: #ffffff;">#3</span> 《Angel beats》中的立华奏的配音是谁?<br><br><div class="qselect"><input id="rdo20" name="c2" type="radio" value="0">花泽大白菜 <input id="rdo21" name="c2" type="radio" value="1">花泽芹菜 <input id="rdo22" name="c2" type="radio" value="2">花泽菠菜 <input id="rdo23" name="c2" type="radio" value="3">花泽香菜</div><br><em>   <span style="color: #ffffff;">#4</span> 游戏《超级玛丽》原始版（小霸王上的那种）中最后BOSS前的那个小怪是什么？<br><br><div class="qselect"><input id="rdo30" name="c3" type="radio" value="0">绿乌龟 <input id="rdo31" name="c3" type="radio" value="1">锤子龟 <input id="rdo32" name="c3" type="radio" value="2">刺猬 <input id="rdo33" name="c3" type="radio" value="3">红乌龟</div>
+</em>   <span style="color: #ffffff;">#5</span> 「三年Z组银八先生」中土方十四郎所饰演角色为？<br><br><div class="qselect"><input id="rdo40" name="c4" type="radio" value="0">组长 <input id="rdo41" name="c4" type="radio" value="1">班长 <input id="rdo42" name="c4" type="radio" value="2">普通学生 <input id="rdo43" name="c4" type="radio" value="3">风纪委员</div><br><em>   <span style="color: #ffffff;">#6</span> 游戏LOL中，被玩家戏称为“每天要死一百万次”的英雄是谁？<br><br><div class="qselect"><input id="rdo50" name="c5" type="radio" value="0">剑圣 <input id="rdo51" name="c5" type="radio" value="1">提莫 <input id="rdo52" name="c5" type="radio" value="2">赵信 <input id="rdo53" name="c5" type="radio" value="3">盖伦</div>
+</em>   <span style="color: #ffffff;">#7</span> 霜月はるか首次参加的Sound Horizon Story CD是哪张？<br><br><div class="qselect"><input id="rdo60" name="c6" type="radio" value="0">Thanatos <input id="rdo61" name="c6" type="radio" value="1">Chronicle 2nd <input id="rdo62" name="c6" type="radio" value="2">Moira <input id="rdo63" name="c6" type="radio" value="3">Lost</div><br><em>   <span style="color: #ffffff;">#8</span> 游戏《爱丽丝疯狂回归》出自于哪一个工作室？<br><br><div class="qselect"><input id="rdo70" name="c7" type="radio" value="0">麻辣椒工作室 <input id="rdo71" name="c7" type="radio" value="1">麻辣猫工作室 <input id="rdo72" name="c7" type="radio" value="2">麻辣兔工作室 <input id="rdo73" name="c7" type="radio" value="3">麻辣马工作室</div>
+</em>   <span style="color: #ffffff;">#9</span> 《名侦探柯南》中服部平次是哪里人？<br><br><div class="qselect"><input id="rdo80" name="c8" type="radio" value="0">北海道 <input id="rdo81" name="c8" type="radio" value="1">京都 <input id="rdo82" name="c8" type="radio" value="2">东京 <input id="rdo83" name="c8" type="radio" value="3">大阪</div><br><em>   <span style="color: #ffffff;">#10</span> 游戏《Minecraft》是由哪家公司开发的？<br><br><div class="qselect"><input id="rdo90" name="c9" type="radio" value="0">majiong <input id="rdo91" name="c9" type="radio" value="1">Mojang <input id="rdo92" name="c9" type="radio" value="2">mojiang <input id="rdo93" name="c9" type="radio" value="3">Majong</div>
+</em>   <span style="color: #ffffff;">#11</span> 动漫界”好男人”指的是谁？<br><br><div class="qselect"><input id="rdo100" name="c10" type="radio" value="0">元首 <input id="rdo101" name="c10" type="radio" value="1">葛炮 <input id="rdo102" name="c10" type="radio" value="2">阿部高和 <input id="rdo103" name="c10" type="radio" value="3">比利海灵顿</div><br><em>   <span style="color: #ffffff;">#12</span> TV版《新世纪福音战士》中真嗣杀死渚熏前的单帧镜头为时多少秒?<br><br><div class="qselect"><input id="rdo110" name="c11" type="radio" value="0">64 <input id="rdo111" name="c11" type="radio" value="1">63 <input id="rdo112" name="c11" type="radio" value="2">74 <input id="rdo113" name="c11" type="radio" value="3">62</div>
+</em>   <span style="color: #ffffff;">#13</span> 魔兽世界中，卡拉赞某BOSS在战斗中会怒吼：我是<strong>_<br><br><div class="qselect"><input id="rdo120" name="c12" type="radio" value="0">老狗也有几颗牙 <input id="rdo121" name="c12" type="radio" value="1">聂拉斯埃兰 <input id="rdo122" name="c12" type="radio" value="2">新世界的神 <input id="rdo123" name="c12" type="radio" value="3">你爷爷</div><br><em>   <span style="color: #ffffff;">#14</span> 以下哪个角色会南斗凤凰拳<br><br><div class="qselect"><input id="rdo130" name="c13" type="radio" value="0">藤原妹红 <input id="rdo131" name="c13" type="radio" value="1">米斯蒂娅 <input id="rdo132" name="c13" type="radio" value="2">灵乌路空 <input id="rdo133" name="c13" type="radio" value="3">露米娅</div>
+</em>   <span style="color: #ffffff;">#15</span> 回转企鹅罐中一共有多少个ED？出了多少个OST<br><br><div class="qselect"><input id="rdo140" name="c14" type="radio" value="0">1，6 <input id="rdo141" name="c14" type="radio" value="1">10，8 <input id="rdo142" name="c14" type="radio" value="2">2，1 <input id="rdo143" name="c14" type="radio" value="3">5，3</div><br><em>   <span style="color: #ffffff;">#16</span> 【灼眼的夏娜】中的夏娜的配音是<br><br><div class="qselect"><input id="rdo150" name="c15" type="radio" value="0">钉宫理惠 <input id="rdo151" name="c15" type="radio" value="1">夏娜 <input id="rdo152" name="c15" type="radio" value="2">花泽香菜 <input id="rdo153" name="c15" type="radio" value="3">下野纮</div>
+</em>   <span style="color: #ffffff;">#17</span> “蹦个大青蛙”是哪部动画OP的空耳?<br><br><div class="qselect"><input id="rdo160" name="c16" type="radio" value="0">Steins;Gate <input id="rdo161" name="c16" type="radio" value="1">Robotics;Notes <input id="rdo162" name="c16" type="radio" value="2">CHAOS;HEAD <input id="rdo163" name="c16" type="radio" value="3">Occultic;Nine</div><br><em>   <span style="color: #ffffff;">#18</span> 在Android系统中，内核(Kernel)被储存于设备的哪一个分区中？<br><br><div class="qselect"><input id="rdo170" name="c17" type="radio" value="0">Boot <input id="rdo171" name="c17" type="radio" value="1">Cache <input id="rdo172" name="c17" type="radio" value="2">Recovery <input id="rdo173" name="c17" type="radio" value="3">System</div>
+</em>   <span style="color: #ffffff;">#19</span> 银魂中由银时神乐新八组成的组织名叫？<br><br><div class="qselect"><input id="rdo180" name="c18" type="radio" value="0">始末屋 <input id="rdo181" name="c18" type="radio" value="1">万事屋 <input id="rdo182" name="c18" type="radio" value="2">千事屋 <input id="rdo183" name="c18" type="radio" value="3">百事屋</div><br><em>   <span style="color: #ffffff;">#20</span> AKB的不动ACE是谁<br><br><div class="qselect"><input id="rdo190" name="c19" type="radio" value="0">渡边麻友 <input id="rdo191" name="c19" type="radio" value="1">前田敦子 <input id="rdo192" name="c19" type="radio" value="2">大岛优子 <input id="rdo193" name="c19" type="radio" value="3">岛崎遥香</div>
+</em>   <span style="color: #ffffff;">#21</span> 今天人类也在绝赞（）中。<br><br><div class="qselect"><input id="rdo200" name="c20" type="radio" value="0">衰退 <input id="rdo201" name="c20" type="radio" value="1">水泳 <input id="rdo202" name="c20" type="radio" value="2">发射 <input id="rdo203" name="c20" type="radio" value="3">发售</div><br><em>   <span style="color: #ffffff;">#22</span> 在《使命召唤 现代战争》系列中是谁最终杀了boss马卡洛夫？<br><br><div class="qselect"><input id="rdo210" name="c21" type="radio" value="0">幽灵 <input id="rdo211" name="c21" type="radio" value="1">普莱斯 <input id="rdo212" name="c21" type="radio" value="2">盖兹 <input id="rdo213" name="c21" type="radio" value="3">肥皂</div>
+</em>   <span style="color: #ffffff;">#23</span> 《Fate/Stay Night》中，凛的Servant是哪个人物的英灵化？<br><br><div class="qselect"><input id="rdo220" name="c22" type="radio" value="0">卫宫切嗣 <input id="rdo221" name="c22" type="radio" value="1">吉尔伽美什 <input id="rdo222" name="c22" type="radio" value="2">间桐慎二 <input id="rdo223" name="c22" type="radio" value="3">卫宫士郎</div><br><em>   <span style="color: #ffffff;">#24</span> WOW中被称为亲儿子的是哪个职业？<br><br><div class="qselect"><input id="rdo230" name="c23" type="radio" value="0">术士 <input id="rdo231" name="c23" type="radio" value="1">法师 <input id="rdo232" name="c23" type="radio" value="2">潜行者 <input id="rdo233" name="c23" type="radio" value="3">圣骑士</div>
+</em>   <span style="color: #ffffff;">#25</span> 《科学超电磁炮》中的御坂美琴的声优是谁？<br><br><div class="qselect"><input id="rdo240" name="c24" type="radio" value="0">伊藤加奈惠 <input id="rdo241" name="c24" type="radio" value="1">佐藤利奈 <input id="rdo242" name="c24" type="radio" value="2">丰崎爱生 <input id="rdo243" name="c24" type="radio" value="3">新井里美</div><br><em>   <span style="color: #ffffff;">#26</span> 游戏《elona》中每过多长时间出现以太之风？<br><br><div class="qselect"><input id="rdo250" name="c25" type="radio" value="0">4个月 <input id="rdo251" name="c25" type="radio" value="1">5个月 <input id="rdo252" name="c25" type="radio" value="2">3个月 <input id="rdo253" name="c25" type="radio" value="3">2个月</div>
+</em>   <span style="color: #ffffff;">#27</span> 被称为“炮姐”的是哪位人物<br><br><div class="qselect"><input id="rdo260" name="c26" type="radio" value="0">一方通行 <input id="rdo261" name="c26" type="radio" value="1">御坂美琴 <input id="rdo262" name="c26" type="radio" value="2">白井黑子 <input id="rdo263" name="c26" type="radio" value="3">上条当麻</div><br><em>   <span style="color: #ffffff;">#28</span> 以下哪个不是《全金属狂潮》中的“耳语者（Whisperd）”？<br><br><div class="qselect"><input id="rdo270" name="c27" type="radio" value="0">雷纳德·泰斯塔罗莎 <input id="rdo271" name="c27" type="radio" value="1">理查德·马度卡斯 <input id="rdo272" name="c27" type="radio" value="2">米拉 <input id="rdo273" name="c27" type="radio" value="3">千鸟要</div>
+</em>   <span style="color: #ffffff;">#29</span> 《某科学的超电磁炮》中，佐天同学经常对初春同学做的一件事情是什么？<br><br><div class="qselect"><input id="rdo280" name="c28" type="radio" value="0">扒裤 <input id="rdo281" name="c28" type="radio" value="1">摸头 <input id="rdo282" name="c28" type="radio" value="2">拍臀 <input id="rdo283" name="c28" type="radio" value="3">掀裙</div><br><em>   <span style="color: #ffffff;">#30</span> 《冰菓》中远垣内将司为什么在社团门外安装红外线收发装置？<br><br><div class="qselect"><input id="rdo290" name="c29" type="radio" value="0">不让人发现他在屋里搞基 <input id="rdo291" name="c29" type="radio" value="1">不让人发现他在屋里抽烟 <input id="rdo292" name="c29" type="radio" value="2">不让人发现他在屋里撸炮 <input id="rdo293" name="c29" type="radio" value="3">不让人发现他在屋里玩psp</div>
+</em>   <span style="color: #ffffff;">#31</span> EVA（不含新剧场版）中，第十七使徒渚熏的名称是<br><br><div class="qselect"><input id="rdo300" name="c30" type="radio" value="0">自由天使 <input id="rdo301" name="c30" type="radio" value="1">基佬天使 <input id="rdo302" name="c30" type="radio" value="2">哲♂学天使 <input id="rdo303" name="c30" type="radio" value="3">真嗣的小天使</div><br><em>   <span style="color: #ffffff;">#32</span> 《C3-魔方少女》中的菲亚有多少种机关形态？<br><br><div class="qselect"><input id="rdo310" name="c31" type="radio" value="0">11种 <input id="rdo311" name="c31" type="radio" value="1">16种 <input id="rdo312" name="c31" type="radio" value="2">32种 <input id="rdo313" name="c31" type="radio" value="3">12种</div>
+</em>   <span style="color: #ffffff;">#33</span> 七龙珠里悟空最后是用哪招打赢魔人布欧<br><br><div class="qselect"><input id="rdo320" name="c32" type="radio" value="0">龙拳 <input id="rdo321" name="c32" type="radio" value="1">界王拳 <input id="rdo322" name="c32" type="radio" value="2">元气弹 <input id="rdo323" name="c32" type="radio" value="3">龟派气功</div><br><em>   <span style="color: #ffffff;">#34</span> 大家喜欢叫杉田智和什么？<br><br><div class="qselect"><input id="rdo330" name="c33" type="radio" value="0">组长 <input id="rdo331" name="c33" type="radio" value="1">团长 <input id="rdo332" name="c33" type="radio" value="2">班长 <input id="rdo333" name="c33" type="radio" value="3">会长</div>
+</em>   <span style="color: #ffffff;">#35</span> 某部经典机甲动漫中出现的经典台词是？<br><br><div class="qselect"><input id="rdo340" name="c34" type="radio" value="0">打完这场战役我就会老家结婚！ <input id="rdo341" name="c34" type="radio" value="1">我爸爸都没打过我！ <input id="rdo342" name="c34" type="radio" value="2">都是时辰的错！ <input id="rdo343" name="c34" type="radio" value="3">你妹啊！</div><br><em>   <span style="color: #ffffff;">#36</span> 下列不属于KEY社作品的是<br><br><div class="qselect"><input id="rdo350" name="c35" type="radio" value="0">AIR <input id="rdo351" name="c35" type="radio" value="1">CLANNAD <input id="rdo352" name="c35" type="radio" value="2">ANOTHER <input id="rdo353" name="c35" type="radio" value="3">KANON</div>
+</em>   <span style="color: #ffffff;">#37</span> 打吊针神曲中主角找谁去打吊针？<br><br><div class="qselect"><input id="rdo360" name="c36" type="radio" value="0">审判天使 <input id="rdo361" name="c36" type="radio" value="1">公婆 <input id="rdo362" name="c36" type="radio" value="2">堕落天使 <input id="rdo363" name="c36" type="radio" value="3">白衣天使</div><br>*   <span style="color: #ffffff;">#38</span> 《自恋刑警》小暮己在逮捕犯人时，会将逮捕状与__</strong>一起出示给对方<br><br><div class="qselect"><input id="rdo370" name="c37" type="radio" value="0">手铐 <input id="rdo371" name="c37" type="radio" value="1">贴身手帕 <input id="rdo372" name="c37" type="radio" value="2">结婚申请书 <input id="rdo373" name="c37" type="radio" value="3">推理日记</div><br><em>   <span style="color: #ffffff;">#39</span> 坂田银时的配刀叫什么<br><br><div class="qselect"><input id="rdo380" name="c38" type="radio" value="0">胧村正 <input id="rdo381" name="c38" type="radio" value="1">逆刃刀 <input id="rdo382" name="c38" type="radio" value="2">洞爷湖 <input id="rdo383" name="c38" type="radio" value="3">斩月</div>
+</em>   <span style="color: #ffffff;">#40</span> 动漫《数码宝贝》中八神嘉儿的数码宝贝是？<br><br><div class="qselect"><input id="rdo390" name="c39" type="radio" value="0">迪路兽 <input id="rdo391" name="c39" type="radio" value="1">巴达兽 <input id="rdo392" name="c39" type="radio" value="2">哥玛兽 <input id="rdo393" name="c39" type="radio" value="3">亚古兽</div><br><em>   <span style="color: #ffffff;">#41</span> 下列哪个人物是《闪电十一人》里的人物？<br><br><div class="qselect"><input id="rdo400" name="c40" type="radio" value="0">热波夏炎 <input id="rdo401" name="c40" type="radio" value="1">夏波热炎 <input id="rdo402" name="c40" type="radio" value="2">热炎夏波 <input id="rdo403" name="c40" type="radio" value="3">夏热波炎</div>
+</em>   <span style="color: #ffffff;">#42</span> 东方project中二婶子是谁？<br><br><div class="qselect"><input id="rdo410" name="c41" type="radio" value="0">丰聪二婶子 <input id="rdo411" name="c41" type="radio" value="1">圣白莲 <input id="rdo412" name="c41" type="radio" value="2">丰聪耳神子 <input id="rdo413" name="c41" type="radio" value="3">八云紫</div><br><em>   <span style="color: #ffffff;">#43</span> 《白熊咖啡厅》里面的白熊的配音是谁？<br><br><div class="qselect"><input id="rdo420" name="c42" type="radio" value="0">樱井孝宏 <input id="rdo421" name="c42" type="radio" value="1">神谷浩史 <input id="rdo422" name="c42" type="radio" value="2">福山润 <input id="rdo423" name="c42" type="radio" value="3">小野大辅</div>
+</em>   <span style="color: #ffffff;">#44</span> 刀剑神域中男主角的那把黑色巨剑叫什么<br><br><div class="qselect"><input id="rdo430" name="c43" type="radio" value="0">泰拉石巨剑 <input id="rdo431" name="c43" type="radio" value="1">阐释者 <input id="rdo432" name="c43" type="radio" value="2">自然恩赐巨剑 <input id="rdo433" name="c43" type="radio" value="3">天选之剑-格朗</div><br><em>   <span style="color: #ffffff;">#45</span> 《魔法禁书目录》中的上条当麻是如何让特异能力无效化的？<br><br><div class="qselect"><input id="rdo440" name="c44" type="radio" value="0">使用右手 <input id="rdo441" name="c44" type="radio" value="1">使用化学武器 <input id="rdo442" name="c44" type="radio" value="2">运用符咒 <input id="rdo443" name="c44" type="radio" value="3">开启说教模式</div>
+</em>   <span style="color: #ffffff;">#46</span> T-34坦克Mod1939配备的主炮口径多大<br><br><div class="qselect"><input id="rdo450" name="c45" type="radio" value="0">85mm <input id="rdo451" name="c45" type="radio" value="1">76mm <input id="rdo452" name="c45" type="radio" value="2">76.2mm <input id="rdo453" name="c45" type="radio" value="3">75.5mm</div><br><em>   <span style="color: #ffffff;">#47</span> 以下哪个动画角色的声优不是山口胜平？<br><br><div class="qselect"><input id="rdo460" name="c46" type="radio" value="0">《海贼王》乌索普 <input id="rdo461" name="c46" type="radio" value="1">《名侦探柯南》工藤新一 <input id="rdo462" name="c46" type="radio" value="2">《银魂》坂田银时 <input id="rdo463" name="c46" type="radio" value="3">《犬夜叉》犬夜叉</div>
+</em>   <span style="color: #ffffff;">#48</span> 以下哪一部是新海诚的作品？<br><br><div class="qselect"><input id="rdo470" name="c47" type="radio" value="0">秒速五公里 <input id="rdo471" name="c47" type="radio" value="1">秒速五百米 <input id="rdo472" name="c47" type="radio" value="2">秒速几厘米 <input id="rdo473" name="c47" type="radio" value="3">秒速五厘米</div><br><em>   <span style="color: #ffffff;">#49</span> 无尽的（）月<br><br><div class="qselect"><input id="rdo480" name="c48" type="radio" value="0">1 <input id="rdo481" name="c48" type="radio" value="1">7 <input id="rdo482" name="c48" type="radio" value="2">8 <input id="rdo483" name="c48" type="radio" value="3">12</div>
+</em>   <span style="color: #ffffff;">#50</span> 通灵王中叶的口头禅是？<br><br><div class="qselect"><input id="rdo490" name="c49" type="radio" value="0">你已经死了 <input id="rdo491" name="c49" type="radio" value="1">船到桥头自然直 <input id="rdo492" name="c49" type="radio" value="2">我爸爸都没打过我！ <input id="rdo493" name="c49" type="radio" value="3">不要大意的上吧</div><br><em>   <span style="color: #ffffff;">#51</span> 下列哪种语言在语言学文法分类上属于多式综合语？<br><br><div class="qselect"><input id="rdo500" name="c50" type="radio" value="0">巴布亚皮钦语 <input id="rdo501" name="c50" type="radio" value="1">泰米尔语 <input id="rdo502" name="c50" type="radio" value="2">萨米语 <input id="rdo503" name="c50" type="radio" value="3">切罗基语</div>
+</em>   <span style="color: #ffffff;">#52</span> 命运石之门中助手的本名是？<br><br><div class="qselect"><input id="rdo510" name="c51" type="radio" value="0">牧濑红利栖 <input id="rdo511" name="c51" type="radio" value="1">克里斯蒂娜 <input id="rdo512" name="c51" type="radio" value="2">牧濑红莉栖 <input id="rdo513" name="c51" type="radio" value="3">栗悟饭和龟波功</div><br><em>   <span style="color: #ffffff;">#53</span> 水分子的键角是？<br><br><div class="qselect"><input id="rdo520" name="c52" type="radio" value="0">109.5 <input id="rdo521" name="c52" type="radio" value="1">107.3 <input id="rdo522" name="c52" type="radio" value="2">104.5 <input id="rdo523" name="c52" type="radio" value="3">105.2</div>
+</em>   <span style="color: #ffffff;">#54</span> Skip Beat中最上恭子在LME演艺制作公司加入的部门名为？<br><br><div class="qselect"><input id="rdo530" name="c53" type="radio" value="0">Love me <input id="rdo531" name="c53" type="radio" value="1">Kiss me <input id="rdo532" name="c53" type="radio" value="2">Help me <input id="rdo533" name="c53" type="radio" value="3">Find me</div><br><em>   <span style="color: #ffffff;">#55</span> 东方同人系列中丰聪耳神子拥有同时听几个人说话的能力？<br><br><div class="qselect"><input id="rdo540" name="c54" type="radio" value="0">无限 <input id="rdo541" name="c54" type="radio" value="1">8 <input id="rdo542" name="c54" type="radio" value="2">10 <input id="rdo543" name="c54" type="radio" value="3">100</div>
+</em>   <span style="color: #ffffff;">#56</span> 下面哪个人物不是东方鬼畜三人组之一<br><br><div class="qselect"><input id="rdo550" name="c55" type="radio" value="0">芙兰朵露 <input id="rdo551" name="c55" type="radio" value="1">十六夜咲夜 <input id="rdo552" name="c55" type="radio" value="2">封兽鵺 <input id="rdo553" name="c55" type="radio" value="3">古明地恋</div><br><em>   <span style="color: #ffffff;">#57</span> 下面哪一项漫画没有在少年漫画杂志少年JUMP上连载？<br><br><div class="qselect"><input id="rdo560" name="c56" type="radio" value="0">《妖精的尾巴》 <input id="rdo561" name="c56" type="radio" value="1">《火影忍者》 <input id="rdo562" name="c56" type="radio" value="2">《幽游白书》 <input id="rdo563" name="c56" type="radio" value="3">《龙珠》</div>
+</em>   <span style="color: #ffffff;">#58</span> 命运石之门里最初的时间机是运用的哪种电器？<br><br><div class="qselect"><input id="rdo570" name="c57" type="radio" value="0">咖啡壶 <input id="rdo571" name="c57" type="radio" value="1">微波炉 <input id="rdo572" name="c57" type="radio" value="2">电视机 <input id="rdo573" name="c57" type="radio" value="3">电冰箱</div><br><em>   <span style="color: #ffffff;">#59</span> 下列哪种姿势是新房监督的动画的代表？<br><br><div class="qselect"><input id="rdo580" name="c58" type="radio" value="0">双手叉腰 <input id="rdo581" name="c58" type="radio" value="1">转身180° <input id="rdo582" name="c58" type="radio" value="2">左手叉腰右手高举 <input id="rdo583" name="c58" type="radio" value="3">转头45°</div>
+</em>   <span style="color: #ffffff;">#60</span> IXION SAGA DT和主角一起冒险的队友有几个<br><br><div class="qselect"><input id="rdo590" name="c59" type="radio" value="0">3个 <input id="rdo591" name="c59" type="radio" value="1">5个 <input id="rdo592" name="c59" type="radio" value="2">2个 <input id="rdo593" name="c59" type="radio" value="3">4个</div><br><em>   <span style="color: #ffffff;">#61</span> 硝基盐酸为什么能溶解金？<br><br><div class="qselect"><input id="rdo600" name="c60" type="radio" value="0">配位 <input id="rdo601" name="c60" type="radio" value="1">还原 <input id="rdo602" name="c60" type="radio" value="2">氧化 <input id="rdo603" name="c60" type="radio" value="3">腐蚀性</div>
+</em>   <span style="color: #ffffff;">#62</span> 网游魔兽世界中，资料片《燃烧的远征》曾被戏称为？<br><br><div class="qselect"><input id="rdo610" name="c61" type="radio" value="0">有这部资料片么？ <input id="rdo611" name="c61" type="radio" value="1">特别迟 <input id="rdo612" name="c61" type="radio" value="2">蛋蛋的忧伤 <input id="rdo613" name="c61" type="radio" value="3">燃烧的胖次</div><br><em>   <span style="color: #ffffff;">#63</span> 以下哪个解说没有和著名解说满楼水平传过绯闻？<br><br><div class="qselect"><input id="rdo620" name="c62" type="radio" value="0">凯文 <input id="rdo621" name="c62" type="radio" value="1">快乐一剑飘 <input id="rdo622" name="c62" type="radio" value="2">阿川 <input id="rdo623" name="c62" type="radio" value="3">小满</div>
+</em>   <span style="color: #ffffff;">#64</span> 高达seed 中圣盾高达的编号是<br><br><div class="qselect"><input id="rdo630" name="c63" type="radio" value="0">GAT-X105A <input id="rdo631" name="c63" type="radio" value="1">GAT-X207 <input id="rdo632" name="c63" type="radio" value="2">GAT-X303 <input id="rdo633" name="c63" type="radio" value="3">GAT-X103</div><br><em>   <span style="color: #ffffff;">#65</span> 初音ミク的诞生日期是？<br><br><div class="qselect"><input id="rdo640" name="c64" type="radio" value="0">2月31日 <input id="rdo641" name="c64" type="radio" value="1">6月1日 <input id="rdo642" name="c64" type="radio" value="2">3月9日 <input id="rdo643" name="c64" type="radio" value="3">8月31日</div>
+</em>   <span style="color: #ffffff;">#66</span> 动画“北斗神拳”主角健次郎身上的疤痕是什么样子的？<br><br><div class="qselect"><input id="rdo650" name="c65" type="radio" value="0">七个指孔。 <input id="rdo651" name="c65" type="radio" value="1">交叉鞭印。 <input id="rdo652" name="c65" type="radio" value="2">三处剑痕。 <input id="rdo653" name="c65" type="radio" value="3">十字刀伤。</div><br><em>   <span style="color: #ffffff;">#67</span> 不属于“钉宫四萌”的是那个？<br><br><div class="qselect"><input id="rdo660" name="c66" type="radio" value="0">露易丝 <input id="rdo661" name="c66" type="radio" value="1">亚里亚 <input id="rdo662" name="c66" type="radio" value="2">逢坂大河 <input id="rdo663" name="c66" type="radio" value="3">夏娜</div>
+</em>   <span style="color: #ffffff;">#68</span> 粉的切开都是？<br><br><div class="qselect"><input id="rdo670" name="c67" type="radio" value="0">黄的 <input id="rdo671" name="c67" type="radio" value="1">绿的 <input id="rdo672" name="c67" type="radio" value="2">红的 <input id="rdo673" name="c67" type="radio" value="3">黑的</div><br><em>   <span style="color: #ffffff;">#69</span> 人们一般称科学的电磁炮里面的佐天泪子会第四波动，这是跟哪部动漫的联动？<br><br><div class="qselect"><input id="rdo680" name="c68" type="radio" value="0">needless <input id="rdo681" name="c68" type="radio" value="1">魔法禁书目录 <input id="rdo682" name="c68" type="radio" value="2">X-MAN <input id="rdo683" name="c68" type="radio" value="3">黑之契约者</div>
+</em>   <span style="color: #ffffff;">#70</span> <em>__</em>你算计我！<br><br><div class="qselect"><input id="rdo690" name="c69" type="radio" value="0">冬亚 <input id="rdo691" name="c69" type="radio" value="1">春亚 <input id="rdo692" name="c69" type="radio" value="2">夏亚 <input id="rdo693" name="c69" type="radio" value="3">秋亚</div><br><em>   <span style="color: #ffffff;">#71</span> 在游戏《魔兽世界》中，暗夜精灵族的女祭司的名字是？<br><br><div class="qselect"><input id="rdo700" name="c70" type="radio" value="0">泰兰德·语风 <input id="rdo701" name="c70" type="radio" value="1">吉安娜 <input id="rdo702" name="c70" type="radio" value="2">玛维 影之歌 <input id="rdo703" name="c70" type="radio" value="3">希尔瓦娜斯</div>
+</em>   <span style="color: #ffffff;">#72</span> 在《JOJO的奇妙冒险》第三部中，承太郎在全盛期时能暂停多少秒？<br><br><div class="qselect"><input id="rdo710" name="c71" type="radio" value="0">6秒 <input id="rdo711" name="c71" type="radio" value="1">2秒 <input id="rdo712" name="c71" type="radio" value="2">5秒 <input id="rdo713" name="c71" type="radio" value="3">9秒</div><br><em>   <span style="color: #ffffff;">#73</span> 以下哪部galgame不是key社的作品？<br><br><div class="qselect"><input id="rdo720" name="c72" type="radio" value="0">eden <input id="rdo721" name="c72" type="radio" value="1">air <input id="rdo722" name="c72" type="radio" value="2">clannad <input id="rdo723" name="c72" type="radio" value="3">little busters</div>
+</em>   <span style="color: #ffffff;">#74</span> 《暗黑破坏神2》中堕天使衣卒尔徘徊在<br><br><div class="qselect"><input id="rdo730" name="c73" type="radio" value="0">鲜血荒原 <input id="rdo731" name="c73" type="radio" value="1">冰河路径 <input id="rdo732" name="c73" type="radio" value="2">绝望平原 <input id="rdo733" name="c73" type="radio" value="3">崔凡克</div><br><em>   <span style="color: #ffffff;">#75</span> 1月番俺修罗中最早与男主产生联系的女主是哪一位？<br><br><div class="qselect"><input id="rdo740" name="c74" type="radio" value="0">冬海爱衣 <input id="rdo741" name="c74" type="radio" value="1">夏川真凉 <input id="rdo742" name="c74" type="radio" value="2">秋篠姬香 <input id="rdo743" name="c74" type="radio" value="3">春咲千和</div>
+</em>   <span style="color: #ffffff;">#76</span> 《名侦探柯南》中柯南的名言是什么？<br><br><div class="qselect"><input id="rdo750" name="c75" type="radio" value="0">我是要成为海贼王的男人！ <input id="rdo751" name="c75" type="radio" value="1">这次元还真是个不毛之地啊。 <input id="rdo752" name="c75" type="radio" value="2">真相只有一个！ <input id="rdo753" name="c75" type="radio" value="3">无路赛无路赛无路赛！</div><br><em>   <span style="color: #ffffff;">#77</span> &lt;&lt;月姬&gt;&gt;中公主的全名是？<br><br><div class="qselect"><input id="rdo760" name="c76" type="radio" value="0">原野秋叶 <input id="rdo761" name="c76" type="radio" value="1">希耶尔 <input id="rdo762" name="c76" type="radio" value="2">琥珀 <input id="rdo763" name="c76" type="radio" value="3">爱尔奎特 布伦史塔德</div>
+</em>   <span style="color: #ffffff;">#78</span> 以下哪个游戏不是saga planets的作品<br><br><div class="qselect"><input id="rdo770" name="c77" type="radio" value="0">Coming Humming <input id="rdo771" name="c77" type="radio" value="1">はつゆきさくら <input id="rdo772" name="c77" type="radio" value="2">さくら、咲きました <input id="rdo773" name="c77" type="radio" value="3">キサラギGOLD★STAR</div><br><em>   <span style="color: #ffffff;">#79</span> 神隐之狼中，可以令神人暴走的是什么？<br><br><div class="qselect"><input id="rdo780" name="c78" type="radio" value="0">醋 <input id="rdo781" name="c78" type="radio" value="1">盐 <input id="rdo782" name="c78" type="radio" value="2">油 <input id="rdo783" name="c78" type="radio" value="3">蜜</div>
+</em>   <span style="color: #ffffff;">#80</span> 《凉宫春日的分裂》与《凉宫春日的惊愕》的发售日期相隔多少天？<br><br><div class="qselect"><input id="rdo790" name="c79" type="radio" value="0">1515 <input id="rdo791" name="c79" type="radio" value="1">1882 <input id="rdo792" name="c79" type="radio" value="2">1467 <input id="rdo793" name="c79" type="radio" value="3">1754</div><br><em>   <span style="color: #ffffff;">#81</span> “孤这一生，无怨无悔，只是，有少许遗憾啊..”是谁的台词？<br><br><div class="qselect"><input id="rdo800" name="c80" type="radio" value="0">龙溟 <input id="rdo801" name="c80" type="radio" value="1">龙葵 <input id="rdo802" name="c80" type="radio" value="2">龙阳 <input id="rdo803" name="c80" type="radio" value="3">龙幽</div>
+</em>   <span style="color: #ffffff;">#82</span> 下列元素中电负性最大的是？<br><br><div class="qselect"><input id="rdo810" name="c81" type="radio" value="0">碳 <input id="rdo811" name="c81" type="radio" value="1">氧 <input id="rdo812" name="c81" type="radio" value="2">硫 <input id="rdo813" name="c81" type="radio" value="3">硅</div><br><em>   <span style="color: #ffffff;">#83</span> 但丁出自哪个系列的游戏？<br><br><div class="qselect"><input id="rdo820" name="c82" type="radio" value="0">鬼武者系列 <input id="rdo821" name="c82" type="radio" value="1">鬼泣系列 <input id="rdo822" name="c82" type="radio" value="2">忍者龙剑传系列 <input id="rdo823" name="c82" type="radio" value="3">战神系列</div>
+</em>   <span style="color: #ffffff;">#84</span> 以下不是石田彰担当声优的角色是？<br><br><div class="qselect"><input id="rdo830" name="c83" type="radio" value="0">黑羽快斗（《魔术快斗》） <input id="rdo831" name="c83" type="radio" value="1">桂小太郎（《银魂》） <input id="rdo832" name="c83" type="radio" value="2">阿斯兰·萨拉（《高达seed》） <input id="rdo833" name="c83" type="radio" value="3">我爱罗（《火影忍者》）</div><br><em>   <span style="color: #ffffff;">#85</span> 《刀剑神域》在TV第一集最后，黑铁官的生命之碑上，位于桐人名字正下方被划去的那个名字是？<br><br><div class="qselect"><input id="rdo840" name="c84" type="radio" value="0">Kisuta <input id="rdo841" name="c84" type="radio" value="1">Kirrche <input id="rdo842" name="c84" type="radio" value="2">Kirano <input id="rdo843" name="c84" type="radio" value="3">Kitaro</div>
+</em>   <span style="color: #ffffff;">#86</span> 因翻唱「科学超电磁炮」的OP而出名的NicoNico唱见的名字是<br><br><div class="qselect"><input id="rdo850" name="c85" type="radio" value="0">ぐるたみん <input id="rdo851" name="c85" type="radio" value="1">灯油 <input id="rdo852" name="c85" type="radio" value="2">天月-あまつき- <input id="rdo853" name="c85" type="radio" value="3">しゃむおん</div><br><em>   <span style="color: #ffffff;">#87</span> 白井黑子的电脑硬件指的是什么<br><br><div class="qselect"><input id="rdo860" name="c86" type="radio" value="0">显卡 <input id="rdo861" name="c86" type="radio" value="1">硬盘 <input id="rdo862" name="c86" type="radio" value="2">主板 <input id="rdo863" name="c86" type="radio" value="3">媚药</div>
+</em>   <span style="color: #ffffff;">#88</span> ‘真女神轉生3 狂熱版’中，但丁和人修羅初次見面的地點是？<br><br><div class="qselect"><input id="rdo870" name="c87" type="radio" value="0">歌舞伎町 <input id="rdo871" name="c87" type="radio" value="1">池袋 <input id="rdo872" name="c87" type="radio" value="2">銀座 <input id="rdo873" name="c87" type="radio" value="3">新宿</div><br><em>   <span style="color: #ffffff;">#89</span> 在白熊咖啡厅中，常勤熊猫调往新加坡，熊猫君伤心的在街上哭了起来是哪一话?<br><br><div class="qselect"><input id="rdo880" name="c88" type="radio" value="0">第44话 <input id="rdo881" name="c88" type="radio" value="1">第38话 <input id="rdo882" name="c88" type="radio" value="2">第50话 <input id="rdo883" name="c88" type="radio" value="3">第34话</div>
+</em>   <span style="color: #ffffff;">#90</span> 以下哪样是漫画《封神演义》闻仲所使用的宝贝<br><br><div class="qselect"><input id="rdo890" name="c89" type="radio" value="0">山河社稷图 <input id="rdo891" name="c89" type="radio" value="1">金蛟剪 <input id="rdo892" name="c89" type="radio" value="2">雷公鞭 <input id="rdo893" name="c89" type="radio" value="3">禁鞭</div><br><em>   <span style="color: #ffffff;">#91</span> 碧之轨迹中，夏莉·奥兰多的外号是<br><br><div class="qselect"><input id="rdo900" name="c90" type="radio" value="0">嗜血的夏莉 <input id="rdo901" name="c90" type="radio" value="1">血染的夏莉 <input id="rdo902" name="c90" type="radio" value="2">铁血的夏莉 <input id="rdo903" name="c90" type="radio" value="3">热血的夏莉</div>
+</em>   <span style="color: #ffffff;">#92</span> 游戏坦克世界中哪辆坦克是C系？<br><br><div class="qselect"><input id="rdo910" name="c91" type="radio" value="0">59式 <input id="rdo911" name="c91" type="radio" value="1">M 18 地狱猫 <input id="rdo912" name="c91" type="radio" value="2">彗星 <input id="rdo913" name="c91" type="radio" value="3">黑豹</div><br><em>   <span style="color: #ffffff;">#93</span> 2010年日本萌王是谁<br><br><div class="qselect"><input id="rdo920" name="c92" type="radio" value="0">御坂美琴 <input id="rdo921" name="c92" type="radio" value="1">中野梓 <input id="rdo922" name="c92" type="radio" value="2">小仓唯 <input id="rdo923" name="c92" type="radio" value="3">逢坂大河</div>
+</em>   <span style="color: #ffffff;">#94</span> 仙水忍的好基友是谁<br><br><div class="qselect"><input id="rdo930" name="c93" type="radio" value="0">幽助 <input id="rdo931" name="c93" type="radio" value="1">鸦 <input id="rdo932" name="c93" type="radio" value="2">树 <input id="rdo933" name="c93" type="radio" value="3">躯</div><br><em>   <span style="color: #ffffff;">#95</span> 以下哪一个项与其他三项不属于同一类？<br><br><div class="qselect"><input id="rdo940" name="c94" type="radio" value="0">DTFT <input id="rdo941" name="c94" type="radio" value="1">FFT <input id="rdo942" name="c94" type="radio" value="2">DCT <input id="rdo943" name="c94" type="radio" value="3">TNT</div>
+</em>   <span style="color: #ffffff;">#96</span> 《神奇宝贝 特别篇》中的路比一直隐藏的第六个口袋妖怪是什么？<br><br><div class="qselect"><input id="rdo950" name="c95" type="radio" value="0">裂空座 <input id="rdo951" name="c95" type="radio" value="1">基拉祈 <input id="rdo952" name="c95" type="radio" value="2">沙扎比 <input id="rdo953" name="c95" type="radio" value="3">雪拉比</div><br><em>   <span style="color: #ffffff;">#97</span> &lt;犬夜叉&gt;中，戈薇的配音是谁？<br><br><div class="qselect"><input id="rdo960" name="c96" type="radio" value="0">雪野六月 <input id="rdo961" name="c96" type="radio" value="1">雪野五月 <input id="rdo962" name="c96" type="radio" value="2">雪野四月 <input id="rdo963" name="c96" type="radio" value="3">雪野七月</div>
+</em>   <span style="color: #ffffff;">#98</span> 《我们的存在》中最后矢野元晴为什么去了东京？<br><br><div class="qselect"><input id="rdo970" name="c97" type="radio" value="0">母亲想要去 <input id="rdo971" name="c97" type="radio" value="1">搬家 <input id="rdo972" name="c97" type="radio" value="2">自己重病 <input id="rdo973" name="c97" type="radio" value="3">母亲重病</div><br><em>   <span style="color: #ffffff;">#99</span> “あの地平线辉くのは”是哪套动画电影主题曲的第一句？<br><br><div class="qselect"><input id="rdo980" name="c98" type="radio" value="0">风之谷 <input id="rdo981" name="c98" type="radio" value="1">天空之城 <input id="rdo982" name="c98" type="radio" value="2">千与千寻 <input id="rdo983" name="c98" type="radio" value="3">猫的报恩</div>
+</em>   <span style="color: #ffffff;">#100</span> B-4榴弹炮的口径为？<br><br><div class="qselect"><input id="rdo990" name="c99" type="radio" value="0">203mm <input id="rdo991" name="c99" type="radio" value="1">122mm <input id="rdo992" name="c99" type="radio" value="2">280mm <input id="rdo993" name="c99" type="radio" value="3">152mm</div>]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>三天不读口生，三天不练手生</p>
+<p><pre class="sort" style="color: #45484b;"><span style="font-weight: bold; color: #555555;">俗话说的一点不假，一段时]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[试吃第一批螃蟹]]></title>
+    <link href="http://cosimahan.github.io/e8-af-95-e5-90-83-e7-ac-ac-e4-b8-80-e6-89-b9-e8-9e-83-e8-9f-b9"/>
+    <id>http://cosimahan.github.io/e8-af-95-e5-90-83-e7-ac-ac-e4-b8-80-e6-89-b9-e8-9e-83-e8-9f-b9</id>
+    <published>2014-06-23T04:24:29.000Z</published>
+    <updated>2015-07-30T08:05:24.267Z</updated>
+    <content type="html"><![CDATA[<p>咱对虚拟运营商都不陌生了，经过几个月的预热，现在终于放号了。于是，我拿到了运营商为“蜗X移动”的“399坑爹卡”。</p>
+<p>毕竟螃蟹吃的有点早，还没熟透就捞了出来，是酸是甜且听我一一道来。</p>
+<p>上个星期预约和抢购，需要下载一个叫“免X店”的垃圾客户端，整个流程也是一头雾水，文案和技术都不到家的样子。大体流程是：预约、抢码（与翔米的F码功能相同）、购买、选号、实名、发货。</p>
+<p>抢购成功之后发货，几天之后 <strong>E</strong>MS<strong> </strong>给我打电话，卡到了。</p>
+<p>开箱图：</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140623_102932.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140623_102932-300x225.jpg" alt="IMG_20140623_102932"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140622_173404.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140622_173404-225x300.jpg" alt="IMG_20140622_173404"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140622_173303.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140622_173303-300x225.jpg" alt="IMG_20140622_173303"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140622_173523.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/06/IMG_20140622_173523-300x225.jpg" alt="IMG_20140622_173523"></a></p>
+<p>&nbsp;</p>
+<p>怎么样，好看吧？弄这么好看有啥用，不如给老子降低点资费。</p>
+<p>它的计费和小区电表类似，先购买一定通话时长、短信、流量，才可以打电话发短信上网，并且就目前来看，正常使用价格的比较坑，我懒得说了，您要是有兴趣自己搜下。</p>
+<p>貌似要进入网厅激活才能用，激活之后想改服务密码，找来找去没有呀，于是<strong>自作聪明</strong>的我点了退出登录，在登陆处点了忘记密码，提示新密码通过短信发送给我，我靠密码只能随机改啊。</p>
+<p>等啊等啊等，不见短信，于是重试*2，也不见短信，我拿另一个手机给这张卡发了个短信，同收不到。预感不妙，估计蜗X移动和联通各省子公司没协同好[1]，打客服（不免费）提交情况，客服是好像都是男的。结下来要求客服重置服务密码，提供姓名、蜗X通行证号、证件号码，那就提供呗，反正信息都给过你们一次了，不过这竟然是口述给客服，好不专业，然后一个工作日内解决。</p>
+<p>第二天也就是今天，10040来电话说重置了，密码重置全人工，这底下效率···</p>
+<p>总结：这坑爹卡先用两天试试吧，虚拟运营商在国外已经有十多年历史了，在我国才刚起步，就像5年前的 3G ，开始问题不断，一年之后呢？除了资费其他都解决了。螃蟹会慢慢熟的，等到熟透了，就甜了。</p>
+<p>[1]  事后了解到，需购买短信包方可接收短信。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>咱对虚拟运营商都不陌生了，经过几个月的预热，现在终于放号了。于是，我拿到了运营商为“蜗X移动”的“399坑爹卡”。</p>
+<p>毕竟螃蟹吃的有点早，还没熟透就捞了出来，是酸是甜且听我一一道来。</p>
+<p>上个星期预约和抢购，需要下载一个叫“免X店”的垃圾客户端，整个流]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[等了好久终于等到今天，梦了好久终于把梦实现]]></title>
+    <link href="http://cosimahan.github.io/e7-ad-89-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e7-ad-89-e5-88-b0-e4-bb-8a-e5-a4-a9-ef-bc-8c-e6-a2-a6-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e6-8a-8a-e6-a2-a6-e5-ae-9e-e7-8e-b0"/>
+    <id>http://cosimahan.github.io/e7-ad-89-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e7-ad-89-e5-88-b0-e4-bb-8a-e5-a4-a9-ef-bc-8c-e6-a2-a6-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e6-8a-8a-e6-a2-a6-e5-ae-9e-e7-8e-b0</id>
+    <published>2014-06-11T00:24:55.000Z</published>
+    <updated>2015-07-30T08:05:24.268Z</updated>
+    <content type="html"><![CDATA[<p>——记高考</p>
+<p>高考是人生最公平的比赛, 高中三年是人生最美丽的乐章。<br>就像华仔唱的, 我的梦想终于要实现了。一个考场,30个小小的笔尖,承载了多少个梦想,学霸抑或学渣,梦想在笔尖上绽放。<br>这次考试发挥可以,总共4场,正常水平<em>2 小幅度超水平</em>2。<br>我之所以有今天,很大程度上取决于父母的教育, 文化程度高一些教育观念自然相对开放一些,培养了我想对较强的理解分析能力,同时致使了我初三到高二的懒散。<br>高三的美好时光已经过去,放下那舍不得的之乎者也柯西不等式,真正的生活即将开始,奋斗吧,向上吧,少年!<br>原写于2014.6.8</p>
+<p><img src="http://www.org.cn/wp-content/uploads/2013/09/sunoway.gif" alt=""></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>——记高考</p>
+<p>高考是人生最公平的比赛, 高中三年是人生最美丽的乐章。<br>就像华仔唱的, 我的梦想终于要实现了。一个考场,30个小小的笔尖,承载了多少个梦想,学霸抑或学渣,梦想在笔尖上绽放。<br>这次考试发挥可以,总共4场,正常水平<em>2 小幅度超水平<]]>
+    </summary>
+    
+      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+  </entry>
+  
 </feed>

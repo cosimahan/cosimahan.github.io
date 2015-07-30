@@ -100,7 +100,1208 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cosimahan.github.io/hello-world" data-id="cicplvub30000ik6bxcma5rwy" class="article-share-link">Share</a>
+      <a data-url="http://cosimahan.github.io/hello-world" data-id="cicpyu3lr0007s06bi2ebduhu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8" class="article-date">
+  <time datetime="2015-07-06T03:50:24.000Z" itemprop="datePublished">2015-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8">拿单片机做了个表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>共使用6个按键、12位共阳数码管、4LED灯加一有源头蜂鸣器，按键占用一组I/O口，数码管、LED灯与蜂鸣器公用三组IO口。</p>
+<p>代码如下</p>
+<p>main.c</p>
+<p><pre class="lang:c decode:true" title="main.c">#include&lt;reg52.h&gt;</pre></p>
+<p>#include&lt;ch1.h&gt;</p>
+<p>#define uint unsigned int</p>
+<p>#define uchar unsigned char</p>
+<p>#define Pa P0//1-8</p>
+<p>#define Pb P3//tx,rx,6keys</p>
+<p>#define Pc P2//a-h</p>
+<p>#define Pd P1//9-12,led,beep..</p>
+<p>sbit bk0=Pb^0;sbit bk1=Pb^1;sbit bk2=Pb^2;sbit bk3=Pb^3;sbit bk4=Pb^4;sbit bk5=Pb^5;sbit bk6=Pb^6;sbit bk7=Pb^7;//bk:Pb’s Keys<br>sbit led=Pd^4;sbit beep=Pd^5;<br>uint i,t,p,num0=0,sec=0,minu=0,hour=0,day=1,mon=1,year=2015,num[12]={0},k=0,kl=0,s=0,ii=0,in[7]={0};<br>xdata uint ahour=18,aminu=0,ring=0,alarm=0,ka=0;<br>code uint map[]={0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x98,0xBF,0xFF,0xA3,0xAB,0x8E},dm[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};//map:0123456789-(null)onf</p>
+<p>uint md(){<br>    /<em><br>                                if(mon==1||mon==3||mon==5||mon==7||mon==8||mon==10||mon==12)return(31);<br>                                else if(mon==4||mon==6||mon==9||mon==11)return(30);<br>                                         else if(mon==2&amp;&amp;year%4==0&amp;&amp;(year%100!=0||year%400==0))return(29);<br>                                                    else return(28);
+    </em>/</p>
+<pre><code><span class="keyword">if</span>(mon==<span class="number">2</span>&amp;amp;&amp;amp;year%<span class="number">4</span>==<span class="number">0</span>&amp;amp;&amp;amp;(year%<span class="number">100</span>!=<span class="number">0</span>||year%<span class="number">400</span>==<span class="number">0</span>)){<span class="keyword">return</span>(<span class="number">29</span>);}
+<span class="keyword">else</span> <span class="keyword">return</span>(dm[mon]);
+</code></pre><p>}<br>void st(uint x){</p>
+<pre><code>/<span class="regexp">//</span><span class="regexp">//</span><span class="regexp">//</span><span class="regexp">//</span>
+            <span class="constant">SBUF=</span>x;
+            <span class="keyword">while</span>(!<span class="constant">TI)</span>  ;  
+    <span class="constant">TI=</span><span class="number">0</span>;  
+    delay(<span class="number">10</span>); 
+</code></pre><p>}</p>
+<p>void main(){<br>     TH0=(65536-10000)/256;<br>     TL0=(65536-10000)%256;<br>     EA=1;<br>     ET0=1;<br>     TR0=1;</p>
+<pre><code> TMOD=<span class="number">0x21</span>;
+
+    SCON = <span class="number">0x50</span>;   
+TH1 = <span class="number">0xFD</span>;  
+TL1 = <span class="number">0xFD</span>;  
+TR1 = <span class="number">1</span>;                          
+ES  = <span class="number">1</span>;
+
+i=<span class="number">9</span>;
+Pa=Pd=Pc=<span class="number">0x00</span>;
+delay(<span class="number">500</span>);<span class="keyword">while</span>(bk5==<span class="number">0</span>);ka=<span class="number">0</span>;
+Pa=Pd=Pc=<span class="number">0xFF</span>;
+
+<span class="keyword">while</span>(i++){
+    delay(<span class="number">20</span>);
+    <span class="comment">//Pb=0x00;//Pb=Pb*0x10;</span>
+    <span class="keyword">if</span>(i&amp;gt;<span class="number">0x7FF</span>)i=<span class="number">9</span>;
+    t=i%<span class="number">12</span>;p=<span class="number">0x01</span>;
+    <span class="keyword">while</span>(t--){
+        p*=<span class="number">2</span>;
+    }
+    Pc=<span class="number">0xFF</span>;<span class="comment">//0</span>
+    <span class="keyword">if</span>(p&amp;lt;<span class="number">0xFF</span>){
+        Pa=<span class="number">0xFF</span>-p;
+        Pd=<span class="number">0xFF</span>;
+        <span class="keyword">if</span>(ring&amp;amp;&amp;amp;num0/<span class="number">2</span>%<span class="number">2</span>&amp;amp;&amp;amp;num0&amp;gt;<span class="number">3</span>)beep=<span class="number">0</span>;
+        <span class="keyword">if</span>(k==<span class="number">0</span>){
+            <span class="keyword">if</span>(ka==<span class="number">1</span>)led=<span class="number">0</span>;
+            <span class="keyword">else</span> <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>){
+
+                    led=<span class="number">0</span>;
+
+            }
+        }
+
+    }
+    <span class="keyword">else</span> {
+        Pa=<span class="number">0xFF</span>;Pd=<span class="number">0xFF</span>-p/<span class="number">0x100</span>;
+        <span class="keyword">if</span>(ring&amp;amp;&amp;amp;num0/<span class="number">2</span>%<span class="number">2</span>&amp;amp;&amp;amp;num0&amp;gt;<span class="number">3</span>)beep=<span class="number">0</span>;
+        <span class="keyword">if</span>(k==<span class="number">0</span>){
+            <span class="keyword">if</span>(ka==<span class="number">1</span>)led=<span class="number">0</span>;
+            <span class="keyword">else</span> <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>){
+
+                    led=<span class="number">0</span>;
+
+            }
+        }
+    <span class="comment">//    if(num0/5%2&amp;amp;&amp;amp;k==0){</span>
+
+    <span class="comment">//            Pd-=0x10;</span>
+
+    <span class="comment">//    }</span>
+    }
+
+            Pc=<span class="built_in">map</span>[num[(i)%<span class="number">12</span>]];
+    <span class="comment">/*//
+        switch(num[(i)%12]){
+            case 0:Pc=0xC0;break;
+            case 1:Pc=0xF9;break;
+            case 2:Pc=0xA4;break;
+            case 3:Pc=0xB0;break;
+            case 4:Pc=0x99;break;
+            case 5:Pc=0x92;break;
+            case 6:Pc=0x82;break;
+            case 7:Pc=0xF8;break;
+            case 8:Pc=0x80;break;
+            case 9:Pc=0x98;break;
+            case 10:Pc=0xBF;break;
+            case 11:Pc=0xFF;break;
+
+        }
+        */</span><span class="comment">//</span>
+        <span class="keyword">if</span>(in[<span class="number">6</span>]==<span class="number">1</span>){
+            in[<span class="number">6</span>]=<span class="number">0</span>;
+            year=in[<span class="number">0</span>];
+            mon=in[<span class="number">1</span>];
+            day=in[<span class="number">2</span>];
+            hour=in[<span class="number">3</span>];
+            minu=in[<span class="number">4</span>];
+            sec=in[<span class="number">5</span>];
+
+        }
+        <span class="keyword">if</span>(in[<span class="number">6</span>]==<span class="number">2</span>){
+          in[<span class="number">6</span>]=<span class="number">0</span>;
+            st(year);
+            st(mon);
+            st(day);
+            st(hour);
+            st(minu);
+            st(sec);
+            st(<span class="number">1</span>);
+        }
+        <span class="comment">//</span>
+        <span class="keyword">if</span>(k){
+                num[<span class="number">0</span>]=year/<span class="number">1000</span>;<span class="comment">//k;//</span>
+                num[<span class="number">1</span>]=year/<span class="number">100</span>%<span class="number">10</span>;<span class="comment">//s;//</span>
+                num[<span class="number">2</span>]=year/<span class="number">10</span>%<span class="number">10</span>;<span class="comment">//kl;//</span>
+                num[<span class="number">3</span>]=year%<span class="number">10</span>;
+                num[<span class="number">4</span>]=<span class="number">10</span>;
+                num[<span class="number">5</span>]=mon/<span class="number">10</span>;
+                num[<span class="number">6</span>]=mon%<span class="number">10</span>;
+                num[<span class="number">7</span>]=<span class="number">10</span>;
+                num[<span class="number">8</span>]=day/<span class="number">10</span>;
+                num[<span class="number">9</span>]=day%<span class="number">10</span>;
+                num[<span class="number">10</span>]=<span class="number">11</span>;
+                num[<span class="number">11</span>]=<span class="number">11</span>;
+
+            <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+
+                <span class="comment">//if(){</span>
+
+                    <span class="keyword">if</span>(s==<span class="number">1</span>)num[<span class="number">0</span>]=num[<span class="number">1</span>]=num[<span class="number">2</span>]=num[<span class="number">3</span>]=<span class="number">11</span>;
+                    <span class="keyword">if</span>(s==<span class="number">2</span>)num[<span class="number">5</span>]=num[<span class="number">6</span>]=<span class="number">11</span>;
+                    <span class="keyword">if</span>(s==<span class="number">3</span>)num[<span class="number">8</span>]=num[<span class="number">9</span>]=<span class="number">11</span>;
+            <span class="comment">//    }</span>
+
+            }
+
+        }
+
+        <span class="keyword">else</span>{
+            <span class="keyword">if</span>(ka==<span class="number">0</span>){
+                num[<span class="number">0</span>]=<span class="number">11</span>;<span class="comment">//beep;//Pb/100;//k;//</span>
+                num[<span class="number">1</span>]=hour/<span class="number">10</span>;<span class="comment">//Pb/10%10;//s;//</span>
+                num[<span class="number">2</span>]=hour%<span class="number">10</span>;<span class="comment">//Pb%10;//kl;//</span>
+                num[<span class="number">3</span>]=<span class="number">11</span>;<span class="comment">//led;//</span>
+                num[<span class="number">4</span>]=<span class="number">11</span>;
+                num[<span class="number">5</span>]=minu/<span class="number">10</span>;<span class="comment">//Pd/100;//</span>
+                num[<span class="number">6</span>]=minu%<span class="number">10</span>;<span class="comment">//Pd/10%10;//</span>
+                num[<span class="number">7</span>]=<span class="number">11</span>;<span class="comment">//Pd%10;//</span>
+                num[<span class="number">8</span>]=<span class="number">11</span>;
+                num[<span class="number">9</span>]=sec/<span class="number">10</span>;
+                num[<span class="number">10</span>]=sec%<span class="number">10</span>;
+                num[<span class="number">11</span>]=<span class="number">11</span>;
+
+                <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+
+                <span class="comment">//    if(){</span>
+                        <span class="keyword">if</span>(s==<span class="number">1</span>)num[<span class="number">1</span>]=num[<span class="number">2</span>]=<span class="number">11</span>;
+                        <span class="keyword">if</span>(s==<span class="number">2</span>)num[<span class="number">5</span>]=num[<span class="number">6</span>]=<span class="number">11</span>;
+                        <span class="keyword">if</span>(s==<span class="number">3</span>)num[<span class="number">9</span>]=num[<span class="number">10</span>]=<span class="number">11</span>;
+                <span class="comment">//    }</span>
+
+                    }
+            }
+            <span class="keyword">else</span>{
+                num[<span class="number">0</span>]=<span class="number">11</span>;<span class="comment">//k;//Pb/100;//</span>
+                num[<span class="number">1</span>]=ahour/<span class="number">10</span>;<span class="comment">//s;//Pb/10%10;//</span>
+                num[<span class="number">2</span>]=ahour%<span class="number">10</span>;<span class="comment">//kl;//Pb%10;//</span>
+                num[<span class="number">3</span>]=<span class="number">11</span>;
+                num[<span class="number">4</span>]=<span class="number">11</span>;
+                num[<span class="number">5</span>]=aminu/<span class="number">10</span>;
+                num[<span class="number">6</span>]=aminu%<span class="number">10</span>;
+                num[<span class="number">7</span>]=<span class="number">11</span>;
+                num[<span class="number">8</span>]=<span class="number">11</span>;
+                <span class="keyword">if</span>(alarm){
+                    num[<span class="number">9</span>]=<span class="number">12</span>;
+                    num[<span class="number">10</span>]=<span class="number">13</span>;
+                    num[<span class="number">11</span>]=<span class="number">11</span>;
+                }
+                <span class="keyword">else</span>{
+                    num[<span class="number">9</span>]=<span class="number">12</span>;
+                    num[<span class="number">10</span>]=<span class="number">14</span>;
+                    num[<span class="number">11</span>]=<span class="number">14</span>;
+                }
+
+                <span class="keyword">if</span>(num0/<span class="number">5</span>%<span class="number">2</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+                    <span class="keyword">if</span>(s==<span class="number">1</span>)num[<span class="number">1</span>]=num[<span class="number">2</span>]=<span class="number">11</span>;
+                    <span class="keyword">if</span>(s==<span class="number">2</span>)num[<span class="number">5</span>]=num[<span class="number">6</span>]=<span class="number">11</span>;
+
+                }
+            }
+
+        }
+
+        <span class="comment">//alarm----</span>
+        <span class="keyword">if</span>(alarm==<span class="number">1</span>){
+            <span class="keyword">if</span>(hour==ahour&amp;amp;&amp;amp;minu==aminu&amp;amp;&amp;amp;sec==<span class="number">0</span>)ring=<span class="number">1</span>;
+            <span class="keyword">if</span>(minu-aminu&amp;gt;=<span class="number">10</span>&amp;amp;&amp;amp;minu-aminu&amp;lt;=<span class="number">65505</span>) ring=<span class="number">0</span>;
+        }
+        <span class="keyword">else</span> ring=<span class="number">0</span>;
+
+}
+</code></pre><p>}<br>void time0() interrupt 1{    //1s<br>  TH0=(65536-50000)/256;<br>   TL0=(65536-50000)%256;<br>   num0++;<br>   if(num0==20){<br>     num0=0;<br>       sec++;</p>
+<pre><code>        <span class="keyword">if</span>(sec==<span class="number">60</span>){
+            sec=<span class="number">0</span>;minu++;
+            <span class="keyword">if</span>(minu==<span class="number">60</span>){
+                minu=<span class="number">0</span>;hour++;
+                <span class="keyword">if</span>(hour==<span class="number">24</span>){
+                    hour=<span class="number">0</span>;day++;
+                    <span class="keyword">if</span>(day&amp;gt;md()){
+                        day=<span class="number">1</span>;mon++;
+                        <span class="keyword">if</span>(mon==<span class="number">13</span>){
+                            mon=<span class="number">1</span>;year++;
+                            <span class="keyword">if</span>(year&amp;gt;=<span class="number">10000</span>){
+                                year=<span class="number">0</span>;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    <span class="comment">//key----</span>
+
+    <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x08</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>-<span class="number">0x08</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x08</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x04</span>-<span class="number">0x08</span>){
+            kl=<span class="number">0</span>;
+            <span class="keyword">if</span>(s==<span class="number">0</span>){
+                <span class="keyword">if</span>(bk2==<span class="number">0</span>){
+                    k=<span class="number">1</span>;
+                }
+                <span class="keyword">else</span> k=<span class="number">0</span>;
+            }
+            <span class="keyword">if</span>(bk3==<span class="number">0</span>){
+                alarm=<span class="number">1</span>;
+            }
+            <span class="keyword">else</span> alarm=<span class="number">0</span>;
+        }
+    }
+<span class="comment">/*    if(Pb==0xFF-0x04&amp;amp;&amp;amp;kl==0&amp;amp;&amp;amp;s==0){
+        delay(1);
+        if(Pb==0xFF-0x04){
+            kl=1;
+            k=k==0?1:0;
+        }
+    }*/</span>
+
+    <span class="comment">//</span>
+
+    <span class="keyword">if</span>(bk7==<span class="number">0</span>&amp;amp;&amp;amp;kl==<span class="number">0</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(bk7==<span class="number">0</span>){
+            kl=<span class="number">1</span>;
+          s=((s==<span class="number">0</span>)?<span class="number">1</span>:((s==<span class="number">1</span>)?<span class="number">2</span>:((s==<span class="number">2</span>)&amp;amp;&amp;amp;(k==<span class="number">1</span>)?<span class="number">3</span>:<span class="number">0</span>)));
+            <span class="comment">/*
+            if(s==0)s=1;
+            else if(s==1)s=2;
+            else if(s==2&amp;amp;&amp;amp;k==1)s=3;
+            else s=0;
+            */</span>
+        }
+    }
+    <span class="keyword">if</span>(bk5==<span class="number">0</span>&amp;amp;&amp;amp;kl==<span class="number">0</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(bk5==<span class="number">0</span>){
+            kl=<span class="number">1</span>;
+            <span class="keyword">if</span>(s==<span class="number">0</span>)ka=((ka==<span class="number">0</span>)?<span class="number">1</span>:<span class="number">0</span>);
+            <span class="comment">/*
+            if(s==0)s=1;
+            else if(s==1)s=2;
+            else if(s==2&amp;amp;&amp;amp;k==1)s=3;
+            else s=0;
+            */</span>
+        }
+    }
+    <span class="comment">//</span>
+    <span class="keyword">if</span>((bk4==<span class="number">0</span>||bk6==<span class="number">0</span>)&amp;amp;&amp;amp;kl==<span class="number">0</span>&amp;amp;&amp;amp;s!=<span class="number">0</span>){
+        delay(<span class="number">1</span>);
+        <span class="keyword">if</span>(bk4==<span class="number">0</span>||bk6==<span class="number">0</span>){
+            kl=<span class="number">1</span>;
+            <span class="keyword">if</span>(k){
+                <span class="keyword">if</span>(s==<span class="number">1</span>){
+
+                    <span class="keyword">if</span>(bk4==<span class="number">0</span>&amp;amp;&amp;amp;year&amp;lt;<span class="number">9999</span>)year++;
+                    <span class="keyword">if</span>(bk6==<span class="number">0</span>&amp;amp;&amp;amp;year&amp;gt;<span class="number">0</span>) year--;
+
+                }
+                <span class="keyword">if</span>(s==<span class="number">2</span>){
+                    <span class="keyword">if</span>(bk4==<span class="number">0</span>)mon++;
+                    <span class="keyword">else</span> mon--;
+                    <span class="keyword">if</span>(mon&amp;lt;<span class="number">1</span>)mon=<span class="number">12</span>;
+                    <span class="keyword">if</span>(mon&amp;gt;<span class="number">12</span>)mon=<span class="number">1</span>;
+                }
+                <span class="keyword">if</span>(s==<span class="number">3</span>){
+                    <span class="keyword">if</span>(bk4==<span class="number">0</span>){day++;}
+</code></pre><p>//                            if(((day&lt;31)&amp;&amp;(mon==1||mon==3||mon==5||mon==7||mon==8||mon==10||mon==12))||((day&lt;30)&amp;&amp;(mon==4||mon==6||mon==9||mon==11))||(((day&lt;29)&amp;&amp;(mon==2&amp;&amp;year%4==0&amp;&amp;(year%100!=0||year%400==0))))||((day&lt;28)&amp;&amp;(mon==2)));<br>//                            else day=0;<br>                            if(day&gt;md())day=1;<br>                            if(bk6==0)day–;<br>                            if(day&lt;1){day=md();<br>//                                if(mon==1||mon==3||mon==5||mon==7||mon==8||mon==10||mon==12)day=31;<br>//                                else if(mon==4||mon==6||mon==9||mon==11)day=30;<br>//                                   else if(mon==2&amp;&amp;year%4==0&amp;&amp;(year%100!=0||year%400==0))day=29;<br>//                                                    else day=28;////</p>
+<pre><code>                       }
+
+                       <span class="comment">/*if(day&amp;lt;1){
+                           if(mon==2){
+                               if(year%4!=0){
+                                   day=28;
+
+                               }
+                               if(year%100==0&amp;amp;&amp;amp;year%400!=0){
+                                   day=28;
+                               }
+                               else day=29;
+                           }
+                           if(mon==2||mon==4||mon==6||mon==9||mon==11)day=30;
+                           else day=31;
+                       }
+                   }
+                       if(day&amp;gt;=29){
+                           if(day==29&amp;amp;&amp;amp;mon==2&amp;amp;&amp;amp;(year%4!=0||(year%100==0&amp;amp;&amp;amp;year%400!=0))){
+                               day=0;
+                           }
+                           if(day==30&amp;amp;&amp;amp;mon==2){
+                               day=0;
+                           }
+                           if((day==31&amp;amp;&amp;amp;(mon==2||mon==4||mon==6||mon==9||mon==11))||day==32){
+                               day=0;
+                           }
+                   }*/</span>
+               }    
+           }
+               <span class="keyword">else</span>{
+                   <span class="keyword">if</span>(ka==<span class="number">0</span>){
+                           <span class="keyword">if</span>(s==<span class="number">1</span>){
+
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(hour&amp;lt;<span class="number">23</span>)hour++;<span class="keyword">else</span> hour=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(hour&amp;gt;<span class="number">0</span>)hour--;<span class="keyword">else</span> hour=<span class="number">23</span>;
+
+                           }
+                           <span class="keyword">if</span>(s==<span class="number">2</span>){
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(minu&amp;lt;<span class="number">59</span>)minu++;<span class="keyword">else</span> minu=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(minu&amp;gt;<span class="number">0</span>) minu--;<span class="keyword">else</span> minu=<span class="number">59</span>;
+
+                           sec=<span class="number">0</span>;
+                       }
+                   }
+                   <span class="keyword">else</span>{
+                       <span class="keyword">if</span>(s==<span class="number">1</span>){
+
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(ahour&amp;lt;<span class="number">23</span>)ahour++;<span class="keyword">else</span> ahour=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(ahour&amp;gt;<span class="number">0</span>)ahour--;<span class="keyword">else</span> ahour=<span class="number">23</span>;
+
+                           }
+                           <span class="keyword">if</span>(s==<span class="number">2</span>){
+                               <span class="keyword">if</span>(bk4==<span class="number">0</span>)<span class="keyword">if</span>(aminu&amp;lt;<span class="number">59</span>)aminu++;<span class="keyword">else</span> aminu=<span class="number">0</span>;
+                               <span class="keyword">if</span>(bk6==<span class="number">0</span>)<span class="keyword">if</span>(aminu&amp;gt;<span class="number">0</span>) aminu--;<span class="keyword">else</span> aminu=<span class="number">59</span>;
+
+                   }
+
+               }
+
+       }    
+   }    
+    <span class="keyword">if</span>((Pb==<span class="number">0xFF</span>-<span class="number">0x10</span>||Pb==<span class="number">0xFF</span>-<span class="number">0x40</span>)&amp;amp;&amp;amp;kl==<span class="number">0</span>&amp;amp;&amp;amp;s==<span class="number">0</span>){
+           delay(<span class="number">1</span>);
+           <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>-<span class="number">0x10</span>){
+               kl=<span class="number">1</span>;
+               in[<span class="number">6</span>]=<span class="number">2</span>;
+           }
+           <span class="keyword">if</span>(Pb==<span class="number">0xFF</span>-<span class="number">0x40</span>){
+               kl=<span class="number">1</span>;ii=<span class="number">7</span>;
+               <span class="keyword">while</span>(ii--)st(<span class="number">2</span>);
+           }
+
+    }
+
+}
+</code></pre><p>}</p>
+<p>void ser() interrupt 4<br>{<br>      if(RI == 1) {<br>      RI = 0;     </p>
+<pre><code>  in[ii] = SBUF<span class="comment">;</span>
+
+}
+
+    ii++<span class="comment">;</span>
+    ii=ii==7?0:ii<span class="comment">;</span>
+</code></pre><p>}<br><br>ch1.h</p>
+<p><pre class="lang:c decode:true " title="ch1.h">#define uint unsigned int</pre></p>
+<p>#define uchar unsigned char</p>
+<p>void delay(uint z)<br>{<br>    uint zz;<br>    while(z–){zz=z;while(zz–);}</p>
+<p>}<br>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8" data-id="cicpyu3ng000ms06bnvjz88fb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e" class="article-date">
+  <time datetime="2015-04-26T08:55:25.000Z" itemprop="datePublished">2015-04-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e">ACM省赛打了块铁，心塞塞</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://i.imgur.com/wx5cbLU.png" alt="T_T"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e" data-id="cicpyu3p30012s06b0ap1sp56" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo" class="article-date">
+  <time datetime="2015-04-17T04:16:00.000Z" itemprop="datePublished">2015-04-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo">把域名从 Godaddy 转到了 NameSilo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>域名还不到一个月过期，发现续费好贵，也没有好用的优惠码，再加上朋友的域名被盗事件，便不想继续放在 Godaddy 那儿了。近日发现 NameSilo 价格尚可，送隐私保护，那就选它了，开工。</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/7BY2WDOF4@2BQQEW44ATJBW.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/7BY2WDOF4@2BQQEW44ATJBW-290x300.png" alt="NameSilo1"></a></p>
+<p>给 Godaddy 要转移码</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/JRL4T4Y20WM51U8F0DXVE.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo1-300x186.png" alt="namesilo1">   <img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/JRL4T4Y20WM51U8F0DXVE-300x157.png" alt="JR)L4T4Y20WM51U8F0)DXVE"></a></p>
+<p>&nbsp;</p>
+<p>收到邮件</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/AN_EQMO%4D7WVESHU@7ED.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo2-300x226.png" alt="namesilo2"></a></p>
+<p>该付款了，有优惠码可省1刀</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/G0AU06SBTF9RWFO5A1O2.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/G0AU06SBTF9RWFO5A1O2-300x272.png" alt="G0AU06SBT)F9}RW~FO5A1O2"></a></p>
+<p>&nbsp;</p>
+<p>价格还可以</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo5.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo5.png" alt="namesilo5"></a></p>
+<!--StartFragment -->
+<div>钱支付了，namesilo 这边还是订单待完成，Q<em>Q，先去写会代码等等吧</em></div><br><div></div><br>&nbsp;<br><div></div><br><div>写~</div><br><div></div><br>&nbsp;<br><div></div><br><div>代~</div><br><div></div><br>&nbsp;<br><div></div><br><div>码~</div><br><div></div><br><div></div><br>&nbsp;<br><div></div><br><div></div><br><div>收到客服回信</div><br><div></div><br><div>[![OD44OC0DGMFXMIK3@5<em>I[M](<a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3" target="_blank" rel="external">http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3</a></em>@5<em>IM-300x153.png)](<a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3" target="_blank" rel="external">http://blog.cosimahan.com/wp-content/uploads/2015/04/OD44OC0DGMFXMIK3</a></em>@5_IM.png)</div><br><div></div><br>&nbsp;<br><div>继续继续</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/PT9O93L_5AW938LOE7QH.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/PT9O93L_5AW938LOE7QH-300x214.png" alt="PT&#96;9O93L(_5AW938L$OE7QH"></a></div><br><div></div><br>&nbsp;<br><div></div><br><div>在 Godaddy 域名状态已经变成了这样</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/86LK60N0_PZ259T88.png" target="_blank" rel="external">![86LK6<a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/86LK60N0_PZ259T88-300x62.png" target="_blank" rel="external">0N0&#96;_(P{&#96;Z(259T88</a></a></div><br>&nbsp;<br><div>手动确认</div><br>&nbsp;<br><div></div><br><div><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo3-300x155.png" alt="namesilo3">  <img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/namesilo4-300x191.jpg" alt="namesilo4"></div><br><div></div><br>&nbsp;<br><div>这样就不用等待了</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/3X_R91XA7R1PE7JAMK5IW.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/3X_R91XA7R1PE7JAMK5IW-300x152.png" alt="~3}X_R91XA7R1PE7JAMK5IW"></a></div><br><div></div><br><div></div><br>&nbsp;<br><div>在  NameSilo 的状态</div><br>&nbsp;<br><div></div><br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/05@LQDY8BGFUNQBI7VHM.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/05@LQDY8BGFUNQBI7VHM-300x32.png" alt="])05@LQDY8BGFUNQBI7VH(M"></a></div><br><div></div><br>&nbsp;<br><div>OK</div><br><div></div><br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/@THA2NY7XGOOXUZDX2@8.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/@THA2NY7XGOOXUZDX2@8-300x154.png" alt="@THA2NY7XGOOXUZ&#96;DX~2}@8"></a></div><br><div></div><br>&nbsp;<br><div></div><br><div>WHOIS 信息已经变了</div><br><div></div><br>&nbsp;<br><div><a href="http://blog.cosimahan.com/wp-content/uploads/2015/04/20150417121552.png" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2015/04/20150417121552-300x200.png" alt="20150417121552"></a></div><br><div></div><br>&nbsp;<br><div></div><br><div>大功告成</div><br>&nbsp;<br><div></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo" data-id="cicpyu3no000os06bf2j3erb5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88" class="article-date">
+  <time datetime="2015-04-14T04:50:31.000Z" itemprop="datePublished">2015-04-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88">总觉得该做点什么</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>大学一年级已经过去了一多半，回想这半年，我都干了些啥子嘛。接触的东西不少，但基本都是皮毛，也做了点东西，都是雕虫小技罢了，没有啥能拿的出手或能说的出口的。</p>
+<p>在学业上投入的精力不多，自然换来了低低的GPA，英语更是得到45分的期末卷面成绩，好在平时成绩占比较大，又加上我的英语老师是那么和蔼善良，最终没有挂科。</p>
+<p>唯一值得庆幸的是转到了喜欢的大类专业，美中不足是男女比例5:1，半年后八成要去cs吧，离程序猿的目标又近了一步，虽然有老师建议我去se，不过感觉我的兴趣范围挺广，不愿只做一只程序猿，希望现阶段能广泛涉猎些。</p>
+<p>不能碌碌无为下去了，这学期要啃完数据结构和操作系统原理，暑假看看Java，嗯，就这样好了。</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88" data-id="cicpyu3ns000qs06bw7xpllpv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8" class="article-date">
+  <time datetime="2015-02-26T07:35:12.000Z" itemprop="datePublished">2015-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8">用C写了个一个支持长数字输入输出计算器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
+<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。</p>
+<p><pre class="lang:c++ decode:true " title="code">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main(){<br>    int a[10001],b[10001],o,oo,i,j;<br>    char c[20002],d;<br>    cout&lt;&lt;”Input equation like ‘1+1’, only support + and - .”&lt;&lt;endl;<br>    gets(c);<br>    for(i=0;c[i+1]&lt;’9’&amp;&amp;c[i+1]&gt;’0’&amp;&amp;i&lt;20001;i++){<br>        a[i]=c[i]-‘0’;<br>    }<br>    if(i==20001||i==0){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    i++;a[i]=’/0’;o=i;<br>    cin&gt;&gt;d;<br>    for(i=o,j=0;c[i+1]!=’0’&amp;&amp;i&lt;20002;i++,j++){<br>        b[j]=c[i]-‘0’;<br>    }<br>    if(i==20002){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    oo=j+1;<br>    if(d!=’+’||d!=’-‘){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    if(d==’+’){<br>        if(o&gt;=oo){<br>            for(i=o-1,j=oo-1;j&gt;=0;i–,j–){<br>                a[i]+=b[j];<br>                if(a[i]&gt;9&amp;&amp;i!=0){a[i]-=10;a[i-1]++;}<br>            }<br>            for(i=0;i&lt;o;i++){cout&lt;&lt;a[i];}<br>        }<br>        else{<br>             for(i=o-1,j=oo-1;i&gt;=0;i–,j–){<br>                b[j]+=a[i];<br>                if(b[j]&gt;9&amp;&amp;j!=0){b[j]-=10;b[j-1]++;}<br>            }<br>            for(i=0;i&lt;oo;i++){cout&lt;&lt;b[i];}<br>        }</p>
+<pre><code>}
+<span class="keyword">else</span>{
+    <span class="keyword">if</span>(o&amp;gt;=oo){
+        <span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span>;j&amp;gt;=<span class="number">0</span>;i--,j--){
+            a[i]-=b[j];
+            <span class="keyword">if</span>(a[i]&amp;lt;<span class="number">0</span>&amp;amp;&amp;amp;i!=<span class="number">0</span>){a[i]+=<span class="number">10</span>;a[i-<span class="number">1</span>]--;}
+        }
+        <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;o;i++){<span class="built_in">cout</span>&amp;lt;&amp;lt;a[i];}
+    }
+    <span class="keyword">else</span>{
+        <span class="built_in">cout</span>&amp;lt;&amp;lt;<span class="string">"INPUT ERROR "</span>; <span class="keyword">return</span> <span class="number">0</span>;
+    }
+
+} 
+</code></pre><p>}<br><br>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8" data-id="cicpyu3mh000es06b9d11qvyd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-bc-80-e5-a7-8b-e6-90-9eacm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/e5-bc-80-e5-a7-8b-e6-90-9eacm" class="article-date">
+  <time datetime="2014-12-11T13:43:56.000Z" itemprop="datePublished">2014-12-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/e5-bc-80-e5-a7-8b-e6-90-9eacm">开始搞ACM</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
+<p>随手拿最近的一些水题放上来吧，当做纪念，可能几年后我成为了大神，人们来嘲笑我说，这么烂的代码竟然是他曾经写的。</p>
+<hr>
+<h4 id="Codeforces_Round_#237_(Div-_2)_-_Valera_and_Fruits">Codeforces Round #237 (Div. 2)  - Valera and Fruits</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Valera loves his garden, where <span class="tex-span"><em>n</em></span> fruit trees grow.</p>
+<p>This year he will enjoy a great harvest! On the <span class="tex-span"><em>i</em></span>-th tree <span class="tex-span"><em>b</em><sub class="lower-index"><em>i</em></sub></span> fruit grow, they will ripen on a day number <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span>. Unfortunately, the fruit on the tree get withered, so they can only be collected on day <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span> and day <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub> + 1</span> (all fruits that are not collected in these two days, become unfit to eat).</p>
+<p>Valera is not very fast, but there are some positive points. Valera is ready to work every day. In one day, Valera can collect no more than<span class="tex-span"><em>v</em></span> fruits. The fruits may be either from the same tree, or from different ones. What is the maximum amount of fruit Valera can collect for all time, if he operates optimally well?</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains two space-separated integers <span class="tex-span"><em>n</em></span> and <span class="tex-span"><em>v</em></span><span class="tex-span">(1 ≤ <em>n</em>, <em>v</em> ≤ 3000)</span> — the number of fruit trees in the garden and the number of fruits that Valera can collect in a day.</p>
+<p>Next <span class="tex-span"><em>n</em></span> lines contain the description of trees in the garden. The <span class="tex-span"><em>i</em></span>-th line contains two space-separated integers <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span> and <span class="tex-span"><em>b</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(1 ≤ <em>a</em><sub class="lower-index"><em>i</em></sub>, <em>b</em><sub class="lower-index"><em>i</em></sub> ≤ 3000)</span> — the day the fruits ripen on the <span class="tex-span"><em>i</em></span>-th tree and the number of fruits on the <span class="tex-span"><em>i</em></span>-th tree.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print a single integer — the maximum number of fruit that Valera can collect.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 3<br>1 5<br>2 3</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>8</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>5 10<br>3 20<br>2 20<br>1 20<br>4 20<br>5 20</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>60</pre><br><br><br></p>
+<div id="vj_hint" class="hiddable">
+
+<p>Hint</p>
+<div class="textBG">
+
+<p>In the first sample, in order to obtain the optimal answer, you should act as follows.</p>
+<ul>
+<li>On the first day collect <span class="tex-span">3</span> fruits from the <span class="tex-span">1</span>-st tree.</li>
+<li>On the second day collect <span class="tex-span">1</span> fruit from the <span class="tex-span">2</span>-nd tree and <span class="tex-span">2</span> fruits from the <span class="tex-span">1</span>-st tree.</li>
+<li>On the third day collect the remaining fruits from the <span class="tex-span">2</span>-nd tree.<br>In the second sample, you can only collect <span class="tex-span">60</span> fruits, the remaining fruit will simply wither.</li>
+</ul>
+<p></p></div><br></div><p></p>
+<p><pre class="lang:c decode:true">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include &lt;algorithm&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n,v,vv,a[3008],b[3008] ,i,ii,t,o,y,iy;<br>    while (scanf(“%d%d”, &amp;n, &amp;v) != EOF)<br>    {<br>        o = 0; vv = v; y = 0;<br>        for (i = 0; i &lt; n; i++)<br>        {<br>            cin &gt;&gt; a[i]&gt;&gt;b[i];<br>        }<br>        for (i = 0; i &lt; n; i++)<br>            for (ii = i + 1; ii &lt; n; ii++)<br>            {<br>                if (a[i]&gt;a[ii])<br>                {<br>                    t = a[i]; a[i] = a[ii]; a[ii] = t;<br>                    t = b[i]; b[i] = b[ii]; b[ii] = t;<br>                }</p>
+<pre><code>        }
+
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        <span class="keyword">if</span> (i != <span class="number">0</span>)
+        {
+            <span class="keyword">if</span> (a[i] != a[i - <span class="number">1</span>]) { v = vv; }
+
+        }
+        <span class="keyword">if</span> (v != <span class="number">0</span> &amp;amp;&amp;amp; i != <span class="number">0</span>)
+        {
+            <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+            {
+                <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
+                {
+                    <span class="keyword">if</span> (v &amp;lt;= b[iy])
+                    {
+                        o += v; b[iy] -= v; v = <span class="number">0</span>;
+                    }
+                    <span class="keyword">else</span> { o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; }
+                }
+            }
+        }
+        <span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &amp;gt; <span class="number">1</span>) v = vv;
+        <span class="keyword">if</span> (v != <span class="number">0</span>)
+        {
+            <span class="keyword">if</span> (v &amp;lt;= b[i])
+            {
+                o += v; b[i] -= v; v = <span class="number">0</span>;
+            }
+            <span class="keyword">else</span> { o += b[i]; v -= b[i]; b[i] = <span class="number">0</span>; }
+        }
+        <span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;amp;&amp;amp;i!=<span class="number">0</span>) y = i;
+
+    }
+
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+
+    v = vv; 
+
+    <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+    {
+        <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
+        {
+            <span class="keyword">if</span> (v &amp;lt;= b[iy])
+            {
+                o += v; b[iy] -= v; v = <span class="number">0</span>;
+            }
+            <span class="keyword">else</span> { o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; }
+        }
+    }
+
+    <span class="built_in">cout</span> &amp;lt;&amp;lt; o &amp;lt;&amp;lt; endl;
+
+}
+<span class="keyword">return</span>(<span class="number">0</span>);
+</code></pre><p>}<br><br>&nbsp;</p>
+<hr>
+<h4 id="Codefoces_436B-Om_Nom_and_Spiders">Codefoces 436B-Om Nom and Spiders</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Om Nom really likes candies and doesn’t like spiders as they frequently steal candies. One day Om Nom fancied a walk in a park. Unfortunately, the park has some spiders and Om Nom doesn’t want to see them at all.</p>
+<p><center><img src="http://espresso.codeforces.com/5be91a371adfaffc95d78b5f3caf8c1149be2c29.png" alt=""></center>The park can be represented as a rectangular <span class="tex-span"><em>n</em> × <em>m</em></span> field. The park has <span class="tex-span"><em>k</em></span> spiders, each spider at time 0 is at some cell of the field. The spiders move all the time, and each spider always moves in one of the four directions (left, right, down, up). In a unit of time, a spider crawls from his cell to the side-adjacent cell in the corresponding direction. If there is no cell in the given direction, then the spider leaves the park. The spiders do not interfere with each other as they move. Specifically, one cell can have multiple spiders at the same time.</p>
+<p>Om Nom isn’t yet sure where to start his walk from but he definitely wants:</p>
+<ul>
+<li>to start walking at time 0 at an upper row cell of the field (it is guaranteed that the cells in this row do not contain any spiders);</li>
+<li>to walk by moving down the field towards the lowest row (the walk ends when Om Nom leaves the boundaries of the park).<br>We know that Om Nom moves by jumping. One jump takes one time unit and transports the little monster from his cell to either a side-adjacent cell on the lower row or outside the park boundaries.</li>
+</ul>
+<p>Each time Om Nom lands in a cell he sees all the spiders that have come to that cell at this moment of time. Om Nom wants to choose the optimal cell to start the walk from. That’s why he wonders: for each possible starting cell, how many spiders will he see during the walk if he starts from this cell? Help him and calculate the required value for each possible starting cell.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains three integers <span class="tex-span"><em>n</em>, <em>m</em>, <em>k</em></span><span class="tex-span">(2 ≤ <em>n</em>, <em>m</em> ≤ 2000; 0 ≤ <em>k</em> ≤ <em>m</em>(<em>n</em> - 1))</span>.</p>
+<p>Each of the next <span class="tex-span"><em>n</em></span> lines contains <span class="tex-span"><em>m</em></span> characters — the description of the park. The characters in the <span class="tex-span"><em>i</em></span>-th line describe the <span class="tex-span"><em>i</em></span>-th row of the park field. If the character in the line equals “<span class="tex-font-style-tt">.</span>“, that means that the corresponding cell of the field is empty; otherwise, the character in the line will equal one of the four characters: “<span class="tex-font-style-tt">L</span>“ (meaning that this cell has a spider at time 0, moving left), “<span class="tex-font-style-tt">R</span>“ (a spider moving right), “<span class="tex-font-style-tt">U</span>“ (a spider moving up), “<span class="tex-font-style-tt">D</span>“ (a spider moving down).</p>
+<p>It is guaranteed that the first row doesn’t contain any spiders. It is guaranteed that the description of the field contains no extra characters. It is guaranteed that at time 0 the field contains exactly <span class="tex-span"><em>k</em></span> spiders.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print <span class="tex-span"><em>m</em></span> integers: the <span class="tex-span"><em>j</em></span>-th integer must show the number of spiders Om Nom will see if he starts his walk from the <span class="tex-span"><em>j</em></span>-th cell of the first row. The cells in any row of the field are numbered from left to right.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3 3 4<br>…<br>R.L<br>R.U</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 2 2</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>RL</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>1 1</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>LR</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 0</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3 4 8<br>….<br>RRLL<br>UUUU</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>1 3 3 1</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>UU</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 0</pre><br><br><br></p>
+<div id="vj_hint" class="hiddable">
+
+<p>Hint</p>
+<div class="textBG">
+
+<p>Consider the first sample. The notes below show how the spider arrangement changes on the field over time:</p>
+<p><pre>…        …        ..U       …<br>R.L   -&gt;   .*U   -&gt;   L.R   -&gt;  …<br>R.U        .R.        ..R       …</pre></p>
+<p><br>Character “<span class="tex-font-style-tt">*</span>“ represents a cell that contains two spiders at the same time.</p>
+<ul>
+<li>If Om Nom starts from the first cell of the first row, he won’t see any spiders.</li>
+<li>If he starts from the second cell, he will see two spiders at time 1.</li>
+<li><p>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></p></li></ul></div><br></div><br><pre class="lang:c decode:true">#include&lt;iostream&gt;<br>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main()<br>{<br>int n, m, k,i,j,fuck;<br>char in[2002][2002];<br>while (scanf(“%d%d%d”, &amp;n,&amp;m,&amp;k) != EOF)<br>{    <p></p>
+<pre><code>fuck = <span class="number">0</span>;
+<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; n; i++)
+    <span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+    {
+        cin &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; in[i][j];
+    }
+
+<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+{
+    <span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;<span class="keyword">lt</span>; n; i++)
+    {
+        <span class="keyword">if</span>(i+i&amp;<span class="keyword">lt</span>;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;
+        <span class="keyword">if</span> (j - i&amp;<span class="keyword">gt</span>;=<span class="number">0</span>&amp;amp;&amp;amp;j-i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;
+        <span class="keyword">if</span> (j + i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;
+    }
+    cout &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; fuck &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; <span class="string">' '</span>; fuck = <span class="number">0</span>;
+}
+cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;
+</code></pre><p>}<br>return(0);<br>}</p></pre><br>&nbsp;<p></p>
+
+
+<hr>
+<h4 id="Codeforces_435B_Pasha_Maximizes">Codeforces 435B Pasha Maximizes</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Pasha has a positive integer <span class="tex-span"><em>a</em></span> without leading zeroes. Today he decided that the number is too small and he should make it larger. Unfortunately, the only operation Pasha can do is to swap two adjacent decimal digits of the integer.</p>
+<p>Help Pasha count the maximum number he can get if he has the time to make at most <span class="tex-span"><em>k</em></span> swaps.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The single line contains two integers <span class="tex-span"><em>a</em></span> and <span class="tex-span"><em>k</em></span><span class="tex-span">(1 ≤ <em>a</em> ≤ 10<sup class="upper-index">18</sup>; 0 ≤ <em>k</em> ≤ 100)</span>.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print the maximum number that Pasha can get if he makes at most <span class="tex-span"><em>k</em></span> swaps.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>1990 1</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>9190</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>300 0</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>300</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>1034 2</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>3104</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre class="">9090000078001234 6</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">9907000008001234<br></pre><br><br><br></p>
+<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
+    <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+
+        xxx[x[i]]++;
+        yyy[y[i]]++;
+    }
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        u = n - xxx[y[i]] - <span class="number">1</span>;
+        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+    }
+
+}
+<span class="keyword">return</span>(<span class="number">0</span>);
+</code></pre><p>}<br>&nbsp;</p>
+<hr>
+<h4 id="codeforce_432B_-_Football_Kit">codeforce 432B - Football Kit</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Consider a football tournament where <span class="tex-span"><em>n</em></span> teams participate. Each team has two football kits: for home games, and for away games. The kit for home games of the <span class="tex-span"><em>i</em></span>-th team has color <span class="tex-span"><em>x</em><sub class="lower-index"><em>i</em></sub></span> and the kit for away games of this team has color <span class="tex-span"><em>y</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(<em>x</em><sub class="lower-index"><em>i</em></sub> ≠ <em>y</em><sub class="lower-index"><em>i</em></sub>)</span>.</p>
+<p>In the tournament, each team plays exactly one home game and exactly one away game with each other team (<span class="tex-span"><em>n</em>(<em>n</em> - 1)</span> games in total). The team, that plays the home game, traditionally plays in its home kit. The team that plays an away game plays in its away kit. However, if two teams has the kits of the same color, they cannot be distinguished. In this case the away team plays in its home kit.</p>
+<p>Calculate how many games in the described tournament each team plays in its home kit and how many games it plays in its away kit.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains a single integer <span class="tex-span"><em>n</em></span><span class="tex-span">(2 ≤ <em>n</em> ≤ 10<sup class="upper-index">5</sup>)</span> — the number of teams. Next <span class="tex-span"><em>n</em></span> lines contain the description of the teams. The <span class="tex-span"><em>i</em></span>-th line contains two space-separated numbers <span class="tex-span"><em>x</em><sub class="lower-index"><em>i</em></sub></span>, <span class="tex-span"><em>y</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(1 ≤ <em>x</em><sub class="lower-index"><em>i</em></sub>, <em>y</em><sub class="lower-index"><em>i</em></sub> ≤ 10<sup class="upper-index">5</sup>; <em>x</em><sub class="lower-index"><em>i</em></sub> ≠ <em>y</em><sub class="lower-index"><em>i</em></sub>)</span> — the color numbers for the home and away kits of the<span class="tex-span"><em>i</em></span>-th team.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>For each team, print on a single line two space-separated integers — the number of games this team is going to play in home and away kits, correspondingly. Print the answers for the teams in the order they appeared in the input.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2<br>1 2<br>2 1</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>2 0<br>2 0</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3<br>1 2<br>2 1<br>1 3</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">3 1<br>4 0<br>2 2</pre><br><br><br></p>
+<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
+    <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+
+        xxx[x[i]]++;
+        yyy[y[i]]++;
+    }
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    {
+        u = n - xxx[y[i]] - <span class="number">1</span>;
+        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+    }
+
+}
+<span class="keyword">return</span>(<span class="number">0</span>);
+</code></pre><p>}<br>&nbsp;</p>
+<hr>
+<h4 id="Codeforces_431B_Shower_Line">Codeforces 431B Shower Line</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Many students live in a dormitory. A dormitory is a whole new world of funny amusements and possibilities but it does have its drawbacks.</p>
+<p>There is only one shower and there are multiple students who wish to have a shower in the morning. That’s why every morning there is a line of five people in front of the dormitory shower door. As soon as the shower opens, the first person from the line enters the shower. After a while the first person leaves the shower and the next person enters the shower. The process continues until everybody in the line has a shower.</p>
+<p>Having a shower takes some time, so the students in the line talk as they wait. At each moment of time the students talk in pairs: the<span class="tex-span">(2<em>i</em> - 1)</span>-th man in the line (for the current moment) talks with the <span class="tex-span">(2<em>i</em>)</span>-th one.</p>
+<p>Let’s look at this process in more detail. Let’s number the people from 1 to 5. Let’s assume that the line initially looks as 23154 (person number 2 stands at the beginning of the line). Then, before the shower opens, 2 talks with 3, 1 talks with 5, 4 doesn’t talk with anyone. Then 2 enters the shower. While 2 has a shower, 3 and 1 talk, 5 and 4 talk too. Then, 3 enters the shower. While 3 has a shower, 1 and 5 talk, 4 doesn’t talk to anyone. Then 1 enters the shower and while he is there, 5 and 4 talk. Then 5 enters the shower, and then 4 enters the shower.</p>
+<p>We know that if students <span class="tex-span"><em>i</em></span> and <span class="tex-span"><em>j</em></span> talk, then the <span class="tex-span"><em>i</em></span>-th student’s happiness increases by <span class="tex-span"><em>g</em><sub class="lower-index"><em>ij</em></sub></span> and the <span class="tex-span"><em>j</em></span>-th student’s happiness increases by <span class="tex-span"><em>g</em><sub class="lower-index"><em>ji</em></sub></span>. Your task is to find such initial order of students in the line that the total happiness of all students will be maximum in the end. Please note that some pair of students may have a talk several times. In the example above students 1 and 5 talk while they wait for the shower to open and while 3 has a shower.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The input consists of five lines, each line contains five space-separated integers: the <span class="tex-span"><em>j</em></span>-th number in the <span class="tex-span"><em>i</em></span>-th line shows <span class="tex-span"><em>g</em><sub class="lower-index"><em>ij</em></sub></span> (<span class="tex-span">0 ≤ <em>g</em><sub class="lower-index"><em>ij</em></sub> ≤ 10<sup class="upper-index">5</sup></span>). It is guaranteed that <span class="tex-span"><em>g</em><sub class="lower-index"><em>ii</em></sub> = 0</span> for all <span class="tex-span"><em>i</em></span>.</p>
+<p>Assume that the students are numbered from 1 to 5.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print a single integer — the maximum possible total happiness of the students.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>0 0 0 0 9<br>0 0 0 0 0<br>0 0 0 0 0<br>0 0 0 0 0<br>7 0 0 0 0</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>32</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>0 43 21 18 2<br>3 0 21 11 65<br>5 2 0 1 4<br>54 62 12 0 99<br>87 64 81 33 0</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">620</pre><br><br><br></p>
+<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#include&lt;string.h&gt;</p>
+<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int o[5][5], i,j, ii, iii, a, b, c, d, e,m=0,max=0;<br>    while (scanf(“%d”, &amp;o[0][0]) != EOF)<br>    {<br>        for (i = 0; i &lt; 5; i++)<br>            for (j = 0; j &lt; 5; j++)<br>            {<br>                if (i == 0 &amp;&amp; j == 0)j++;<br>                cin &gt;&gt; o[i][j];<br>            }<br>        for (a = 0; a &lt; 5; a++)<br>            for (b = 0; b &lt; 5;b++)<br>                for (c = 0; c &lt; 5; c++)<br>                    for (d = 0; d &lt; 5; d++)<br>                        for (e = 0; e &lt; 5; e++)<br>                        {<br>                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)<br>                            m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) <em> 2 + (o[d][e] + o[e][d]) </em> 2;<br>                            if (m&gt;max) max = m;<br>                        }<br>        cout &lt;&lt; max&lt;&lt;endl;<br>    }<br>    return(0);<br>}<br>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/e5-bc-80-e5-a7-8b-e6-90-9eacm" data-id="cicpyu3o2000ss06bszyqfs0c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f" class="article-date">
+  <time datetime="2014-10-26T09:25:57.000Z" itemprop="datePublished">2014-10-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f">大一秋游1——中南百草原</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是大学里的第一次班级活动，特发此文以示纪念。</p>
+<p>真尽兴，整个景区几乎走遍了，娱乐设施玩遍了，中间还吃了顿自助烧烤，一天下来好累呀。</p>
+<p>没有拍照的习惯，只拍了几张，都是些失去本性的动物们，有的我也叫不出名字来。</p>
+<p><a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_104940.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_104940-300x225.jpg" alt="IMG_20141025_104940"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102325-e1415334508927.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102325-e1415334508927-300x225.jpg" alt="IMG_20141025_102325"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102257-e1415334434711.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_102257-e1415334434711-300x225.jpg" alt="IMG_20141025_102257"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101355-e1415334543795.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101355-e1415334543795-300x225.jpg" alt="IMG_20141025_101355"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101239.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_101239-300x225.jpg" alt="IMG_20141025_101239"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095709-e1415334687827.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095709-e1415334687827-300x225.jpg" alt="IMG_20141025_095709"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095339.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_095339-300x225.jpg" alt="IMG_20141025_095339"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094433-e1415334812956.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094433-e1415334812956-225x300.jpg" alt="IMG_20141025_094433"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094317.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094317-300x225.jpg" alt="IMG_20141025_094317"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094305.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094305-300x225.jpg" alt="IMG_20141025_094305"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094256.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_094256-300x225.jpg" alt="IMG_20141025_094256"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093947.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093947-300x225.jpg" alt="IMG_20141025_093947"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093858.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093858-300x225.jpg" alt="IMG_20141025_093858"></a> <a href="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093640.jpg" target="_blank" rel="external"><img src="http://blog.cosimahan.com/wp-content/uploads/2014/11/IMG_20141025_093640-300x225.jpg" alt="IMG_20141025_093640"></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f" data-id="cicpyu3ob000us06btw3uqk7u" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2" class="article-date">
+  <time datetime="2014-09-20T04:18:15.000Z" itemprop="datePublished">2014-09-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2">梦想是一定要有的，万一实现了呢</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>梦想是一定要有的，万一实现了呢</p>
+<p>——阿里巴巴</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2" data-id="cicpyu3n0000is06bdfi0zmey" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-windows-9-the-new-start-menu-in-action" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/windows-9-the-new-start-menu-in-action" class="article-date">
+  <time datetime="2014-09-13T01:34:50.000Z" itemprop="datePublished">2014-09-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/windows-9-the-new-start-menu-in-action">Windows 9: The new Start Menu in Action</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <iframe src="//www.youtube.com/embed/--wgAsHWNRE" width="640" height="390" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+<h3 id="My_comment:">My comment:</h3><p><span style="color: #616161;">MS made a compromise in the design of start menu, let Metro apps run as windows, but I don’t think it’s the best decision. PC is PC, pad also is pad, I feel awkward when I use a PC likes use a pad, don’t you think so?</span></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cosimahan.github.io/windows-9-the-new-start-menu-in-action" data-id="cicpyu3l20004s06b3cbgebna" class="article-share-link">Share</a>
       
       
     </footer>
@@ -111,11 +1312,22 @@
 
   
   
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
+  
 </section>
         
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a><span class="category-list-count">17</span></li></ul>
+    </div>
+  </div>
+
   
     
   
@@ -125,7 +1337,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -138,6 +1350,22 @@
         
           <li>
             <a href="/hello-world">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8">拿单片机做了个表</a>
+          </li>
+        
+          <li>
+            <a href="/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e">ACM省赛打了块铁，心塞塞</a>
+          </li>
+        
+          <li>
+            <a href="/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo">把域名从 Godaddy 转到了 NameSilo</a>
+          </li>
+        
+          <li>
+            <a href="/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88">总觉得该做点什么</a>
           </li>
         
       </ul>

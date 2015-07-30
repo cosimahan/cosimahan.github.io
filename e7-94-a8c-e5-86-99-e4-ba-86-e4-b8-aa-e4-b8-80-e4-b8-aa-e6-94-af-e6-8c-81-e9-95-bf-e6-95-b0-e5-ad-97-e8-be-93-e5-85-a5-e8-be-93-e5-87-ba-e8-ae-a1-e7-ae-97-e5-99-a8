@@ -3,21 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Cosimahan&#39;s</title>
+  <title>用C写了个一个支持长数字输入输出计算器 | Cosimahan&#39;s</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+  <meta name="description" content="市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。
+目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。
+#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;stdio.h&amp;gt;using namespace std;int main(){    int a[10001],b[10001],o,oo,i,j;    char c[200">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://cosimahan.github.io/hello-world">
+<meta property="og:title" content="用C写了个一个支持长数字输入输出计算器">
+<meta property="og:url" content="http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8">
 <meta property="og:site_name" content="Cosimahan's">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2015-07-30T02:24:28.772Z">
+<meta property="og:description" content="市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。
+目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。
+#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;stdio.h&amp;gt;using namespace std;int main(){    int a[10001],b[10001],o,oo,i,j;    char c[200">
+<meta property="og:updated_time" content="2015-07-30T08:05:24.300Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="用C写了个一个支持长数字输入输出计算器">
+<meta name="twitter:description" content="市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。
+目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。
+#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;stdio.h&amp;gt;using namespace std;int main(){    int a[10001],b[10001],o,oo,i,j;    char c[200">
   
     <link rel="alternative" href="/atom.xml" title="Cosimahan&#39;s" type="application/atom+xml">
   
@@ -67,12 +73,16 @@ Quick">
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/hello-world" class="article-date">
-  <time datetime="2015-07-30T02:24:28.772Z" itemprop="datePublished">2015-07-30</time>
+    <a href="/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8" class="article-date">
+  <time datetime="2015-02-26T07:35:12.000Z" itemprop="datePublished">2015-02-26</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -81,7 +91,7 @@ Quick">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      用C写了个一个支持长数字输入输出计算器
     </h1>
   
 
@@ -89,20 +99,30 @@ Quick">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
+<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。</p>
+<p><pre class="lang:c++ decode:true " title="code">#include&lt;iostream&gt;</pre></p>
+<p>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main(){<br>    int a[10001],b[10001],o,oo,i,j;<br>    char c[20002],d;<br>    cout&lt;&lt;”Input equation like ‘1+1’, only support + and - .”&lt;&lt;endl;<br>    gets(c);<br>    for(i=0;c[i+1]&lt;’9’&amp;&amp;c[i+1]&gt;’0’&amp;&amp;i&lt;20001;i++){<br>        a[i]=c[i]-‘0’;<br>    }<br>    if(i==20001||i==0){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    i++;a[i]=’/0’;o=i;<br>    cin&gt;&gt;d;<br>    for(i=o,j=0;c[i+1]!=’0’&amp;&amp;i&lt;20002;i++,j++){<br>        b[j]=c[i]-‘0’;<br>    }<br>    if(i==20002){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    oo=j+1;<br>    if(d!=’+’||d!=’-‘){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    if(d==’+’){<br>        if(o&gt;=oo){<br>            for(i=o-1,j=oo-1;j&gt;=0;i–,j–){<br>                a[i]+=b[j];<br>                if(a[i]&gt;9&amp;&amp;i!=0){a[i]-=10;a[i-1]++;}<br>            }<br>            for(i=0;i&lt;o;i++){cout&lt;&lt;a[i];}<br>        }<br>        else{<br>             for(i=o-1,j=oo-1;i&gt;=0;i–,j–){<br>                b[j]+=a[i];<br>                if(b[j]&gt;9&amp;&amp;j!=0){b[j]-=10;b[j-1]++;}<br>            }<br>            for(i=0;i&lt;oo;i++){cout&lt;&lt;b[i];}<br>        }</p>
+<pre><code>}
+<span class="keyword">else</span>{
+    <span class="keyword">if</span>(o&amp;gt;=oo){
+        <span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span>;j&amp;gt;=<span class="number">0</span>;i--,j--){
+            a[i]-=b[j];
+            <span class="keyword">if</span>(a[i]&amp;lt;<span class="number">0</span>&amp;amp;&amp;amp;i!=<span class="number">0</span>){a[i]+=<span class="number">10</span>;a[i-<span class="number">1</span>]--;}
+        }
+        <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;o;i++){<span class="built_in">cout</span>&amp;lt;&amp;lt;a[i];}
+    }
+    <span class="keyword">else</span>{
+        <span class="built_in">cout</span>&amp;lt;&amp;lt;<span class="string">"INPUT ERROR "</span>; <span class="keyword">return</span> <span class="number">0</span>;
+    }
+
+} 
+</code></pre><p>}<br><br>&nbsp;</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cosimahan.github.io/hello-world" data-id="cicpyu3lr0007s06bi2ebduhu" class="article-share-link">Share</a>
+      <a data-url="http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8" data-id="cicpyu3mh000es06b9d11qvyd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -111,10 +131,19 @@ Quick">
     
 <nav id="article-nav">
   
+    <a href="/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          总觉得该做点什么
+        
+      </div>
+    </a>
   
-    <a href="/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/e5-bc-80-e5-a7-8b-e6-90-9eacm" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">拿单片机做了个表</div>
+      <div class="article-nav-title">开始搞ACM</div>
     </a>
   
 </nav>
