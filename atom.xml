@@ -17,8 +17,8 @@
   
   <entry>
     <title><![CDATA[拿单片机做了个表]]></title>
-    <link href="http://cosimahan.github.io/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8"/>
-    <id>http://cosimahan.github.io/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8</id>
+    <link href="http://cosimahan.github.io/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8.html"/>
+    <id>http://cosimahan.github.io/e6-8b-bf-e5-8d-95-e7-89-87-e6-9c-ba-e5-81-9a-e4-ba-86-e4-b8-aa-e8-a1-a8.html</id>
     <published>2015-07-06T03:50:24.000Z</published>
     <updated>2015-07-30T08:05:24.314Z</updated>
     <content type="html"><![CDATA[<p>共使用6个按键、12位共阳数码管、4LED灯加一有源头蜂鸣器，按键占用一组I/O口，数码管、LED灯与蜂鸣器公用三组IO口。</p>
@@ -427,8 +427,8 @@ Pa=Pd=Pc=<span class="number">0xFF</span>;
   
   <entry>
     <title><![CDATA[ACM省赛打了块铁，心塞塞]]></title>
-    <link href="http://cosimahan.github.io/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e"/>
-    <id>http://cosimahan.github.io/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e</id>
+    <link href="http://cosimahan.github.io/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e.html"/>
+    <id>http://cosimahan.github.io/acm-e7-9c-81-e8-b5-9b-e6-89-93-e4-ba-86-e5-9d-97-e9-93-81-ef-bc-8c-e5-bf-83-e5-a1-9e-e5-a1-9e.html</id>
     <published>2015-04-26T08:55:25.000Z</published>
     <updated>2015-07-30T08:05:24.298Z</updated>
     <content type="html"><![CDATA[<p><img src="http://i.imgur.com/wx5cbLU.png" alt="T_T"></p>
@@ -444,8 +444,8 @@ Pa=Pd=Pc=<span class="number">0xFF</span>;
   
   <entry>
     <title><![CDATA[把域名从 Godaddy 转到了 NameSilo]]></title>
-    <link href="http://cosimahan.github.io/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo"/>
-    <id>http://cosimahan.github.io/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo</id>
+    <link href="http://cosimahan.github.io/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo.html"/>
+    <id>http://cosimahan.github.io/e6-8a-8a-e5-9f-9f-e5-90-8d-e4-bb-8egodaddy-e8-bd-ac-e5-88-b0-e4-ba-86namesilo.html</id>
     <published>2015-04-17T04:16:00.000Z</published>
     <updated>2015-07-30T08:05:24.301Z</updated>
     <content type="html"><![CDATA[<p>域名还不到一个月过期，发现续费好贵，也没有好用的优惠码，再加上朋友的域名被盗事件，便不想继续放在 Godaddy 那儿了。近日发现 NameSilo 价格尚可，送隐私保护，那就选它了，开工。</p>
@@ -473,8 +473,8 @@ Pa=Pd=Pc=<span class="number">0xFF</span>;
   
   <entry>
     <title><![CDATA[总觉得该做点什么]]></title>
-    <link href="http://cosimahan.github.io/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88"/>
-    <id>http://cosimahan.github.io/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88</id>
+    <link href="http://cosimahan.github.io/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88.html"/>
+    <id>http://cosimahan.github.io/e6-80-bb-e8-a7-89-e5-be-97-e8-af-a5-e5-81-9a-e7-82-b9-e4-bb-80-e4-b9-88.html</id>
     <published>2015-04-14T04:50:31.000Z</published>
     <updated>2015-07-30T08:05:24.301Z</updated>
     <content type="html"><![CDATA[<p>大学一年级已经过去了一多半，回想这半年，我都干了些啥子嘛。接触的东西不少，但基本都是皮毛，也做了点东西，都是雕虫小技罢了，没有啥能拿的出手或能说的出口的。</p>
@@ -494,8 +494,8 @@ Pa=Pd=Pc=<span class="number">0xFF</span>;
   
   <entry>
     <title><![CDATA[用C写了个一个支持长数字输入输出计算器]]></title>
-    <link href="http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8"/>
-    <id>http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8</id>
+    <link href="http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8.html"/>
+    <id>http://cosimahan.github.io/e7-94-a8c-e5-86-99-e4-ba-86-e4-b8-aa-e4-b8-80-e4-b8-aa-e6-94-af-e6-8c-81-e9-95-bf-e6-95-b0-e5-ad-97-e8-be-93-e5-85-a5-e8-be-93-e5-87-ba-e8-ae-a1-e7-ae-97-e5-99-a8.html</id>
     <published>2015-02-26T07:35:12.000Z</published>
     <updated>2015-07-30T08:05:24.300Z</updated>
     <content type="html"><![CDATA[<p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
@@ -530,8 +530,8 @@ Pa=Pd=Pc=<span class="number">0xFF</span>;
   
   <entry>
     <title><![CDATA[开始搞ACM]]></title>
-    <link href="http://cosimahan.github.io/e5-bc-80-e5-a7-8b-e6-90-9eacm"/>
-    <id>http://cosimahan.github.io/e5-bc-80-e5-a7-8b-e6-90-9eacm</id>
+    <link href="http://cosimahan.github.io/e5-bc-80-e5-a7-8b-e6-90-9eacm.html"/>
+    <id>http://cosimahan.github.io/e5-bc-80-e5-a7-8b-e6-90-9eacm.html</id>
     <published>2014-12-11T13:43:56.000Z</published>
     <updated>2015-07-30T08:05:24.294Z</updated>
     <content type="html"><![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
@@ -950,8 +950,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[大一秋游1——中南百草原]]></title>
-    <link href="http://cosimahan.github.io/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f"/>
-    <id>http://cosimahan.github.io/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f</id>
+    <link href="http://cosimahan.github.io/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f.html"/>
+    <id>http://cosimahan.github.io/e5-a4-a7-e4-b8-80-e7-a7-8b-e6-b8-b81-e4-b8-ad-e5-8d-97-e7-99-be-e8-8d-89-e5-8e-9f.html</id>
     <published>2014-10-26T09:25:57.000Z</published>
     <updated>2015-07-30T08:05:24.286Z</updated>
     <content type="html"><![CDATA[<p>这是大学里的第一次班级活动，特发此文以示纪念。</p>
@@ -972,8 +972,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[梦想是一定要有的，万一实现了呢]]></title>
-    <link href="http://cosimahan.github.io/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2"/>
-    <id>http://cosimahan.github.io/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2</id>
+    <link href="http://cosimahan.github.io/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2.html"/>
+    <id>http://cosimahan.github.io/e6-a2-a6-e6-83-b3-e6-98-af-e4-b8-80-e5-ae-9a-e8-a6-81-e6-9c-89-e7-9a-84-ef-bc-8c-e4-b8-87-e4-b8-80-e5-ae-9e-e7-8e-b0-e4-ba-86-e5-91-a2.html</id>
     <published>2014-09-20T04:18:15.000Z</published>
     <updated>2015-07-30T08:05:24.292Z</updated>
     <content type="html"><![CDATA[<p>梦想是一定要有的，万一实现了呢</p>
@@ -991,8 +991,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[Windows 9: The new Start Menu in Action]]></title>
-    <link href="http://cosimahan.github.io/windows-9-the-new-start-menu-in-action"/>
-    <id>http://cosimahan.github.io/windows-9-the-new-start-menu-in-action</id>
+    <link href="http://cosimahan.github.io/windows-9-the-new-start-menu-in-action.html"/>
+    <id>http://cosimahan.github.io/windows-9-the-new-start-menu-in-action.html</id>
     <published>2014-09-13T01:34:50.000Z</published>
     <updated>2015-07-30T08:05:24.280Z</updated>
     <content type="html"><![CDATA[<iframe src="//www.youtube.com/embed/--wgAsHWNRE" width="640" height="390" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
@@ -1011,8 +1011,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[初中者，蛋蛋后之地盤也]]></title>
-    <link href="http://cosimahan.github.io/e5-88-9d-e4-b8-ad-e8-80-85-ef-bc-8c-e8-9b-8b-e8-9b-8b-e5-90-8e-e4-b9-8b-e5-9c-b0-e7-9b-a4-e4-b9-9f"/>
-    <id>http://cosimahan.github.io/e5-88-9d-e4-b8-ad-e8-80-85-ef-bc-8c-e8-9b-8b-e8-9b-8b-e5-90-8e-e4-b9-8b-e5-9c-b0-e7-9b-a4-e4-b9-9f</id>
+    <link href="http://cosimahan.github.io/e5-88-9d-e4-b8-ad-e8-80-85-ef-bc-8c-e8-9b-8b-e8-9b-8b-e5-90-8e-e4-b9-8b-e5-9c-b0-e7-9b-a4-e4-b9-9f.html"/>
+    <id>http://cosimahan.github.io/e5-88-9d-e4-b8-ad-e8-80-85-ef-bc-8c-e8-9b-8b-e8-9b-8b-e5-90-8e-e4-b9-8b-e5-9c-b0-e7-9b-a4-e4-b9-9f.html</id>
     <published>2014-09-01T04:04:25.000Z</published>
     <updated>2015-07-30T08:05:24.287Z</updated>
     <content type="html"><![CDATA[<p>二〇一四·九·一，月曜。</p>
@@ -1028,8 +1028,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[未成年的忧与乐]]></title>
-    <link href="http://cosimahan.github.io/e6-9c-aa-e6-88-90-e5-b9-b4-e7-9a-84-e5-bf-a7-e4-b8-8e-e4-b9-90"/>
-    <id>http://cosimahan.github.io/e6-9c-aa-e6-88-90-e5-b9-b4-e7-9a-84-e5-bf-a7-e4-b8-8e-e4-b9-90</id>
+    <link href="http://cosimahan.github.io/e6-9c-aa-e6-88-90-e5-b9-b4-e7-9a-84-e5-bf-a7-e4-b8-8e-e4-b9-90.html"/>
+    <id>http://cosimahan.github.io/e6-9c-aa-e6-88-90-e5-b9-b4-e7-9a-84-e5-bf-a7-e4-b8-8e-e4-b9-90.html</id>
     <published>2014-08-26T04:01:19.000Z</published>
     <updated>2015-07-30T08:05:24.293Z</updated>
     <content type="html"><![CDATA[<ul>
@@ -1061,8 +1061,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[电影《活着》观后感]]></title>
-    <link href="http://cosimahan.github.io/e7-94-b5-e5-bd-b1-e3-80-8a-e6-b4-bb-e7-9d-80-e3-80-8b-e8-a7-82-e5-90-8e-e6-84-9f"/>
-    <id>http://cosimahan.github.io/e7-94-b5-e5-bd-b1-e3-80-8a-e6-b4-bb-e7-9d-80-e3-80-8b-e8-a7-82-e5-90-8e-e6-84-9f</id>
+    <link href="http://cosimahan.github.io/e7-94-b5-e5-bd-b1-e3-80-8a-e6-b4-bb-e7-9d-80-e3-80-8b-e8-a7-82-e5-90-8e-e6-84-9f.html"/>
+    <id>http://cosimahan.github.io/e7-94-b5-e5-bd-b1-e3-80-8a-e6-b4-bb-e7-9d-80-e3-80-8b-e8-a7-82-e5-90-8e-e6-84-9f.html</id>
     <published>2014-08-09T13:45:12.000Z</published>
     <updated>2015-07-30T08:05:24.277Z</updated>
     <content type="html"><![CDATA[<p>「两个福贵的脚上都沾满了泥,走去时都微微晃动着身体。」从几个月前的试卷上，我对余华先生的《活着》产生了兴趣。今天看了张艺谋先生据此拍的电影，简单写写感受。</p>
@@ -1080,8 +1080,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[%e7%88%bd]]></title>
-    <link href="http://cosimahan.github.io/e7-88-bd"/>
-    <id>http://cosimahan.github.io/e7-88-bd</id>
+    <link href="http://cosimahan.github.io/e7-88-bd.html"/>
+    <id>http://cosimahan.github.io/e7-88-bd.html</id>
     <published>2014-07-28T08:29:43.000Z</published>
     <updated>2015-07-30T08:05:24.282Z</updated>
     <content type="html"><![CDATA[<h1 id="爽">爽</h1>]]></content>
@@ -1095,8 +1095,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
   
   <entry>
     <title><![CDATA[初日 AKB48]]></title>
-    <link href="http://cosimahan.github.io/e5-88-9d-e6-97-a5akb48"/>
-    <id>http://cosimahan.github.io/e5-88-9d-e6-97-a5akb48</id>
+    <link href="http://cosimahan.github.io/e5-88-9d-e6-97-a5akb48.html"/>
+    <id>http://cosimahan.github.io/e5-88-9d-e6-97-a5akb48.html</id>
     <published>2014-07-22T07:25:53.000Z</published>
     <updated>2015-07-30T08:05:24.278Z</updated>
     <content type="html"><![CDATA[<p><strong>歌，不燃，但歌词很好。</strong></p>
@@ -1175,8 +1175,8 @@ Oh！
   
   <entry>
     <title><![CDATA[三天不读口生，三天不练手生]]></title>
-    <link href="http://cosimahan.github.io/e4-b8-89-e5-a4-a9-e4-b8-8d-e8-af-bb-e5-8f-a3-e7-94-9f-ef-bc-8c-e4-b8-89-e5-a4-a9-e4-b8-8d-e7-bb-83-e6-89-8b-e7-94-9f"/>
-    <id>http://cosimahan.github.io/e4-b8-89-e5-a4-a9-e4-b8-8d-e8-af-bb-e5-8f-a3-e7-94-9f-ef-bc-8c-e4-b8-89-e5-a4-a9-e4-b8-8d-e7-bb-83-e6-89-8b-e7-94-9f</id>
+    <link href="http://cosimahan.github.io/e4-b8-89-e5-a4-a9-e4-b8-8d-e8-af-bb-e5-8f-a3-e7-94-9f-ef-bc-8c-e4-b8-89-e5-a4-a9-e4-b8-8d-e7-bb-83-e6-89-8b-e7-94-9f.html"/>
+    <id>http://cosimahan.github.io/e4-b8-89-e5-a4-a9-e4-b8-8d-e8-af-bb-e5-8f-a3-e7-94-9f-ef-bc-8c-e4-b8-89-e5-a4-a9-e4-b8-8d-e7-bb-83-e6-89-8b-e7-94-9f.html</id>
     <published>2014-07-03T12:52:24.000Z</published>
     <updated>2015-07-30T08:05:24.269Z</updated>
     <content type="html"><![CDATA[<blockquote>
@@ -1248,8 +1248,8 @@ Oh！
   
   <entry>
     <title><![CDATA[试吃第一批螃蟹]]></title>
-    <link href="http://cosimahan.github.io/e8-af-95-e5-90-83-e7-ac-ac-e4-b8-80-e6-89-b9-e8-9e-83-e8-9f-b9"/>
-    <id>http://cosimahan.github.io/e8-af-95-e5-90-83-e7-ac-ac-e4-b8-80-e6-89-b9-e8-9e-83-e8-9f-b9</id>
+    <link href="http://cosimahan.github.io/e8-af-95-e5-90-83-e7-ac-ac-e4-b8-80-e6-89-b9-e8-9e-83-e8-9f-b9.html"/>
+    <id>http://cosimahan.github.io/e8-af-95-e5-90-83-e7-ac-ac-e4-b8-80-e6-89-b9-e8-9e-83-e8-9f-b9.html</id>
     <published>2014-06-23T04:24:29.000Z</published>
     <updated>2015-07-30T08:05:24.267Z</updated>
     <content type="html"><![CDATA[<p>咱对虚拟运营商都不陌生了，经过几个月的预热，现在终于放号了。于是，我拿到了运营商为“蜗X移动”的“399坑爹卡”。</p>
@@ -1279,8 +1279,8 @@ Oh！
   
   <entry>
     <title><![CDATA[等了好久终于等到今天，梦了好久终于把梦实现]]></title>
-    <link href="http://cosimahan.github.io/e7-ad-89-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e7-ad-89-e5-88-b0-e4-bb-8a-e5-a4-a9-ef-bc-8c-e6-a2-a6-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e6-8a-8a-e6-a2-a6-e5-ae-9e-e7-8e-b0"/>
-    <id>http://cosimahan.github.io/e7-ad-89-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e7-ad-89-e5-88-b0-e4-bb-8a-e5-a4-a9-ef-bc-8c-e6-a2-a6-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e6-8a-8a-e6-a2-a6-e5-ae-9e-e7-8e-b0</id>
+    <link href="http://cosimahan.github.io/e7-ad-89-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e7-ad-89-e5-88-b0-e4-bb-8a-e5-a4-a9-ef-bc-8c-e6-a2-a6-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e6-8a-8a-e6-a2-a6-e5-ae-9e-e7-8e-b0.html"/>
+    <id>http://cosimahan.github.io/e7-ad-89-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e7-ad-89-e5-88-b0-e4-bb-8a-e5-a4-a9-ef-bc-8c-e6-a2-a6-e4-ba-86-e5-a5-bd-e4-b9-85-e7-bb-88-e4-ba-8e-e6-8a-8a-e6-a2-a6-e5-ae-9e-e7-8e-b0.html</id>
     <published>2014-06-11T00:24:55.000Z</published>
     <updated>2015-07-30T08:05:24.268Z</updated>
     <content type="html"><![CDATA[<p>——记高考</p>
