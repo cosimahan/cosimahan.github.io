@@ -6,24 +6,18 @@
   <title>用C写了个一个支持长数字输入输出计算器 | Cosima Han&#39;s</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。
-目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。
-#include&amp;lt;iostream&amp;gt;
-#include&amp;lt;stdio.h&amp;gt;using namespace std;int main(){    int a[10001],b[10001],o,oo,i,j;    char c[200">
+目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&amp;lt;iostream&amp;gt;#include&amp;l">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用C写了个一个支持长数字输入输出计算器">
 <meta property="og:url" content="http://cosimahan.github.io/用C写了个一个支持长数字输入输出计算器.html">
 <meta property="og:site_name" content="Cosima Han's">
 <meta property="og:description" content="市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。
-目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。
-#include&amp;lt;iostream&amp;gt;
-#include&amp;lt;stdio.h&amp;gt;using namespace std;int main(){    int a[10001],b[10001],o,oo,i,j;    char c[200">
-<meta property="og:updated_time" content="2015-07-30T08:05:24.300Z">
+目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&amp;lt;iostream&amp;gt;#include&amp;l">
+<meta property="og:updated_time" content="2015-08-03T02:43:31.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用C写了个一个支持长数字输入输出计算器">
 <meta name="twitter:description" content="市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。
-目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。
-#include&amp;lt;iostream&amp;gt;
-#include&amp;lt;stdio.h&amp;gt;using namespace std;int main(){    int a[10001],b[10001],o,oo,i,j;    char c[200">
+目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include&amp;lt;iostream&amp;gt;#include&amp;l">
   
     <link rel="alternative" href="/atom.xml" title="Cosima Han&#39;s" type="application/atom+xml">
   
@@ -100,24 +94,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
-<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。</p>
-<p><pre class="lang:c++ decode:true " title="code">#include&lt;iostream&gt;</pre></p>
-<p>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main(){<br>    int a[10001],b[10001],o,oo,i,j;<br>    char c[20002],d;<br>    cout&lt;&lt;”Input equation like ‘1+1’, only support + and - .”&lt;&lt;endl;<br>    gets(c);<br>    for(i=0;c[i+1]&lt;’9’&amp;&amp;c[i+1]&gt;’0’&amp;&amp;i&lt;20001;i++){<br>        a[i]=c[i]-‘0’;<br>    }<br>    if(i==20001||i==0){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    i++;a[i]=’/0’;o=i;<br>    cin&gt;&gt;d;<br>    for(i=o,j=0;c[i+1]!=’0’&amp;&amp;i&lt;20002;i++,j++){<br>        b[j]=c[i]-‘0’;<br>    }<br>    if(i==20002){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    oo=j+1;<br>    if(d!=’+’||d!=’-‘){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    if(d==’+’){<br>        if(o&gt;=oo){<br>            for(i=o-1,j=oo-1;j&gt;=0;i–,j–){<br>                a[i]+=b[j];<br>                if(a[i]&gt;9&amp;&amp;i!=0){a[i]-=10;a[i-1]++;}<br>            }<br>            for(i=0;i&lt;o;i++){cout&lt;&lt;a[i];}<br>        }<br>        else{<br>             for(i=o-1,j=oo-1;i&gt;=0;i–,j–){<br>                b[j]+=a[i];<br>                if(b[j]&gt;9&amp;&amp;j!=0){b[j]-=10;b[j-1]++;}<br>            }<br>            for(i=0;i&lt;oo;i++){cout&lt;&lt;b[i];}<br>        }</p>
-<pre><code>}
-<span class="keyword">else</span>{
-    <span class="keyword">if</span>(o&amp;gt;=oo){
-        <span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span>;j&amp;gt;=<span class="number">0</span>;i--,j--){
-            a[i]-=b[j];
-            <span class="keyword">if</span>(a[i]&amp;lt;<span class="number">0</span>&amp;amp;&amp;amp;i!=<span class="number">0</span>){a[i]+=<span class="number">10</span>;a[i-<span class="number">1</span>]--;}
-        }
-        <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;o;i++){<span class="built_in">cout</span>&amp;lt;&amp;lt;a[i];}
-    }
-    <span class="keyword">else</span>{
-        <span class="built_in">cout</span>&amp;lt;&amp;lt;<span class="string">"INPUT ERROR "</span>; <span class="keyword">return</span> <span class="number">0</span>;
-    }
-
-} 
-</code></pre><p>}<br><br>&nbsp;</p>
+<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">using namespace std<span class="comment">;</span></span><br><span class="line"><span class="built_in">int</span> main()&#123;</span><br><span class="line">	<span class="built_in">int</span> a[<span class="number">10001</span>],b[<span class="number">10001</span>],o,oo,i,j<span class="comment">;</span></span><br><span class="line">	char c[<span class="number">20002</span>],d<span class="comment">;</span></span><br><span class="line">	cout&lt;&lt;<span class="string">"Input equation like '1+1', only support + and - ."</span>&lt;&lt;endl<span class="comment">;</span></span><br><span class="line">	gets(c)<span class="comment">;</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;c[i+1]&lt;'9'&amp;&amp;c[i+1]&gt;'0'&amp;&amp;i&lt;20001;i++)&#123;</span></span><br><span class="line">		a[i]=c[i]-<span class="string">'0'</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(i==<span class="number">20001</span>||i==<span class="number">0</span>)&#123;cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;&#125;</span></span><br><span class="line">	i++<span class="comment">;a[i]='/0';o=i;</span></span><br><span class="line">	cin&gt;&gt;d<span class="comment">;</span></span><br><span class="line">	<span class="keyword">for</span>(i=o,j=<span class="number">0</span><span class="comment">;c[i+1]!='0'&amp;&amp;i&lt;20002;i++,j++)&#123;</span></span><br><span class="line">		b[j]=c[i]-<span class="string">'0'</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(i==<span class="number">20002</span>)&#123;cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;&#125;</span></span><br><span class="line">	oo=j+<span class="number">1</span><span class="comment">;</span></span><br><span class="line">	<span class="keyword">if</span>(d!=<span class="string">'+'</span>||d!=<span class="string">'-'</span>)&#123;cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;&#125;</span></span><br><span class="line">	<span class="keyword">if</span>(d==<span class="string">'+'</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(o&gt;=oo)&#123;</span><br><span class="line">			<span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span><span class="comment">;j&gt;=0;i--,j--)&#123;</span></span><br><span class="line">				a[i]+=b[j]<span class="comment">;</span></span><br><span class="line">				<span class="keyword">if</span>(a[i]&gt;<span class="number">9</span>&amp;&amp;i!=<span class="number">0</span>)&#123;a[i]-=<span class="number">10</span><span class="comment">;a[i-1]++;&#125;</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;o;i++)&#123;cout&lt;&lt;a[i];&#125;</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">	     	<span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span><span class="comment">;i&gt;=0;i--,j--)&#123;</span></span><br><span class="line">				b[j]+=a[i]<span class="comment">;</span></span><br><span class="line">				<span class="keyword">if</span>(b[j]&gt;<span class="number">9</span>&amp;&amp;j!=<span class="number">0</span>)&#123;b[j]-=<span class="number">10</span><span class="comment">;b[j-1]++;&#125;</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;oo;i++)&#123;cout&lt;&lt;b[i];&#125;</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(o&gt;=oo)&#123;</span><br><span class="line">			<span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span><span class="comment">;j&gt;=0;i--,j--)&#123;</span></span><br><span class="line">				a[i]-=b[j]<span class="comment">;</span></span><br><span class="line">				<span class="keyword">if</span>(a[i]&lt;<span class="number">0</span>&amp;&amp;i!=<span class="number">0</span>)&#123;a[i]+=<span class="number">10</span><span class="comment">;a[i-1]--;&#125;</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;o;i++)&#123;cout&lt;&lt;a[i];&#125;</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
 
       
     </div>
@@ -184,7 +162,7 @@
       <ul>
         
           <li>
-            <a href="/从WordPress转移到了Hexo.html">从WordPress转移到了Hexo</a>
+            <a href="/把博客从 WordPress 转移到了 Hexo.html">从WordPress转移到了Hexo</a>
           </li>
         
           <li>

@@ -17,8 +17,8 @@
   
   <entry>
     <title><![CDATA[从WordPress转移到了Hexo]]></title>
-    <link href="http://cosimahan.github.io/%E4%BB%8EWordPress%E8%BD%AC%E7%A7%BB%E5%88%B0%E4%BA%86Hexo.html"/>
-    <id>http://cosimahan.github.io/从WordPress转移到了Hexo.html</id>
+    <link href="http://cosimahan.github.io/%E6%8A%8A%E5%8D%9A%E5%AE%A2%E4%BB%8E%20WordPress%20%E8%BD%AC%E7%A7%BB%E5%88%B0%E4%BA%86%20Hexo.html"/>
+    <id>http://cosimahan.github.io/把博客从 WordPress 转移到了 Hexo.html</id>
     <published>2015-08-02T08:32:06.000Z</published>
     <updated>2015-08-02T08:32:06.260Z</updated>
     <content type="html"></content>
@@ -120,31 +120,14 @@
     <link href="http://cosimahan.github.io/%E7%94%A8C%E5%86%99%E4%BA%86%E4%B8%AA%E4%B8%80%E4%B8%AA%E6%94%AF%E6%8C%81%E9%95%BF%E6%95%B0%E5%AD%97%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E8%AE%A1%E7%AE%97%E5%99%A8.html"/>
     <id>http://cosimahan.github.io/用C写了个一个支持长数字输入输出计算器.html</id>
     <published>2015-02-26T07:35:12.000Z</published>
-    <updated>2015-07-30T08:05:24.300Z</updated>
+    <updated>2015-08-03T02:43:31.614Z</updated>
     <content type="html"><![CDATA[<p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
-<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。</p>
-<p><pre class="lang:c++ decode:true " title="code">#include&lt;iostream&gt;</pre></p>
-<p>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main(){<br>    int a[10001],b[10001],o,oo,i,j;<br>    char c[20002],d;<br>    cout&lt;&lt;”Input equation like ‘1+1’, only support + and - .”&lt;&lt;endl;<br>    gets(c);<br>    for(i=0;c[i+1]&lt;’9’&amp;&amp;c[i+1]&gt;’0’&amp;&amp;i&lt;20001;i++){<br>        a[i]=c[i]-‘0’;<br>    }<br>    if(i==20001||i==0){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    i++;a[i]=’/0’;o=i;<br>    cin&gt;&gt;d;<br>    for(i=o,j=0;c[i+1]!=’0’&amp;&amp;i&lt;20002;i++,j++){<br>        b[j]=c[i]-‘0’;<br>    }<br>    if(i==20002){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    oo=j+1;<br>    if(d!=’+’||d!=’-‘){cout&lt;&lt;”INPUT ERROR “; return 0;}<br>    if(d==’+’){<br>        if(o&gt;=oo){<br>            for(i=o-1,j=oo-1;j&gt;=0;i–,j–){<br>                a[i]+=b[j];<br>                if(a[i]&gt;9&amp;&amp;i!=0){a[i]-=10;a[i-1]++;}<br>            }<br>            for(i=0;i&lt;o;i++){cout&lt;&lt;a[i];}<br>        }<br>        else{<br>             for(i=o-1,j=oo-1;i&gt;=0;i–,j–){<br>                b[j]+=a[i];<br>                if(b[j]&gt;9&amp;&amp;j!=0){b[j]-=10;b[j-1]++;}<br>            }<br>            for(i=0;i&lt;oo;i++){cout&lt;&lt;b[i];}<br>        }</p>
-<pre><code>}
-<span class="keyword">else</span>{
-    <span class="keyword">if</span>(o&amp;gt;=oo){
-        <span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span>;j&amp;gt;=<span class="number">0</span>;i--,j--){
-            a[i]-=b[j];
-            <span class="keyword">if</span>(a[i]&amp;lt;<span class="number">0</span>&amp;amp;&amp;amp;i!=<span class="number">0</span>){a[i]+=<span class="number">10</span>;a[i-<span class="number">1</span>]--;}
-        }
-        <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;o;i++){<span class="built_in">cout</span>&amp;lt;&amp;lt;a[i];}
-    }
-    <span class="keyword">else</span>{
-        <span class="built_in">cout</span>&amp;lt;&amp;lt;<span class="string">"INPUT ERROR "</span>; <span class="keyword">return</span> <span class="number">0</span>;
-    }
-
-} 
-</code></pre><p>}<br><br>&nbsp;</p>
+<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">using namespace std<span class="comment">;</span></span><br><span class="line"><span class="built_in">int</span> main()&#123;</span><br><span class="line">	<span class="built_in">int</span> a[<span class="number">10001</span>],b[<span class="number">10001</span>],o,oo,i,j<span class="comment">;</span></span><br><span class="line">	char c[<span class="number">20002</span>],d<span class="comment">;</span></span><br><span class="line">	cout&lt;&lt;<span class="string">"Input equation like '1+1', only support + and - ."</span>&lt;&lt;endl<span class="comment">;</span></span><br><span class="line">	gets(c)<span class="comment">;</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;c[i+1]&lt;'9'&amp;&amp;c[i+1]&gt;'0'&amp;&amp;i&lt;20001;i++)&#123;</span></span><br><span class="line">		a[i]=c[i]-<span class="string">'0'</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(i==<span class="number">20001</span>||i==<span class="number">0</span>)&#123;cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;&#125;</span></span><br><span class="line">	i++<span class="comment">;a[i]='/0';o=i;</span></span><br><span class="line">	cin&gt;&gt;d<span class="comment">;</span></span><br><span class="line">	<span class="keyword">for</span>(i=o,j=<span class="number">0</span><span class="comment">;c[i+1]!='0'&amp;&amp;i&lt;20002;i++,j++)&#123;</span></span><br><span class="line">		b[j]=c[i]-<span class="string">'0'</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(i==<span class="number">20002</span>)&#123;cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;&#125;</span></span><br><span class="line">	oo=j+<span class="number">1</span><span class="comment">;</span></span><br><span class="line">	<span class="keyword">if</span>(d!=<span class="string">'+'</span>||d!=<span class="string">'-'</span>)&#123;cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;&#125;</span></span><br><span class="line">	<span class="keyword">if</span>(d==<span class="string">'+'</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(o&gt;=oo)&#123;</span><br><span class="line">			<span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span><span class="comment">;j&gt;=0;i--,j--)&#123;</span></span><br><span class="line">				a[i]+=b[j]<span class="comment">;</span></span><br><span class="line">				<span class="keyword">if</span>(a[i]&gt;<span class="number">9</span>&amp;&amp;i!=<span class="number">0</span>)&#123;a[i]-=<span class="number">10</span><span class="comment">;a[i-1]++;&#125;</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;o;i++)&#123;cout&lt;&lt;a[i];&#125;</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">	     	<span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span><span class="comment">;i&gt;=0;i--,j--)&#123;</span></span><br><span class="line">				b[j]+=a[i]<span class="comment">;</span></span><br><span class="line">				<span class="keyword">if</span>(b[j]&gt;<span class="number">9</span>&amp;&amp;j!=<span class="number">0</span>)&#123;b[j]-=<span class="number">10</span><span class="comment">;b[j-1]++;&#125;</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;oo;i++)&#123;cout&lt;&lt;b[i];&#125;</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(o&gt;=oo)&#123;</span><br><span class="line">			<span class="keyword">for</span>(i=o-<span class="number">1</span>,j=oo-<span class="number">1</span><span class="comment">;j&gt;=0;i--,j--)&#123;</span></span><br><span class="line">				a[i]-=b[j]<span class="comment">;</span></span><br><span class="line">				<span class="keyword">if</span>(a[i]&lt;<span class="number">0</span>&amp;&amp;i!=<span class="number">0</span>)&#123;a[i]+=<span class="number">10</span><span class="comment">;a[i-1]--;&#125;</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span><span class="comment">;i&lt;o;i++)&#123;cout&lt;&lt;a[i];&#125;</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			cout&lt;&lt;<span class="string">"INPUT ERROR "</span><span class="comment">; return 0;</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
-<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。</p>
-<p><pre class="lang:c++ decode:true " title="code">#in]]>
+<p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。<br><figure class="highlight autoit"><table><tr><td class="]]>
     </summary>
     
       <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
@@ -156,7 +139,7 @@
     <link href="http://cosimahan.github.io/%E5%BC%80%E5%A7%8B%E6%90%9EACM.html"/>
     <id>http://cosimahan.github.io/开始搞ACM.html</id>
     <published>2014-12-11T13:43:56.000Z</published>
-    <updated>2015-08-03T02:23:37.022Z</updated>
+    <updated>2015-08-03T02:39:50.478Z</updated>
     <content type="html"><![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
 <p>随手拿最近的一些水题放上来吧，当做纪念，可能几年后我成为了大神，人们来嘲笑我说，这么烂的代码竟然是他曾经写的。</p>
 <hr>
@@ -212,30 +195,30 @@
 <li>On the third day collect the remaining fruits from the <span class="tex-span">2</span>-nd tree.<br>In the second sample, you can only collect <span class="tex-span">60</span> fruits, the remaining fruit will simply wither.</li>
 </ul>
 <p></p></div><br></div><p></p>
-<p><pre class="lang:c decode:true"><code>#include&lt;iostream&gt;</code></pre></p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include &lt;algorithm&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n,v,vv,a[3008],b[3008] ,i,ii,t,o,y,iy;<br>    while (scanf(“%d%d”, &amp;n, &amp;v) != EOF)<br>    {<br>        o = 0; vv = v; y = 0;<br>        for (i = 0; i &lt; n; i++)<br>        {<br>            cin &gt;&gt; a[i]&gt;&gt;b[i];<br>        }<br>        for (i = 0; i &lt; n; i++)<br>            for (ii = i + 1; ii &lt; n; ii++)<br>            {<br>                if (a[i]&gt;a[ii])<br>                {<br>                    t = a[i]; a[i] = a[ii]; a[ii] = t;<br>                    t = b[i]; b[i] = b[ii]; b[ii] = t;<br>                }</p>
+<p><pre class="lang:c decode:true"><code>#include<iostream></iostream></code></pre></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include <algorithm><br>using namespace std;<br>int main()<br>{<br>    long int n,v,vv,a[3008],b[3008] ,i,ii,t,o,y,iy;<br>    while (scanf(“%d%d”, &amp;n, &amp;v) != EOF)<br>    {<br>        o = 0; vv = v; y = 0;<br>        for (i = 0; i &lt; n; i++)<br>        {<br>            cin &gt;&gt; a[i]&gt;&gt;b[i];<br>        }<br>        for (i = 0; i &lt; n; i++)<br>            for (ii = i + 1; ii &lt; n; ii++)<br>            {<br>                if (a[i]&gt;a[ii])<br>                {<br>                    t = a[i]; a[i] = a[ii]; a[ii] = t;<br>                    t = b[i]; b[i] = b[ii]; b[ii] = t;<br>                }</algorithm></p>
 <pre><code>        }
 
     <span class="comment">//</span>
     <span class="comment">//</span>
     <span class="comment">//</span>
 
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
         <span class="keyword">if</span> (i != <span class="number">0</span>)
         {
             <span class="keyword">if</span> (a[i] != a[i - <span class="number">1</span>]) { v = vv; }
 
         }
-        <span class="keyword">if</span> (v != <span class="number">0</span> &amp;amp;&amp;amp; i != <span class="number">0</span>)
+        <span class="keyword">if</span> (v != <span class="number">0</span> &amp;&amp; i != <span class="number">0</span>)
         {
-            <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+            <span class="keyword">for</span> (iy = y; iy &lt; i; iy++)
             {
                 <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
                 {
-                    <span class="keyword">if</span> (v &amp;lt;= b[iy])
+                    <span class="keyword">if</span> (v &lt;= b[iy])
                     {
                         o += v; b[iy] -= v; v = <span class="number">0</span>;
                     }
@@ -243,16 +226,16 @@
                 }
             }
         }
-        <span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &amp;gt; <span class="number">1</span>) v = vv;
+        <span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &gt; <span class="number">1</span>) v = vv;
         <span class="keyword">if</span> (v != <span class="number">0</span>)
         {
-            <span class="keyword">if</span> (v &amp;lt;= b[i])
+            <span class="keyword">if</span> (v &lt;= b[i])
             {
                 o += v; b[i] -= v; v = <span class="number">0</span>;
             }
             <span class="keyword">else</span> { o += b[i]; v -= b[i]; b[i] = <span class="number">0</span>; }
         }
-        <span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;amp;&amp;amp;i!=<span class="number">0</span>) y = i;
+        <span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;&amp;i!=<span class="number">0</span>) y = i;
 
     }
 
@@ -262,11 +245,11 @@
 
     v = vv; 
 
-    <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+    <span class="keyword">for</span> (iy = y; iy &lt; i; iy++)
     {
         <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
         {
-            <span class="keyword">if</span> (v &amp;lt;= b[iy])
+            <span class="keyword">if</span> (v &lt;= b[iy])
             {
                 o += v; b[iy] -= v; v = <span class="number">0</span>;
             }
@@ -274,7 +257,7 @@
         }
     }
 
-    <span class="built_in">cout</span> &amp;lt;&amp;lt; o &amp;lt;&amp;lt; endl;
+    <span class="built_in">cout</span> &lt;&lt; o &lt;&lt; endl;
 
 }
 <span class="keyword">return</span>(<span class="number">0</span>);
@@ -355,26 +338,26 @@
 <ul>
 <li>If Om Nom starts from the first cell of the first row, he won’t see any spiders.</li>
 <li>If he starts from the second cell, he will see two spiders at time 1.</li>
-<li><p>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></p></li></ul></div><br></div><br><pre class="lang:c decode:true"><br><code><br>#include&lt;iostream&gt;<br>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main()<br>{<br>int n, m, k,i,j,fuck;<br>char in[2002][2002];<br>while (scanf(“%d%d%d”, &amp;n,&amp;m,&amp;k) != EOF)<br>{    <p></p>
+<li><p>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></p></li></ul></div><br></div><br><pre class="lang:c decode:true"><br><code><br>#include<iostream><br>#include<stdio.h><br>using namespace std;<br>int main()<br>{<br>int n, m, k,i,j,fuck;<br>char in[2002][2002];<br>while (scanf(“%d%d%d”, &amp;n,&amp;m,&amp;k) != EOF)<br>{    <p></p>
 <pre><code>fuck = <span class="number">0</span>;
-<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; n; i++)
-    <span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
+    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++)
     {
-        cin &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; in[i][j];
+        <span class="built_in">cin</span> &gt;&gt; in[i][j];
     }
 
-<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++)
 {
-    <span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;<span class="keyword">lt</span>; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++)
     {
-        <span class="keyword">if</span>(i+i&amp;<span class="keyword">lt</span>;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;
-        <span class="keyword">if</span> (j - i&amp;<span class="keyword">gt</span>;=<span class="number">0</span>&amp;amp;&amp;amp;j-i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;
-        <span class="keyword">if</span> (j + i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;
+        <span class="keyword">if</span>(i+i&lt;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;
+        <span class="keyword">if</span> (j - i&gt;=<span class="number">0</span>&amp;&amp;j-i&lt;m)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;
+        <span class="keyword">if</span> (j + i&lt;m)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;
     }
-    cout &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; fuck &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; <span class="string">' '</span>; fuck = <span class="number">0</span>;
+    <span class="built_in">cout</span> &lt;&lt; fuck &lt;&lt; <span class="string">' '</span>; fuck = <span class="number">0</span>;
 }
-cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;
-</code></pre><p>}<br>return(0);<br>}<br><code><br></code></p></code></pre><br>&nbsp;<p></p>
+<span class="built_in">cout</span>&lt;&lt;endl;
+</code></pre><p>}<br>return(0);<br>}<br><code><br></code></p></stdio.h></iostream></code></pre><br>&nbsp;<p></p>
 
 
 <hr>
@@ -429,23 +412,23 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><div class="title">Output</div></p>
 <p><pre class="">9907000008001234<br></pre><br><br><br></p>
 <p><pre class="lang:c decode:true "><br><code></code></pre></p>
-<p>#include&lt;iostream&gt;</p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<p>#include<iostream></iostream></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include<cstring><br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</cstring></p>
 <pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
     <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
-        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+        <span class="built_in">cin</span> &gt;&gt; x[i] &gt;&gt; y[i];
 
         xxx[x[i]]++;
         yyy[y[i]]++;
     }
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
         u = n - xxx[y[i]] - <span class="number">1</span>;
-        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+        <span class="built_in">cout</span> &lt;&lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &lt;&lt; <span class="string">' '</span> &lt;&lt; u &lt;&lt; endl;
     }
 
 }
@@ -492,23 +475,23 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><div class="title">Output</div></p>
 <p><pre class="">3 1<br>4 0<br>2 2</pre><br><br><br></p>
 <p><pre class="lang:c decode:true "><br><code></code></pre></p>
-<p>#include&lt;iostream&gt;</p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<p>#include<iostream></iostream></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include<cstring><br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</cstring></p>
 <pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
     <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
-        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+        <span class="built_in">cin</span> &gt;&gt; x[i] &gt;&gt; y[i];
 
         xxx[x[i]]++;
         yyy[y[i]]++;
     }
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
         u = n - xxx[y[i]] - <span class="number">1</span>;
-        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+        <span class="built_in">cout</span> &lt;&lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &lt;&lt; <span class="string">' '</span> &lt;&lt; u &lt;&lt; endl;
     }
 
 }
@@ -558,10 +541,10 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><div class="title">Output</div></p>
 <p><pre class="">620</pre><br><br><br></p>
 <p><pre class="lang:c decode:true "><br><code></code></pre></p>
-<p>#include&lt;iostream&gt;</p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int o[5][5], i,j, ii, iii, a, b, c, d, e,m=0,max=0;<br>    while (scanf(“%d”, &amp;o[0][0]) != EOF)<br>    {<br>        for (i = 0; i &lt; 5; i++)<br>            for (j = 0; j &lt; 5; j++)<br>            {<br>                if (i == 0 &amp;&amp; j == 0)j++;<br>                cin &gt;&gt; o[i][j];<br>            }<br>        for (a = 0; a &lt; 5; a++)<br>            for (b = 0; b &lt; 5;b++)<br>                for (c = 0; c &lt; 5; c++)<br>                    for (d = 0; d &lt; 5; d++)<br>                        for (e = 0; e &lt; 5; e++)<br>                        {<br>                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)<br>                            m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) <em> 2 + (o[d][e] + o[e][d]) </em> 2;<br>                            if (m&gt;max) max = m;<br>                        }<br>        cout &lt;&lt; max&lt;&lt;endl;<br>    }<br>    return(0);<br>}<br><code><br>&nbsp;</code></p>
+<p>#include<iostream></iostream></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include<cstring><br>using namespace std;<br>int main()<br>{<br>    long int o[5][5], i,j, ii, iii, a, b, c, d, e,m=0,max=0;<br>    while (scanf(“%d”, &amp;o[0][0]) != EOF)<br>    {<br>        for (i = 0; i &lt; 5; i++)<br>            for (j = 0; j &lt; 5; j++)<br>            {<br>                if (i == 0 &amp;&amp; j == 0)j++;<br>                cin &gt;&gt; o[i][j];<br>            }<br>        for (a = 0; a &lt; 5; a++)<br>            for (b = 0; b &lt; 5;b++)<br>                for (c = 0; c &lt; 5; c++)<br>                    for (d = 0; d &lt; 5; d++)<br>                        for (e = 0; e &lt; 5; e++)<br>                        {<br>                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)<br>                            m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) <em> 2 + (o[d][e] + o[e][d]) </em> 2;<br>                            if (m&gt;max) max = m;<br>                        }<br>        cout &lt;&lt; max&lt;<endl; }="" return(0);="" <code=""><br>&nbsp;</endl;></cstring></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>

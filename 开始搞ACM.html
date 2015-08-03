@@ -28,7 +28,7 @@ Description
 
 Valera loves his garden,">
 <meta property="og:image" content="http://espresso.codeforces.com/5be91a371adfaffc95d78b5f3caf8c1149be2c29.png">
-<meta property="og:updated_time" content="2015-08-03T02:23:37.022Z">
+<meta property="og:updated_time" content="2015-08-03T02:39:50.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开始搞ACM">
 <meta name="twitter:description" content="上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。
@@ -170,30 +170,30 @@ Valera loves his garden,">
 <li>On the third day collect the remaining fruits from the <span class="tex-span">2</span>-nd tree.<br>In the second sample, you can only collect <span class="tex-span">60</span> fruits, the remaining fruit will simply wither.</li>
 </ul>
 <p></p></div><br></div><p></p>
-<p><pre class="lang:c decode:true"><code>#include&lt;iostream&gt;</code></pre></p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include &lt;algorithm&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n,v,vv,a[3008],b[3008] ,i,ii,t,o,y,iy;<br>    while (scanf(“%d%d”, &amp;n, &amp;v) != EOF)<br>    {<br>        o = 0; vv = v; y = 0;<br>        for (i = 0; i &lt; n; i++)<br>        {<br>            cin &gt;&gt; a[i]&gt;&gt;b[i];<br>        }<br>        for (i = 0; i &lt; n; i++)<br>            for (ii = i + 1; ii &lt; n; ii++)<br>            {<br>                if (a[i]&gt;a[ii])<br>                {<br>                    t = a[i]; a[i] = a[ii]; a[ii] = t;<br>                    t = b[i]; b[i] = b[ii]; b[ii] = t;<br>                }</p>
+<p><pre class="lang:c decode:true"><code>#include<iostream></iostream></code></pre></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include <algorithm><br>using namespace std;<br>int main()<br>{<br>    long int n,v,vv,a[3008],b[3008] ,i,ii,t,o,y,iy;<br>    while (scanf(“%d%d”, &amp;n, &amp;v) != EOF)<br>    {<br>        o = 0; vv = v; y = 0;<br>        for (i = 0; i &lt; n; i++)<br>        {<br>            cin &gt;&gt; a[i]&gt;&gt;b[i];<br>        }<br>        for (i = 0; i &lt; n; i++)<br>            for (ii = i + 1; ii &lt; n; ii++)<br>            {<br>                if (a[i]&gt;a[ii])<br>                {<br>                    t = a[i]; a[i] = a[ii]; a[ii] = t;<br>                    t = b[i]; b[i] = b[ii]; b[ii] = t;<br>                }</algorithm></p>
 <pre><code>        }
 
     <span class="comment">//</span>
     <span class="comment">//</span>
     <span class="comment">//</span>
 
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
         <span class="keyword">if</span> (i != <span class="number">0</span>)
         {
             <span class="keyword">if</span> (a[i] != a[i - <span class="number">1</span>]) { v = vv; }
 
         }
-        <span class="keyword">if</span> (v != <span class="number">0</span> &amp;amp;&amp;amp; i != <span class="number">0</span>)
+        <span class="keyword">if</span> (v != <span class="number">0</span> &amp;&amp; i != <span class="number">0</span>)
         {
-            <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+            <span class="keyword">for</span> (iy = y; iy &lt; i; iy++)
             {
                 <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
                 {
-                    <span class="keyword">if</span> (v &amp;lt;= b[iy])
+                    <span class="keyword">if</span> (v &lt;= b[iy])
                     {
                         o += v; b[iy] -= v; v = <span class="number">0</span>;
                     }
@@ -201,16 +201,16 @@ Valera loves his garden,">
                 }
             }
         }
-        <span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &amp;gt; <span class="number">1</span>) v = vv;
+        <span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &gt; <span class="number">1</span>) v = vv;
         <span class="keyword">if</span> (v != <span class="number">0</span>)
         {
-            <span class="keyword">if</span> (v &amp;lt;= b[i])
+            <span class="keyword">if</span> (v &lt;= b[i])
             {
                 o += v; b[i] -= v; v = <span class="number">0</span>;
             }
             <span class="keyword">else</span> { o += b[i]; v -= b[i]; b[i] = <span class="number">0</span>; }
         }
-        <span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;amp;&amp;amp;i!=<span class="number">0</span>) y = i;
+        <span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;&amp;i!=<span class="number">0</span>) y = i;
 
     }
 
@@ -220,11 +220,11 @@ Valera loves his garden,">
 
     v = vv; 
 
-    <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
+    <span class="keyword">for</span> (iy = y; iy &lt; i; iy++)
     {
         <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
         {
-            <span class="keyword">if</span> (v &amp;lt;= b[iy])
+            <span class="keyword">if</span> (v &lt;= b[iy])
             {
                 o += v; b[iy] -= v; v = <span class="number">0</span>;
             }
@@ -232,7 +232,7 @@ Valera loves his garden,">
         }
     }
 
-    <span class="built_in">cout</span> &amp;lt;&amp;lt; o &amp;lt;&amp;lt; endl;
+    <span class="built_in">cout</span> &lt;&lt; o &lt;&lt; endl;
 
 }
 <span class="keyword">return</span>(<span class="number">0</span>);
@@ -313,26 +313,26 @@ Valera loves his garden,">
 <ul>
 <li>If Om Nom starts from the first cell of the first row, he won’t see any spiders.</li>
 <li>If he starts from the second cell, he will see two spiders at time 1.</li>
-<li><p>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></p></li></ul></div><br></div><br><pre class="lang:c decode:true"><br><code><br>#include&lt;iostream&gt;<br>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main()<br>{<br>int n, m, k,i,j,fuck;<br>char in[2002][2002];<br>while (scanf(“%d%d%d”, &amp;n,&amp;m,&amp;k) != EOF)<br>{    <p></p>
+<li><p>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></p></li></ul></div><br></div><br><pre class="lang:c decode:true"><br><code><br>#include<iostream><br>#include<stdio.h><br>using namespace std;<br>int main()<br>{<br>int n, m, k,i,j,fuck;<br>char in[2002][2002];<br>while (scanf(“%d%d%d”, &amp;n,&amp;m,&amp;k) != EOF)<br>{    <p></p>
 <pre><code>fuck = <span class="number">0</span>;
-<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; n; i++)
-    <span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
+    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++)
     {
-        cin &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; in[i][j];
+        <span class="built_in">cin</span> &gt;&gt; in[i][j];
     }
 
-<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
+<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++)
 {
-    <span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;<span class="keyword">lt</span>; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++)
     {
-        <span class="keyword">if</span>(i+i&amp;<span class="keyword">lt</span>;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;
-        <span class="keyword">if</span> (j - i&amp;<span class="keyword">gt</span>;=<span class="number">0</span>&amp;amp;&amp;amp;j-i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;
-        <span class="keyword">if</span> (j + i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;
+        <span class="keyword">if</span>(i+i&lt;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;
+        <span class="keyword">if</span> (j - i&gt;=<span class="number">0</span>&amp;&amp;j-i&lt;m)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;
+        <span class="keyword">if</span> (j + i&lt;m)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;
     }
-    cout &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; fuck &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; <span class="string">' '</span>; fuck = <span class="number">0</span>;
+    <span class="built_in">cout</span> &lt;&lt; fuck &lt;&lt; <span class="string">' '</span>; fuck = <span class="number">0</span>;
 }
-cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;
-</code></pre><p>}<br>return(0);<br>}<br><code><br></code></p></code></pre><br>&nbsp;<p></p>
+<span class="built_in">cout</span>&lt;&lt;endl;
+</code></pre><p>}<br>return(0);<br>}<br><code><br></code></p></stdio.h></iostream></code></pre><br>&nbsp;<p></p>
 
 
 <hr>
@@ -387,23 +387,23 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><div class="title">Output</div></p>
 <p><pre class="">9907000008001234<br></pre><br><br><br></p>
 <p><pre class="lang:c decode:true "><br><code></code></pre></p>
-<p>#include&lt;iostream&gt;</p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<p>#include<iostream></iostream></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include<cstring><br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</cstring></p>
 <pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
     <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
-        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+        <span class="built_in">cin</span> &gt;&gt; x[i] &gt;&gt; y[i];
 
         xxx[x[i]]++;
         yyy[y[i]]++;
     }
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
         u = n - xxx[y[i]] - <span class="number">1</span>;
-        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+        <span class="built_in">cout</span> &lt;&lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &lt;&lt; <span class="string">' '</span> &lt;&lt; u &lt;&lt; endl;
     }
 
 }
@@ -450,23 +450,23 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><div class="title">Output</div></p>
 <p><pre class="">3 1<br>4 0<br>2 2</pre><br><br><br></p>
 <p><pre class="lang:c decode:true "><br><code></code></pre></p>
-<p>#include&lt;iostream&gt;</p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
+<p>#include<iostream></iostream></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include<cstring><br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</cstring></p>
 <pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
     <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
-        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
+        <span class="built_in">cin</span> &gt;&gt; x[i] &gt;&gt; y[i];
 
         xxx[x[i]]++;
         yyy[y[i]]++;
     }
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
+    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)
     {
         u = n - xxx[y[i]] - <span class="number">1</span>;
-        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
+        <span class="built_in">cout</span> &lt;&lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &lt;&lt; <span class="string">' '</span> &lt;&lt; u &lt;&lt; endl;
     }
 
 }
@@ -516,10 +516,10 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><div class="title">Output</div></p>
 <p><pre class="">620</pre><br><br><br></p>
 <p><pre class="lang:c decode:true "><br><code></code></pre></p>
-<p>#include&lt;iostream&gt;</p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int o[5][5], i,j, ii, iii, a, b, c, d, e,m=0,max=0;<br>    while (scanf(“%d”, &amp;o[0][0]) != EOF)<br>    {<br>        for (i = 0; i &lt; 5; i++)<br>            for (j = 0; j &lt; 5; j++)<br>            {<br>                if (i == 0 &amp;&amp; j == 0)j++;<br>                cin &gt;&gt; o[i][j];<br>            }<br>        for (a = 0; a &lt; 5; a++)<br>            for (b = 0; b &lt; 5;b++)<br>                for (c = 0; c &lt; 5; c++)<br>                    for (d = 0; d &lt; 5; d++)<br>                        for (e = 0; e &lt; 5; e++)<br>                        {<br>                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)<br>                            m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) <em> 2 + (o[d][e] + o[e][d]) </em> 2;<br>                            if (m&gt;max) max = m;<br>                        }<br>        cout &lt;&lt; max&lt;&lt;endl;<br>    }<br>    return(0);<br>}<br><code><br>&nbsp;</code></p>
+<p>#include<iostream></iostream></p>
+<p>#include<stdio.h></stdio.h></p>
+<p>#include<string.h></string.h></p>
+<p>#include<cstring><br>using namespace std;<br>int main()<br>{<br>    long int o[5][5], i,j, ii, iii, a, b, c, d, e,m=0,max=0;<br>    while (scanf(“%d”, &amp;o[0][0]) != EOF)<br>    {<br>        for (i = 0; i &lt; 5; i++)<br>            for (j = 0; j &lt; 5; j++)<br>            {<br>                if (i == 0 &amp;&amp; j == 0)j++;<br>                cin &gt;&gt; o[i][j];<br>            }<br>        for (a = 0; a &lt; 5; a++)<br>            for (b = 0; b &lt; 5;b++)<br>                for (c = 0; c &lt; 5; c++)<br>                    for (d = 0; d &lt; 5; d++)<br>                        for (e = 0; e &lt; 5; e++)<br>                        {<br>                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)<br>                            m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) <em> 2 + (o[d][e] + o[e][d]) </em> 2;<br>                            if (m&gt;max) max = m;<br>                        }<br>        cout &lt;&lt; max&lt;<endl; }="" return(0);="" <code=""><br>&nbsp;</endl;></cstring></p>
 
       
     </div>
@@ -586,7 +586,7 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
       <ul>
         
           <li>
-            <a href="/从WordPress转移到了Hexo.html">从WordPress转移到了Hexo</a>
+            <a href="/把博客从 WordPress 转移到了 Hexo.html">从WordPress转移到了Hexo</a>
           </li>
         
           <li>
