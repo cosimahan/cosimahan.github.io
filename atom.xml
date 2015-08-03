@@ -156,7 +156,7 @@
     <link href="http://cosimahan.github.io/%E5%BC%80%E5%A7%8B%E6%90%9EACM.html"/>
     <id>http://cosimahan.github.io/开始搞ACM.html</id>
     <published>2014-12-11T13:43:56.000Z</published>
-    <updated>2015-07-30T08:05:24.294Z</updated>
+    <updated>2015-08-03T02:16:02.878Z</updated>
     <content type="html"><![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
 <p>随手拿最近的一些水题放上来吧，当做纪念，可能几年后我成为了大神，人们来嘲笑我说，这么烂的代码竟然是他曾经写的。</p>
 <hr>
@@ -211,74 +211,8 @@
 <li>On the second day collect <span class="tex-span">1</span> fruit from the <span class="tex-span">2</span>-nd tree and <span class="tex-span">2</span> fruits from the <span class="tex-span">1</span>-st tree.</li>
 <li>On the third day collect the remaining fruits from the <span class="tex-span">2</span>-nd tree.<br>In the second sample, you can only collect <span class="tex-span">60</span> fruits, the remaining fruit will simply wither.</li>
 </ul>
-<p></p></div><br></div><p></p>
-<p><pre class="lang:c decode:true">#include&lt;iostream&gt;</pre></p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include &lt;algorithm&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n,v,vv,a[3008],b[3008] ,i,ii,t,o,y,iy;<br>    while (scanf(“%d%d”, &amp;n, &amp;v) != EOF)<br>    {<br>        o = 0; vv = v; y = 0;<br>        for (i = 0; i &lt; n; i++)<br>        {<br>            cin &gt;&gt; a[i]&gt;&gt;b[i];<br>        }<br>        for (i = 0; i &lt; n; i++)<br>            for (ii = i + 1; ii &lt; n; ii++)<br>            {<br>                if (a[i]&gt;a[ii])<br>                {<br>                    t = a[i]; a[i] = a[ii]; a[ii] = t;<br>                    t = b[i]; b[i] = b[ii]; b[ii] = t;<br>                }</p>
-<pre><code>        }
-
-    <span class="comment">//</span>
-    <span class="comment">//</span>
-    <span class="comment">//</span>
-
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
-    {
-        <span class="keyword">if</span> (i != <span class="number">0</span>)
-        {
-            <span class="keyword">if</span> (a[i] != a[i - <span class="number">1</span>]) { v = vv; }
-
-        }
-        <span class="keyword">if</span> (v != <span class="number">0</span> &amp;amp;&amp;amp; i != <span class="number">0</span>)
-        {
-            <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
-            {
-                <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
-                {
-                    <span class="keyword">if</span> (v &amp;lt;= b[iy])
-                    {
-                        o += v; b[iy] -= v; v = <span class="number">0</span>;
-                    }
-                    <span class="keyword">else</span> { o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; }
-                }
-            }
-        }
-        <span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &amp;gt; <span class="number">1</span>) v = vv;
-        <span class="keyword">if</span> (v != <span class="number">0</span>)
-        {
-            <span class="keyword">if</span> (v &amp;lt;= b[i])
-            {
-                o += v; b[i] -= v; v = <span class="number">0</span>;
-            }
-            <span class="keyword">else</span> { o += b[i]; v -= b[i]; b[i] = <span class="number">0</span>; }
-        }
-        <span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;amp;&amp;amp;i!=<span class="number">0</span>) y = i;
-
-    }
-
-    <span class="comment">//</span>
-    <span class="comment">//</span>
-    <span class="comment">//</span>
-
-    v = vv; 
-
-    <span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)
-    {
-        <span class="keyword">if</span> (b[iy] != <span class="number">0</span>)
-        {
-            <span class="keyword">if</span> (v &amp;lt;= b[iy])
-            {
-                o += v; b[iy] -= v; v = <span class="number">0</span>;
-            }
-            <span class="keyword">else</span> { o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; }
-        }
-    }
-
-    <span class="built_in">cout</span> &amp;lt;&amp;lt; o &amp;lt;&amp;lt; endl;
-
-}
-<span class="keyword">return</span>(<span class="number">0</span>);
-</code></pre><p>}<br><br>&nbsp;</p>
+<p></p></div><br></div><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &amp;lt;algorithm&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> n,v,vv,a[<span class="number">3008</span>],b[<span class="number">3008</span>] ,i,ii,t,o,y,iy;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;amp;n, &amp;amp;v) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line">		o = <span class="number">0</span>; vv = v; y = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &amp;gt;&amp;gt; a[i]&amp;gt;&amp;gt;b[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">			<span class="keyword">for</span> (ii = i + <span class="number">1</span>; ii &amp;lt; n; ii++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (a[i]&amp;gt;a[ii])</span><br><span class="line">				&#123; </span><br><span class="line">					t = a[i]; a[i] = a[ii]; a[ii] = t; </span><br><span class="line">					t = b[i]; b[i] = b[ii]; b[ii] = t;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (i != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (a[i] != a[i - <span class="number">1</span>]) &#123; v = vv; &#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (v != <span class="number">0</span> &amp;amp;&amp;amp; i != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span> (b[iy] != <span class="number">0</span>)</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="keyword">if</span> (v &amp;lt;= b[iy])</span><br><span class="line">						&#123;</span><br><span class="line">							o += v; b[iy] -= v; v = <span class="number">0</span>;</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">else</span> &#123; o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; &#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &amp;gt; <span class="number">1</span>) v = vv;</span><br><span class="line">			<span class="keyword">if</span> (v != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (v &amp;lt;= b[i])</span><br><span class="line">				&#123;</span><br><span class="line">					o += v; b[i] -= v; v = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123; o += b[i]; v -= b[i]; b[i] = <span class="number">0</span>; &#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;amp;&amp;amp;i!=<span class="number">0</span>) y = i;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">		v = vv; </span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (iy = y; iy &amp;lt; i; iy++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (b[iy] != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (v &amp;lt;= b[iy])</span><br><span class="line">				&#123;</span><br><span class="line">					o += v; b[iy] -= v; v = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123; o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; &#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &amp;lt;&amp;lt; o &amp;lt;&amp;lt; endl;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+<p>&nbsp;</p>
 <hr>
 <h4 id="Codefoces_436B-Om_Nom_and_Spiders">Codefoces 436B-Om Nom and Spiders</h4><div id="vj_description" class="hiddable">
 
@@ -355,28 +289,10 @@
 <ul>
 <li>If Om Nom starts from the first cell of the first row, he won’t see any spiders.</li>
 <li>If he starts from the second cell, he will see two spiders at time 1.</li>
-<li><p>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></p></li></ul></div><br></div><br><pre class="lang:c decode:true">#include&lt;iostream&gt;<br>#include&lt;stdio.h&gt;<br>using namespace std;<br>int main()<br>{<br>int n, m, k,i,j,fuck;<br>char in[2002][2002];<br>while (scanf(“%d%d%d”, &amp;n,&amp;m,&amp;k) != EOF)<br>{    <p></p>
-<pre><code>fuck = <span class="number">0</span>;
-<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; n; i++)
-    <span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
-    {
-        cin &amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>; in[i][j];
-    }
-
-<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;<span class="keyword">lt</span>; <span class="keyword">m</span>; j++)
-{
-    <span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;<span class="keyword">lt</span>; n; i++)
-    {
-        <span class="keyword">if</span>(i+i&amp;<span class="keyword">lt</span>;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;
-        <span class="keyword">if</span> (j - i&amp;<span class="keyword">gt</span>;=<span class="number">0</span>&amp;amp;&amp;amp;j-i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;
-        <span class="keyword">if</span> (j + i&amp;<span class="keyword">lt</span>;<span class="keyword">m</span>)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;
-    }
-    cout &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; fuck &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>; <span class="string">' '</span>; fuck = <span class="number">0</span>;
-}
-cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;
-</code></pre><p>}<br>return(0);<br>}</p></pre><br>&nbsp;<p></p>
+<li>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></li></ul></div><br></div><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m, k,i,j,fuck;</span><br><span class="line">	<span class="keyword">char</span> in[<span class="number">2002</span>][<span class="number">2002</span>];</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;amp;n,&amp;amp;m,&amp;amp;k) != EOF)</span><br><span class="line">	&#123;	</span><br><span class="line">		fuck = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">			<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; m; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cin</span> &amp;gt;&amp;gt; in[i][j];</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; m; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt; n; i++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(i+i&amp;lt;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;</span><br><span class="line">				<span class="keyword">if</span> (j - i&amp;gt;=<span class="number">0</span>&amp;amp;&amp;amp;j-i&amp;lt;m)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;</span><br><span class="line">				<span class="keyword">if</span> (j + i&amp;lt;m)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="built_in">cout</span> &amp;lt;&amp;lt; fuck &amp;lt;&amp;lt; <span class="string">' '</span>; fuck = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="built_in">cout</span>&amp;lt;&amp;lt;endl;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+<p>&nbsp;</p>
 <hr>
 <h4 id="Codeforces_435B_Pasha_Maximizes">Codeforces 435B Pasha Maximizes</h4><div id="vj_description" class="hiddable">
 
@@ -427,29 +343,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><pre class="">9090000078001234 6</pre><br></p>
 <p><div class="output"></div></p>
 <p><div class="title">Output</div></p>
-<p><pre class="">9907000008001234<br></pre><br><br><br></p>
-<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
-<pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
-    <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
-    {
-        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
-
-        xxx[x[i]]++;
-        yyy[y[i]]++;
-    }
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
-    {
-        u = n - xxx[y[i]] - <span class="number">1</span>;
-        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
-    }
-
-}
-<span class="keyword">return</span>(<span class="number">0</span>);
-</code></pre><p>}<br>&nbsp;</p>
+<p><pre class="">9907000008001234<br></pre><br><br><br><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;cstring&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> n, x[<span class="number">100008</span>], y[<span class="number">100008</span>],  i = <span class="number">0</span>, j,xxx[<span class="number">100008</span>],yyy[<span class="number">100008</span>],u;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;amp;n) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));</span><br><span class="line">		<span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];</span><br><span class="line"></span><br><span class="line">			xxx[x[i]]++;</span><br><span class="line">			yyy[y[i]]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			u = n - xxx[y[i]] - <span class="number">1</span>;</span><br><span class="line">			<span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
 <hr>
 <h4 id="codeforce_432B_-_Football_Kit">codeforce 432B - Football Kit</h4><div id="vj_description" class="hiddable">
 
@@ -489,29 +384,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><pre>3<br>1 2<br>2 1<br>1 3</pre><br></p>
 <p><div class="output"></div></p>
 <p><div class="title">Output</div></p>
-<p><pre class="">3 1<br>4 0<br>2 2</pre><br><br><br></p>
-<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int n, x[100008], y[100008],  i = 0, j,xxx[100008],yyy[100008],u;<br>    while (scanf(“%d”, &amp;n) != EOF)<br>    {</p>
-<pre><code>    <span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));
-    <span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
-    {
-        <span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];
-
-        xxx[x[i]]++;
-        yyy[y[i]]++;
-    }
-    <span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)
-    {
-        u = n - xxx[y[i]] - <span class="number">1</span>;
-        <span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;
-    }
-
-}
-<span class="keyword">return</span>(<span class="number">0</span>);
-</code></pre><p>}<br>&nbsp;</p>
+<p><pre class="">3 1<br>4 0<br>2 2</pre><br><br><br><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;cstring&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> n, x[<span class="number">100008</span>], y[<span class="number">100008</span>],  i = <span class="number">0</span>, j,xxx[<span class="number">100008</span>],yyy[<span class="number">100008</span>],u;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;amp;n) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));</span><br><span class="line">		<span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &amp;gt;&amp;gt; x[i] &amp;gt;&amp;gt; y[i];</span><br><span class="line"></span><br><span class="line">			xxx[x[i]]++;</span><br><span class="line">			yyy[y[i]]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			u = n - xxx[y[i]] - <span class="number">1</span>;</span><br><span class="line">			<span class="built_in">cout</span> &amp;lt;&amp;lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &amp;lt;&amp;lt; <span class="string">' '</span> &amp;lt;&amp;lt; u &amp;lt;&amp;lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
 <hr>
 <h4 id="Codeforces_431B_Shower_Line">Codeforces 431B Shower Line</h4><div id="vj_description" class="hiddable">
 
@@ -554,11 +428,8 @@ cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;en
 <p><pre>0 43 21 18 2<br>3 0 21 11 65<br>5 2 0 1 4<br>54 62 12 0 99<br>87 64 81 33 0</pre><br></p>
 <p><div class="output"></div></p>
 <p><div class="title">Output</div></p>
-<p><pre class="">620</pre><br><br><br></p>
-<p><pre class="lang:c decode:true ">#include&lt;iostream&gt;</pre></p>
-<p>#include&lt;stdio.h&gt;</p>
-<p>#include&lt;string.h&gt;</p>
-<p>#include&lt;cstring&gt;<br>using namespace std;<br>int main()<br>{<br>    long int o[5][5], i,j, ii, iii, a, b, c, d, e,m=0,max=0;<br>    while (scanf(“%d”, &amp;o[0][0]) != EOF)<br>    {<br>        for (i = 0; i &lt; 5; i++)<br>            for (j = 0; j &lt; 5; j++)<br>            {<br>                if (i == 0 &amp;&amp; j == 0)j++;<br>                cin &gt;&gt; o[i][j];<br>            }<br>        for (a = 0; a &lt; 5; a++)<br>            for (b = 0; b &lt; 5;b++)<br>                for (c = 0; c &lt; 5; c++)<br>                    for (d = 0; d &lt; 5; d++)<br>                        for (e = 0; e &lt; 5; e++)<br>                        {<br>                            if(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)<br>                            m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) <em> 2 + (o[d][e] + o[e][d]) </em> 2;<br>                            if (m&gt;max) max = m;<br>                        }<br>        cout &lt;&lt; max&lt;&lt;endl;<br>    }<br>    return(0);<br>}<br>&nbsp;</p>
+<p><pre class="">620</pre><br><br><br><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&amp;lt;cstring&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> o[<span class="number">5</span>][<span class="number">5</span>], i,j, ii, iii, a, b, c, d, e,m=<span class="number">0</span>,max=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;amp;o[<span class="number">0</span>][<span class="number">0</span>]) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; <span class="number">5</span>; i++)</span><br><span class="line">			<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; <span class="number">5</span>; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (i == <span class="number">0</span> &amp;amp;&amp;amp; j == <span class="number">0</span>)j++;</span><br><span class="line">				<span class="built_in">cin</span> &amp;gt;&amp;gt; o[i][j];</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">for</span> (a = <span class="number">0</span>; a &amp;lt; <span class="number">5</span>; a++)</span><br><span class="line">			<span class="keyword">for</span> (b = <span class="number">0</span>; b &amp;lt; <span class="number">5</span>;b++)</span><br><span class="line">				<span class="keyword">for</span> (c = <span class="number">0</span>; c &amp;lt; <span class="number">5</span>; c++)</span><br><span class="line">					<span class="keyword">for</span> (d = <span class="number">0</span>; d &amp;lt; <span class="number">5</span>; d++)</span><br><span class="line">						<span class="keyword">for</span> (e = <span class="number">0</span>; e &amp;lt; <span class="number">5</span>; e++)</span><br><span class="line">						&#123;</span><br><span class="line">							<span class="keyword">if</span>(a!=b&amp;amp;&amp;amp;a!=c&amp;amp;&amp;amp;a!=d&amp;amp;&amp;amp;a!=e&amp;amp;&amp;amp;b!=c&amp;amp;&amp;amp;b!=d&amp;amp;&amp;amp;b!=e&amp;amp;&amp;amp;c!=d&amp;amp;&amp;amp;c!=e&amp;amp;&amp;amp;d!=e)</span><br><span class="line">							m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) * <span class="number">2</span> + (o[d][e] + o[e][d]) * <span class="number">2</span>;</span><br><span class="line">							<span class="keyword">if</span> (m&amp;gt;max) max = m;</span><br><span class="line">						&#125;</span><br><span class="line">		<span class="built_in">cout</span> &amp;lt;&amp;lt; max&amp;lt;&amp;lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
