@@ -4,9 +4,9 @@
   <title><![CDATA[Cosima Han's]]></title>
   <subtitle><![CDATA[择高处立，就平处坐，向宽出行]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://cosimahan.github.io//"/>
+  <link href="http://blog.cosimahan.com//"/>
   <updated>2015-08-04T08:04:57.835Z</updated>
-  <id>http://cosimahan.github.io//</id>
+  <id>http://blog.cosimahan.com//</id>
   
   <author>
     <name><![CDATA[Cosima]]></name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title><![CDATA[把博客从 WordPress 转移到了 Hexo]]></title>
-    <link href="http://cosimahan.github.io/%E6%8A%8A%E5%8D%9A%E5%AE%A2%E4%BB%8E%20WordPress%20%E8%BD%AC%E7%A7%BB%E5%88%B0%E4%BA%86%20Hexo.html"/>
-    <id>http://cosimahan.github.io/把博客从 WordPress 转移到了 Hexo.html</id>
+    <link href="http://blog.cosimahan.com/%E6%8A%8A%E5%8D%9A%E5%AE%A2%E4%BB%8E%20WordPress%20%E8%BD%AC%E7%A7%BB%E5%88%B0%E4%BA%86%20Hexo.html"/>
+    <id>http://blog.cosimahan.com/把博客从 WordPress 转移到了 Hexo.html</id>
     <published>2015-08-02T08:32:06.000Z</published>
     <updated>2015-08-04T08:04:57.835Z</updated>
     <content type="html"></content>
@@ -30,8 +30,8 @@
   
   <entry>
     <title><![CDATA[拿单片机做了个表]]></title>
-    <link href="http://cosimahan.github.io/%E6%8B%BF%E5%8D%95%E7%89%87%E6%9C%BA%E5%81%9A%E4%BA%86%E4%B8%AA%E8%A1%A8.html"/>
-    <id>http://cosimahan.github.io/拿单片机做了个表.html</id>
+    <link href="http://blog.cosimahan.com/%E6%8B%BF%E5%8D%95%E7%89%87%E6%9C%BA%E5%81%9A%E4%BA%86%E4%B8%AA%E8%A1%A8.html"/>
+    <id>http://blog.cosimahan.com/拿单片机做了个表.html</id>
     <published>2015-07-06T03:50:24.000Z</published>
     <updated>2015-08-03T02:04:38.349Z</updated>
     <content type="html"><![CDATA[<p>共使用6个按键、12位共阳数码管、4LED灯加一有源头蜂鸣器，按键占用一组I/O口，数码管、LED灯与蜂鸣器公用三组IO口。</p>
@@ -44,14 +44,14 @@
 <p>代码如下<br><figure class="highlight cpp"><table><tr><td class="gutter"]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ACM省赛打了块铁，心塞塞]]></title>
-    <link href="http://cosimahan.github.io/ACM%E7%9C%81%E8%B5%9B%E6%89%93%E4%BA%86%E5%9D%97%E9%93%81%EF%BC%8C%E5%BF%83%E5%A1%9E%E5%A1%9E.html"/>
-    <id>http://cosimahan.github.io/ACM省赛打了块铁，心塞塞.html</id>
+    <link href="http://blog.cosimahan.com/ACM%E7%9C%81%E8%B5%9B%E6%89%93%E4%BA%86%E5%9D%97%E9%93%81%EF%BC%8C%E5%BF%83%E5%A1%9E%E5%A1%9E.html"/>
+    <id>http://blog.cosimahan.com/ACM省赛打了块铁，心塞塞.html</id>
     <published>2015-04-26T08:55:25.000Z</published>
     <updated>2015-07-30T08:05:24.298Z</updated>
     <content type="html"><![CDATA[<p><img src="http://i.imgur.com/wx5cbLU.png" alt="T_T"></p>
@@ -61,14 +61,14 @@
 ]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[把域名从 Godaddy 转到了 NameSilo]]></title>
-    <link href="http://cosimahan.github.io/%E6%8A%8A%E5%9F%9F%E5%90%8D%E4%BB%8E%20Godaddy%20%E8%BD%AC%E5%88%B0%E4%BA%86%20NameSilo.html"/>
-    <id>http://cosimahan.github.io/把域名从 Godaddy 转到了 NameSilo.html</id>
+    <link href="http://blog.cosimahan.com/%E6%8A%8A%E5%9F%9F%E5%90%8D%E4%BB%8E%20Godaddy%20%E8%BD%AC%E5%88%B0%E4%BA%86%20NameSilo.html"/>
+    <id>http://blog.cosimahan.com/把域名从 Godaddy 转到了 NameSilo.html</id>
     <published>2015-04-17T04:16:00.000Z</published>
     <updated>2015-08-05T04:45:55.838Z</updated>
     <content type="html"><![CDATA[<p>域名还不到一个月过期，发现续费好贵，也没有好用的优惠码，再加上朋友的域名被盗事件，便不想继续放在 Godaddy 那儿了。近日发现 NameSilo 价格尚可，送隐私保护，那就选它了，开工。</p>
@@ -90,14 +90,14 @@
 <p><a href="http://7u2p8s.com1.z0.glb]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[总觉得该做点什么]]></title>
-    <link href="http://cosimahan.github.io/%E6%80%BB%E8%A7%89%E5%BE%97%E8%AF%A5%E5%81%9A%E7%82%B9%E4%BB%80%E4%B9%88.html"/>
-    <id>http://cosimahan.github.io/总觉得该做点什么.html</id>
+    <link href="http://blog.cosimahan.com/%E6%80%BB%E8%A7%89%E5%BE%97%E8%AF%A5%E5%81%9A%E7%82%B9%E4%BB%80%E4%B9%88.html"/>
+    <id>http://blog.cosimahan.com/总觉得该做点什么.html</id>
     <published>2015-04-14T04:50:31.000Z</published>
     <updated>2015-08-03T01:58:32.886Z</updated>
     <content type="html"><![CDATA[<p>大学一年级已经过去了一多半，回想这半年，我都干了些啥子嘛。接触的东西不少，但基本都是皮毛，也做了点东西，都是雕虫小技罢了，没有啥能拿的出手或能说的出口的。</p>
@@ -111,14 +111,14 @@
 <p>在学业上投入的精力不多，自然换来了低低的GPA，英语更是得到45分的期末卷面成绩，好在平时成绩占比较大，]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[用C写了个一个支持长数字输入输出计算器]]></title>
-    <link href="http://cosimahan.github.io/%E7%94%A8C%E5%86%99%E4%BA%86%E4%B8%AA%E4%B8%80%E4%B8%AA%E6%94%AF%E6%8C%81%E9%95%BF%E6%95%B0%E5%AD%97%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E8%AE%A1%E7%AE%97%E5%99%A8.html"/>
-    <id>http://cosimahan.github.io/用C写了个一个支持长数字输入输出计算器.html</id>
+    <link href="http://blog.cosimahan.com/%E7%94%A8C%E5%86%99%E4%BA%86%E4%B8%AA%E4%B8%80%E4%B8%AA%E6%94%AF%E6%8C%81%E9%95%BF%E6%95%B0%E5%AD%97%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E8%AE%A1%E7%AE%97%E5%99%A8.html"/>
+    <id>http://blog.cosimahan.com/用C写了个一个支持长数字输入输出计算器.html</id>
     <published>2015-02-26T07:35:12.000Z</published>
     <updated>2015-08-03T02:43:31.614Z</updated>
     <content type="html"><![CDATA[<p>市面上竟然没找到一个支持几千位数字输入的计算器软件，只好自己动手搞了一个。</p>
@@ -130,14 +130,14 @@
 <p>目前暂时只支持非负整数的加减法运算，我毕竟还是很菜，代码又丑又烂。<br><figure class="highlight autoit"><table><tr><td class="]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[开始搞ACM]]></title>
-    <link href="http://cosimahan.github.io/%E5%BC%80%E5%A7%8B%E6%90%9EACM.html"/>
-    <id>http://cosimahan.github.io/开始搞ACM.html</id>
+    <link href="http://blog.cosimahan.com/%E5%BC%80%E5%A7%8B%E6%90%9EACM.html"/>
+    <id>http://blog.cosimahan.com/开始搞ACM.html</id>
     <published>2014-12-11T13:43:56.000Z</published>
     <updated>2015-08-03T02:50:16.329Z</updated>
     <content type="html"><![CDATA[<p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
@@ -421,14 +421,14 @@
 <h4 id="Codef]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[大一秋游1——中南百草原]]></title>
-    <link href="http://cosimahan.github.io/%E5%A4%A7%E4%B8%80%E7%A7%8B%E6%B8%B81%E2%80%94%E2%80%94%E4%B8%AD%E5%8D%97%E7%99%BE%E8%8D%89%E5%8E%9F.html"/>
-    <id>http://cosimahan.github.io/大一秋游1——中南百草原.html</id>
+    <link href="http://blog.cosimahan.com/%E5%A4%A7%E4%B8%80%E7%A7%8B%E6%B8%B81%E2%80%94%E2%80%94%E4%B8%AD%E5%8D%97%E7%99%BE%E8%8D%89%E5%8E%9F.html"/>
+    <id>http://blog.cosimahan.com/大一秋游1——中南百草原.html</id>
     <published>2014-10-26T09:25:57.000Z</published>
     <updated>2015-08-05T04:42:03.269Z</updated>
     <content type="html"><![CDATA[<p>这是大学里的第一次班级活动，特发此文以示纪念。</p>
@@ -443,14 +443,14 @@
 <p><a href="htt]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Windows 9: The new Start Menu in Action]]></title>
-    <link href="http://cosimahan.github.io/windows-9-the-new-start-menu-in-action.html"/>
-    <id>http://cosimahan.github.io/windows-9-the-new-start-menu-in-action.html</id>
+    <link href="http://blog.cosimahan.com/windows-9-the-new-start-menu-in-action.html"/>
+    <id>http://blog.cosimahan.com/windows-9-the-new-start-menu-in-action.html</id>
     <published>2014-09-13T01:34:50.000Z</published>
     <updated>2015-07-30T08:05:24.280Z</updated>
     <content type="html"><![CDATA[<iframe src="//www.youtube.com/embed/--wgAsHWNRE" width="640" height="390" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
@@ -463,14 +463,14 @@
 <h3 ]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[未成年的忧与乐]]></title>
-    <link href="http://cosimahan.github.io/%E6%9C%AA%E6%88%90%E5%B9%B4%E7%9A%84%E5%BF%A7%E4%B8%8E%E4%B9%90.html"/>
-    <id>http://cosimahan.github.io/未成年的忧与乐.html</id>
+    <link href="http://blog.cosimahan.com/%E6%9C%AA%E6%88%90%E5%B9%B4%E7%9A%84%E5%BF%A7%E4%B8%8E%E4%B9%90.html"/>
+    <id>http://blog.cosimahan.com/未成年的忧与乐.html</id>
     <published>2014-08-26T04:01:19.000Z</published>
     <updated>2015-07-30T08:05:24.293Z</updated>
     <content type="html"><![CDATA[<ul>
@@ -496,14 +496,14 @@
 <li><em>禁止不满16周岁的未成年人开业从事个体经营活动</em><br>来源：中华人]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[电影《活着》观后感]]></title>
-    <link href="http://cosimahan.github.io/%E7%94%B5%E5%BD%B1%E3%80%8A%E6%B4%BB%E7%9D%80%E3%80%8B%E8%A7%82%E5%90%8E%E6%84%9F.html"/>
-    <id>http://cosimahan.github.io/电影《活着》观后感.html</id>
+    <link href="http://blog.cosimahan.com/%E7%94%B5%E5%BD%B1%E3%80%8A%E6%B4%BB%E7%9D%80%E3%80%8B%E8%A7%82%E5%90%8E%E6%84%9F.html"/>
+    <id>http://blog.cosimahan.com/电影《活着》观后感.html</id>
     <published>2014-08-09T13:45:12.000Z</published>
     <updated>2015-07-30T08:05:24.277Z</updated>
     <content type="html"><![CDATA[<p>「两个福贵的脚上都沾满了泥,走去时都微微晃动着身体。」从几个月前的试卷上，我对余华先生的《活着》产生了兴趣。今天看了张艺谋先生据此拍的电影，简单写写感受。</p>
@@ -515,14 +515,14 @@
 <p>电影相比原著，少了些超脱，多了点入世；少了些刻薄尖锐，多了点黑色幽默。温和的讽刺，让人哭笑不得，一次次的]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[初日 AKB48]]></title>
-    <link href="http://cosimahan.github.io/%E5%88%9D%E6%97%A5%20AKB48.html"/>
-    <id>http://cosimahan.github.io/初日 AKB48.html</id>
+    <link href="http://blog.cosimahan.com/%E5%88%9D%E6%97%A5%20AKB48.html"/>
+    <id>http://blog.cosimahan.com/初日 AKB48.html</id>
     <published>2014-07-22T07:25:53.000Z</published>
     <updated>2015-07-30T08:05:24.278Z</updated>
     <content type="html"><![CDATA[<p><strong>歌，不燃，但歌词很好。</strong></p>
@@ -595,14 +595,14 @@ Oh！
 <iframe src="http://player.youku.com/embed/XMzAzNzk5OTY0" wi]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[三天不读口生，三天不练手生]]></title>
-    <link href="http://cosimahan.github.io/%E4%B8%89%E5%A4%A9%E4%B8%8D%E8%AF%BB%E5%8F%A3%E7%94%9F%EF%BC%8C%E4%B8%89%E5%A4%A9%E4%B8%8D%E7%BB%83%E6%89%8B%E7%94%9F.html"/>
-    <id>http://cosimahan.github.io/三天不读口生，三天不练手生.html</id>
+    <link href="http://blog.cosimahan.com/%E4%B8%89%E5%A4%A9%E4%B8%8D%E8%AF%BB%E5%8F%A3%E7%94%9F%EF%BC%8C%E4%B8%89%E5%A4%A9%E4%B8%8D%E7%BB%83%E6%89%8B%E7%94%9F.html"/>
+    <id>http://blog.cosimahan.com/三天不读口生，三天不练手生.html</id>
     <published>2014-07-03T12:52:24.000Z</published>
     <updated>2015-07-30T08:05:24.269Z</updated>
     <content type="html"><![CDATA[<blockquote>
@@ -668,14 +668,14 @@ Oh！
 <p><pre class="sort" style="color: #45484b;"><span style="font-weight: bold; color: #555555;">俗话说的一点不假，一段时]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[试吃第一批螃蟹]]></title>
-    <link href="http://cosimahan.github.io/%E8%AF%95%E5%90%83%E7%AC%AC%E4%B8%80%E6%89%B9%E8%9E%83%E8%9F%B9.html"/>
-    <id>http://cosimahan.github.io/试吃第一批螃蟹.html</id>
+    <link href="http://blog.cosimahan.com/%E8%AF%95%E5%90%83%E7%AC%AC%E4%B8%80%E6%89%B9%E8%9E%83%E8%9F%B9.html"/>
+    <id>http://blog.cosimahan.com/试吃第一批螃蟹.html</id>
     <published>2014-06-23T04:24:29.000Z</published>
     <updated>2015-08-05T04:41:15.196Z</updated>
     <content type="html"><![CDATA[<p>咱对虚拟运营商都不陌生了，经过几个月的预热，现在终于放号了。于是，我拿到了运营商为“蜗X移动”的“399坑爹卡”。</p>
@@ -699,14 +699,14 @@ Oh！
 <p>上个星期预约和抢购，需要下载一个叫“免X店”的垃圾客户端，整个流]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[等了好久终于等到今天，梦了好久终于把梦实现]]></title>
-    <link href="http://cosimahan.github.io/%E7%AD%89%E4%BA%86%E5%A5%BD%E4%B9%85%E7%BB%88%E4%BA%8E%E7%AD%89%E5%88%B0%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%A2%A6%E4%BA%86%E5%A5%BD%E4%B9%85%E7%BB%88%E4%BA%8E%E6%8A%8A%E6%A2%A6%E5%AE%9E%E7%8E%B0.html"/>
-    <id>http://cosimahan.github.io/等了好久终于等到今天，梦了好久终于把梦实现.html</id>
+    <link href="http://blog.cosimahan.com/%E7%AD%89%E4%BA%86%E5%A5%BD%E4%B9%85%E7%BB%88%E4%BA%8E%E7%AD%89%E5%88%B0%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%A2%A6%E4%BA%86%E5%A5%BD%E4%B9%85%E7%BB%88%E4%BA%8E%E6%8A%8A%E6%A2%A6%E5%AE%9E%E7%8E%B0.html"/>
+    <id>http://blog.cosimahan.com/等了好久终于等到今天，梦了好久终于把梦实现.html</id>
     <published>2014-06-11T00:24:55.000Z</published>
     <updated>2015-07-30T08:05:24.268Z</updated>
     <content type="html"><![CDATA[<p>——记高考</p>
@@ -718,7 +718,7 @@ Oh！
 <p>高考是人生最公平的比赛, 高中三年是人生最美丽的乐章。<br>就像华仔唱的, 我的梦想终于要实现了。一个考场,30个小小的笔尖,承载了多少个梦想,学霸抑或学渣,梦想在笔尖上绽放。<br>这次考试发挥可以,总共4场,正常水平<em>2 小幅度超水平<]]>
     </summary>
     
-      <category term="未分类" scheme="http://cosimahan.github.io/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
     
   </entry>
   
