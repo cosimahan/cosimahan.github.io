@@ -5,7 +5,7 @@
   <subtitle><![CDATA[择高处立，就平处坐，向宽出行]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.cosimahan.com//"/>
-  <updated>2015-11-13T11:53:47.742Z</updated>
+  <updated>2015-11-13T12:01:20.433Z</updated>
   <id>http://blog.cosimahan.com//</id>
   
   <author>
@@ -20,16 +20,14 @@
     <link href="http://blog.cosimahan.com/%E5%85%B3%E4%BA%8E%E5%BF%AB%E9%80%9F%E7%9C%81%E5%8A%9B%E5%9C%B0%E5%9C%A8%E7%BA%B8%E8%B4%A8%E6%9D%90%E6%96%99%E4%B8%8A%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E5%AD%97%E8%BF%B9%E7%9A%84%E7%A0%94%E7%A9%B6.html"/>
     <id>http://blog.cosimahan.com/关于快速省力地在纸质材料上实现手写字迹的研究.html</id>
     <published>2015-11-13T10:37:08.000Z</published>
-    <updated>2015-11-13T11:53:47.742Z</updated>
+    <updated>2015-11-13T12:01:20.433Z</updated>
     <content type="html"><![CDATA[<h2 id="摘要"><center>摘要</center></h2><p>（略）</p>
 <h2 id="关键字"><center>关键字</center></h2><p>手写 打印</p>
 <h2 id="正文"><center>正文</center></h2><p><strong>选题依据、研究背景与研究意义：</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;总有一些看起来浪费时间的事情，其中一些便是现在无聊课程要求的手写作业了。本研究的目的旨在使人们从这种毫无意义的重复劳动中解放出来，节省宝贵的时间和精力用于码代码。<br><strong>研究现状：</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;自二十世纪后期电脑打印得到应用以来，打印技术不断发展，激光打印、喷墨打印等已经普及，现在普通打印机打印的质量已经相当不错，成本也相对低廉。<br>&nbsp;&nbsp;&nbsp;&nbsp;如今的中文字体早已不单单仅有宋体黑体等传统字体，各种艺术体、手写体更是百花齐放。<br><strong>研究方法：</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;以我的思想为指导，通过对相关研究现状的分析，得出实现目标的可行理论方案和实际解决方案。<br><strong>可行理论方案</strong><br>考虑成本和质量，故采用电脑打印技术比较可行；考虑因特网的方便和自由，故使用网络上手写体字体比较可行。<br><strong>实际解决方案</strong></p>
 <ol>
 <li>一款合适的字体；</li>
 <li>用这款字体在Word等文字工具中写好你要写的东西；</li>
-<li><p>打印：</p>
-<p>3.1. 如果字体大小一致的话，在没有线/格子的纸上打印会使字看起来很整齐；<br>3.2. 在有线的纸上只许算好行间距和页边距，行间距可以用尺子量后换算成磅；<br>3.3. 在格子纸上还要保证每个字符大小一致；</p>
-</li>
+<li>打印：<br>3.1. 如果字体大小一致的话，在没有线/格子的纸上打印会使字看起来很整齐；<br>3.2. 在有线的纸上只许算好行间距和页边距，行间距可以用尺子量后换算成磅；<br>3.3. 在格子纸上还要保证每个字符大小一致；</li>
 <li>适当的涂改会增加真实性。</li>
 </ol>
 <p><strong>研究成果</strong><br><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2015/11/0.jpg" alt=""></p>
