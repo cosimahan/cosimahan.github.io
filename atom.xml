@@ -5,7 +5,7 @@
   <subtitle><![CDATA[择高处立，就平处坐，向宽出行]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.cosimahan.com//"/>
-  <updated>2015-11-30T02:04:49.271Z</updated>
+  <updated>2016-01-17T07:17:14.783Z</updated>
   <id>http://blog.cosimahan.com//</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[GUI的简单计算器]]></title>
+    <link href="http://blog.cosimahan.com/%E5%9F%BA%E4%BA%8EMATLAB%20GUI%E7%9A%84%E7%AE%80%E5%8D%95%E8%AE%A1%E7%AE%97%E5%99%A8.html"/>
+    <id>http://blog.cosimahan.com/基于MATLAB GUI的简单计算器.html</id>
+    <published>2016-01-17T07:09:25.000Z</published>
+    <updated>2016-01-17T07:17:14.783Z</updated>
+    <content type="html"><![CDATA[<p>首先网上搜索，大概了解MATLAB GUI，然后开始做。</p>
+<p>我的目标是仿照普通实体计算器的样子和功能实现一个简单的计算器。</p>
+<p>进入GUI Developer之后，先添加几个text框，分别是作为输出的“o1”和寄存数据用的“t1”，为了美观，又使用一个“我是计算器”文本框把t1挡住。</p>
+<p>接下来添加按键，分别是数字键0-9、四则运算键加减乘除、储存功能键M+ M- MC MR，再加上AC退格和等于键。</p>
+<p>然后该写按键触发所执行的代码了，大致思路如下</p>
+<ol>
+<li><p>输入输出部分：按下数字键，先判断如果是开始新的计算，则把o1清零。把o1的值乘以10,再加上所按下的数字。<br>以“1”为例，代码如下</p>
+</li>
+<li><p>四则运算部分：按下运算键，先判断有无待执行的运算，若有则执行，然后把自己设为待执行的运算，如果按下的是等号，就直接执行前面待执行的运算好了，以“+”为例，代码如下</p>
+</li>
+<li><p>寄存部分：就是搞一个全局变量，然后对它进行操作，代码如下：</p>
+</li>
+<li><p>还剩下两个键，AC就把除了寄存相关的都初始化，退格就是把o1里的量与它自身对10的模的差除以10。</p>
+</li>
+<li><p>本来想加小数输入功能来着，感觉不难，懒得写了。</p>
+</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>首先网上搜索，大概了解MATLAB GUI，然后开始做。</p>
+<p>我的目标是仿照普通实体计算器的样子和功能实现一个简单的计算器。</p>
+<p>进入GUI Developer之后，先添加几个text框，分别是作为输出的“o1”和寄存数据用的“t1”，为了美观，又使用一]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[关于WEB服务器的安全问题（LAMP）]]></title>
