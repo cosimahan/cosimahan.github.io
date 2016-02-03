@@ -5,7 +5,7 @@
   <subtitle><![CDATA[择高处立，就平处坐，向宽出行]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.cosimahan.com//"/>
-  <updated>2016-01-17T07:37:43.165Z</updated>
+  <updated>2016-02-03T04:11:57.889Z</updated>
   <id>http://blog.cosimahan.com//</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[C++类内成员访问控制中一个容易忽略的地方]]></title>
+    <link href="http://blog.cosimahan.com/C++%E7%B1%BB%E5%86%85%E6%88%90%E5%91%98%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%AE%B9%E6%98%93%E5%BF%BD%E7%95%A5%E7%9A%84%E5%9C%B0%E6%96%B9.html"/>
+    <id>http://blog.cosimahan.com/C++类内成员访问控制中一个容易忽略的地方.html</id>
+    <published>2016-02-03T03:10:42.000Z</published>
+    <updated>2016-02-03T04:11:57.889Z</updated>
+    <content type="html"><![CDATA[<p>今天看到了运算符重载，在动手实践的过程中遇到了一个疑惑。</p>
+<blockquote>
+<p>main.cpp</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> c&#123;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">private</span>:</span><br><span class="line">    		<span class="keyword">int</span> a,b;</span><br><span class="line">    	<span class="keyword">public</span>:</span><br><span class="line">    		c(<span class="keyword">void</span>)&#123;</span><br><span class="line">	            a=b=<span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    		c(<span class="keyword">int</span>)&#123;</span><br><span class="line">            	a = in; b = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    		</span><br><span class="line">			c <span class="keyword">operator</span>+(c cadd)&#123;</span><br><span class="line">	            c csum;</span><br><span class="line">	            csum.a = a + cadd.a;</span><br><span class="line">	            csum.b = b + cadd.b;</span><br><span class="line">            	<span class="keyword">return</span> csum;</span><br><span class="line">            &#125;</span><br><span class="line">		</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，14行新建了一个对象，为何在15和16行中能直接访问其私有成员呢，这不是在对象外么。<br>经过查找资料，结果如下：</p>
+<blockquote>
+<p>A member of a class can be<br>— private; that is, its name can be used only by members and friends of the class in which it is<br>declared.<br>— protected; that is, its name can be used only by members and friends of the class in which it is<br>declared, and by members and friends of classes derived from this class (see 11.5).<br>— public; that is, its name can be used anywhere without access restriction.</p>
+</blockquote>
+<p>就是说，访问限制是针对于类的，而不是针对于对象的。<br>类的对象在类的内部默认是友元，同一个类的不同对象可以互相访问其私有成员，而不属于这个类的其他对象和函数才不能访问其私有成员。<br>原来我一直理解有误，认为访问控制针对于对象，这样是错的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天看到了运算符重载，在动手实践的过程中遇到了一个疑惑。</p>
+<blockquote>
+<p>main.cpp</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[基于MATLAB GUI的简单计算器]]></title>
@@ -807,25 +834,6 @@ Oh！
     <![CDATA[<p>咱对虚拟运营商都不陌生了，经过几个月的预热，现在终于放号了。于是，我拿到了运营商为“蜗X移动”的“399坑爹卡”。</p>
 <p>毕竟螃蟹吃的有点早，还没熟透就捞了出来，是酸是甜且听我一一道来。</p>
 <p>上个星期预约和抢购，需要下载一个叫“免X店”的垃圾客户端，整个流]]>
-    </summary>
-    
-      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[等了好久终于等到今天，梦了好久终于把梦实现]]></title>
-    <link href="http://blog.cosimahan.com/%E7%AD%89%E4%BA%86%E5%A5%BD%E4%B9%85%E7%BB%88%E4%BA%8E%E7%AD%89%E5%88%B0%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%A2%A6%E4%BA%86%E5%A5%BD%E4%B9%85%E7%BB%88%E4%BA%8E%E6%8A%8A%E6%A2%A6%E5%AE%9E%E7%8E%B0.html"/>
-    <id>http://blog.cosimahan.com/等了好久终于等到今天，梦了好久终于把梦实现.html</id>
-    <published>2014-06-11T00:24:55.000Z</published>
-    <updated>2015-07-30T08:05:24.268Z</updated>
-    <content type="html"><![CDATA[<p>——记高考</p>
-<p>高考是人生最公平的比赛, 高中三年是人生最美丽的乐章。<br>就像华仔唱的, 我的梦想终于要实现了。一个考场,30个小小的笔尖,承载了多少个梦想,学霸抑或学渣,梦想在笔尖上绽放。<br>这次考试发挥可以,总共4场,正常水平<em>2 小幅度超水平</em>2。<br>我之所以有今天,很大程度上取决于父母的教育, 文化程度高一些教育观念自然相对开放一些,培养了我想对较强的理解分析能力,同时致使了我初三到高二的懒散。<br>高三的美好时光已经过去,放下那舍不得的之乎者也柯西不等式,真正的生活即将开始,奋斗吧,向上吧,少年!<br>原写于2014.6.8</p>
-<p><img src="http://www.org.cn/wp-content/uploads/2013/09/sunoway.gif" alt=""></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>——记高考</p>
-<p>高考是人生最公平的比赛, 高中三年是人生最美丽的乐章。<br>就像华仔唱的, 我的梦想终于要实现了。一个考场,30个小小的笔尖,承载了多少个梦想,学霸抑或学渣,梦想在笔尖上绽放。<br>这次考试发挥可以,总共4场,正常水平<em>2 小幅度超水平<]]>
     </summary>
     
       <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
