@@ -5,7 +5,7 @@
   <subtitle><![CDATA[择高处立，就平处坐，向宽出行]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.cosimahan.com//"/>
-  <updated>2016-07-02T03:33:36.875Z</updated>
+  <updated>2016-09-18T04:50:50.964Z</updated>
   <id>http://blog.cosimahan.com//</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[对某种射频卡的简单安全探究]]></title>
+    <link href="http://blog.cosimahan.com/%E5%AF%B9%E6%9F%90%E7%A7%8D%E5%B0%84%E9%A2%91%E5%8D%A1%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%89%E5%85%A8%E6%8E%A2%E7%A9%B6.html"/>
+    <id>http://blog.cosimahan.com/对某种射频卡的简单安全探究.html</id>
+    <published>2016-08-15T04:19:00.000Z</published>
+    <updated>2016-09-18T04:50:50.964Z</updated>
+    <content type="html"><![CDATA[<p>本文仅是对特定射频卡（RFID卡）在技术上的简单探究，请勿以此用作非法用途。</p>
+<p>本次研究的RFID卡是Mifare1 S50卡(1K容量)，符合ISO / IEC 14443型标准，其在国内比较常见，是由恩智浦公司（NXP）开发生产，亦有国产的兼容卡。</p>
+<h2 id="简介">简介</h2><p>这种卡片的就像一个强制加密的硬盘，密码和数据都存在硬盘里面，厂家出厂会把密码设置默认密码，FFFFFFFFFFFF。<br>其中一共有16个扇区，就像硬盘被分成了16个区，每个区都有独立的两个密码来管理，分别是A密码和B密码。两个密码的权限由控制位决定，一般情况只用A密码便能读写数据。另外有些控制位更改了后就不可逆转。<br>每个扇区又有四个块，就像一个分区面有四个文件一样，如下图。 <img src="http://bbs.eeworld.com.cn/data/attachment/forum/month_1111/20111128_d8c43086bb1d6f115c21WBuWqk0ddCSx.jpg.thumb.jpg" alt=""></p>
+<p>扇区0的块0为制造商使用，并不可以更改，其中前4字节为卡片的UID，无需密码可读。（有一种国产M1卡可改UID，在国内叫UID卡，在国外叫 Chinese Magic Card 中国魔术卡）</p>
+<h2 id="漏洞">漏洞</h2><p>1.<code>PRNG漏洞</code> ：通过PRNG漏洞攻击，可获得0扇区密匙。</p>
+<blockquote>
+<p>国外的安全研究人员发现，MIFARE Classic采用的是Crypto-1私有加密算法，其算法的特点就是对称式的密码算法或者说是私钥密码系统。其主要组成部分是伪随机数发生器（PRNG）、48位的线性反馈移位寄存器（LFSR）以及非线性函数。由于算法当中的Filter Function的设计出现缺陷，导致改变线性反馈移位寄存器的后8位数值就有可能得到所对应的Keystream。这个缺陷类似于802.11b WEP算法，不同的明文有极高的可能性被相同的Keystream，使得整个加密算法出现了漏洞。</p>
+</blockquote>
+<p>2.<code>嵌套认证漏洞</code> ：使用任何一个扇区的已知密匙，获取所有扇区的密匙。</p>
+<blockquote>
+<p>已知一个扇区的密钥，可以根据漏洞得到其它密钥的32位，然后对其它16位进行穷举攻击，该穷举耗时很短。</p>
+</blockquote>
+<p>3.<code>通信嗅探</code> ：通过监听卡片和读卡设备的通讯获得密钥。</p>
+<blockquote>
+<p>M1卡在读卡机和卡片交互数据和密码时，使用了crapto1算法。即便同一张卡，同样的密码，嗅探得到交互数据也是随机的，但是只要获得前面提到的四组随机数组，以及UID，就可以反解出密匙。</p>
+</blockquote>
+<p>由于水平有限，漏洞的详细原理不叙述，感兴趣请自行搜索相关论文。:D</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>本文仅是对特定射频卡（RFID卡）在技术上的简单探究，请勿以此用作非法用途。</p>
+<p>本次研究的RFID卡是Mifare1 S50卡(1K容量)，符合ISO / IEC 14443型标准，其在国内比较常见，是由恩智浦公司（NXP）开发生产，亦有国产的兼容卡。</p>
+]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[WEB控制的WIFI小车（基于树莓派）]]></title>
@@ -710,86 +742,6 @@
     <summary type="html">
     <![CDATA[<p>「两个福贵的脚上都沾满了泥,走去时都微微晃动着身体。」从几个月前的试卷上，我对余华先生的《活着》产生了兴趣。今天看了张艺谋先生据此拍的电影，简单写写感受。</p>
 <p>电影相比原著，少了些超脱，多了点入世；少了些刻薄尖锐，多了点黑色幽默。温和的讽刺，让人哭笑不得，一次次的]]>
-    </summary>
-    
-      <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[初日 AKB48]]></title>
-    <link href="http://blog.cosimahan.com/%E5%88%9D%E6%97%A5%20AKB48.html"/>
-    <id>http://blog.cosimahan.com/初日 AKB48.html</id>
-    <published>2014-07-22T07:25:53.000Z</published>
-    <updated>2015-07-30T08:05:24.278Z</updated>
-    <content type="html"><![CDATA[<p><strong>歌，不燃，但歌词很好。</strong></p>
-<p><strong>谨以此歌，赠与即将迈入大学校门的自己。</strong></p>
-<iframe src="http://player.youku.com/embed/XMzAzNzk5OTY0" width="510" height="498" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-
-<pre><code>我正伫立在 
-憧憬已久的舞台上 
-被欢呼与掌声的热烈气氛所围绕 
-透过严格课程 
-克服自我极限 
-所迎来的今日 
-机会的帷幕在此刻揭开 
-
-曾有著只有自己跳不好
-在回家的路上 哭泣的日子 
-也有著唱不出自己的期许
-而失去自信的日子 
-每逢此刻 眼中只有钦羡著 
-对手所散发出的光芒 
-
-梦想就如同在汗水中 
-渐渐绽放的花朵 
-这份努力 
-绝对要贯彻始终 
-梦想就如同在汗水中 
-一直等待萌发的嫩芽 
-总有一天 
-美梦终会成真 
-
-聚光灯
-如此明亮眩目 
-好似经过漫漫长夜破晓而出的朝阳 
-对於前辈们 
-有著绝对不想输给她们的意志 
-期待编织出属於我们的表演 
-
-曾有著因为受伤而休养 
-懊悔哭泣的日子 
-也有著课业跟剧场训练 
-无法兼顾而想放弃的日子 
-但是总有从远方传来的安可声 
-默默支持著我 
-
-梦想就在那泪水尽头 
-破涕而笑的花朵 
-在奋斗之后终将盛开绽放 
-梦想就在那泪水尽头 
-坚持著不输风雨的信念 
-直到祈求的晴空展现天际 
-
-用生命奋力跳舞！ 
-用生命努力唱歌！ 
-铭记著初心
-全力投球！ 
-Oh！
-
-梦想就如同在汗水中 
-渐渐绽放的花朵 
-这份努力 
-绝对要贯彻始终 
-梦想就如同在汗水中 
-一直等待萌发的嫩芽 
-总有一天 
-美梦终会成真
-</code></pre>]]></content>
-    <summary type="html">
-    <![CDATA[<p><strong>歌，不燃，但歌词很好。</strong></p>
-<p><strong>谨以此歌，赠与即将迈入大学校门的自己。</strong></p>
-<iframe src="http://player.youku.com/embed/XMzAzNzk5OTY0" wi]]>
     </summary>
     
       <category term="未分类" scheme="http://blog.cosimahan.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>

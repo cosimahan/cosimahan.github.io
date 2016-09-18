@@ -1,4 +1,277 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="alternate" type="application/rss+xml" title="Cosima Han's" href="http://blog.cosimahan.com/atom.xml"><link rel="stylesheet" href="/styles.css"><title>Cosima Han's</title></head><body><div class="container"><div class="columns page-header"><h1>Cosima Han's</h1></div><div class="columns"><div class="navigation clearfix"><nav class="left"><a href="/">主页</a><a href="https://github.com/cosimahan">GitHub</a><a href="/about">关于</a><a href="/messageboard">留言板</a></nav><nav class="right"><a href="/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><article><header><h2><a href="/大一秋游1——中南百草原.html">大一秋游1——中南百草原</a></h2></header><div class="article-meta clearfix"><time class="left">2014-10-26</time><ul class="tags left"><li><a href="/categories/未分类/">未分类</a></li></ul><ul class="tags right"></ul></div><div class="markdown-body"><p>这是大学里的第一次班级活动，特发此文以示纪念。</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="alternate" type="application/rss+xml" title="Cosima Han's" href="http://blog.cosimahan.com/atom.xml"><link rel="stylesheet" href="/styles.css"><title>Cosima Han's</title></head><body><div class="container"><div class="columns page-header"><h1>Cosima Han's</h1></div><div class="columns"><div class="navigation clearfix"><nav class="left"><a href="/">主页</a><a href="https://github.com/cosimahan">GitHub</a><a href="/about">关于</a><a href="/messageboard">留言板</a></nav><nav class="right"><a href="/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><article><header><h2><a href="/开始搞ACM.html">开始搞ACM</a></h2></header><div class="article-meta clearfix"><time class="left">2014-12-11</time><ul class="tags left"><li><a href="/categories/未分类/">未分类</a></li></ul><ul class="tags right"></ul></div><div class="markdown-body"><p>上个月开始搞ACM(ICPC)，虽然只是做一些水题。一道题苦想半天调试N遍最后AC，这感觉 特别爽哟。</p>
+<p>随手拿最近的一些水题放上来吧，当做纪念，可能几年后我成为了大神，人们来嘲笑我说，这么烂的代码竟然是他曾经写的。</p>
+<hr>
+<h4 id="Codeforces_Round_#237_(Div-_2)_-_Valera_and_Fruits">Codeforces Round #237 (Div. 2)  - Valera and Fruits</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Valera loves his garden, where <span class="tex-span"><em>n</em></span> fruit trees grow.</p>
+<p>This year he will enjoy a great harvest! On the <span class="tex-span"><em>i</em></span>-th tree <span class="tex-span"><em>b</em><sub class="lower-index"><em>i</em></sub></span> fruit grow, they will ripen on a day number <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span>. Unfortunately, the fruit on the tree get withered, so they can only be collected on day <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span> and day <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub> + 1</span> (all fruits that are not collected in these two days, become unfit to eat).</p>
+<p>Valera is not very fast, but there are some positive points. Valera is ready to work every day. In one day, Valera can collect no more than<span class="tex-span"><em>v</em></span> fruits. The fruits may be either from the same tree, or from different ones. What is the maximum amount of fruit Valera can collect for all time, if he operates optimally well?</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains two space-separated integers <span class="tex-span"><em>n</em></span> and <span class="tex-span"><em>v</em></span><span class="tex-span">(1 ≤ <em>n</em>, <em>v</em> ≤ 3000)</span> — the number of fruit trees in the garden and the number of fruits that Valera can collect in a day.</p>
+<p>Next <span class="tex-span"><em>n</em></span> lines contain the description of trees in the garden. The <span class="tex-span"><em>i</em></span>-th line contains two space-separated integers <span class="tex-span"><em>a</em><sub class="lower-index"><em>i</em></sub></span> and <span class="tex-span"><em>b</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(1 ≤ <em>a</em><sub class="lower-index"><em>i</em></sub>, <em>b</em><sub class="lower-index"><em>i</em></sub> ≤ 3000)</span> — the day the fruits ripen on the <span class="tex-span"><em>i</em></span>-th tree and the number of fruits on the <span class="tex-span"><em>i</em></span>-th tree.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print a single integer — the maximum number of fruit that Valera can collect.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 3<br>1 5<br>2 3</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>8</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>5 10<br>3 20<br>2 20<br>1 20<br>4 20<br>5 20</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>60</pre><br><br><br></p>
+<div id="vj_hint" class="hiddable">
+
+<p>Hint</p>
+<div class="textBG">
+
+<p>In the first sample, in order to obtain the optimal answer, you should act as follows.</p>
+<ul>
+<li>On the first day collect <span class="tex-span">3</span> fruits from the <span class="tex-span">1</span>-st tree.</li>
+<li>On the second day collect <span class="tex-span">1</span> fruit from the <span class="tex-span">2</span>-nd tree and <span class="tex-span">2</span> fruits from the <span class="tex-span">1</span>-st tree.</li>
+<li>On the third day collect the remaining fruits from the <span class="tex-span">2</span>-nd tree.<br>In the second sample, you can only collect <span class="tex-span">60</span> fruits, the remaining fruit will simply wither.</li>
+</ul>
+<p></p></div><br></div><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> n,v,vv,a[<span class="number">3008</span>],b[<span class="number">3008</span>] ,i,ii,t,o,y,iy;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;v) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line">		o = <span class="number">0</span>; vv = v; y = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; a[i]&gt;&gt;b[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">			<span class="keyword">for</span> (ii = i + <span class="number">1</span>; ii &lt; n; ii++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (a[i]&gt;a[ii])</span><br><span class="line">				&#123; </span><br><span class="line">					t = a[i]; a[i] = a[ii]; a[ii] = t; </span><br><span class="line">					t = b[i]; b[i] = b[ii]; b[ii] = t;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (i != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (a[i] != a[i - <span class="number">1</span>]) &#123; v = vv; &#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (v != <span class="number">0</span> &amp;&amp; i != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">for</span> (iy = y; iy &lt; i; iy++)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span> (b[iy] != <span class="number">0</span>)</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="keyword">if</span> (v &lt;= b[iy])</span><br><span class="line">						&#123;</span><br><span class="line">							o += v; b[iy] -= v; v = <span class="number">0</span>;</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">else</span> &#123; o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; &#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (a[i] - a[i - <span class="number">1</span>] &gt; <span class="number">1</span>) v = vv;</span><br><span class="line">			<span class="keyword">if</span> (v != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (v &lt;= b[i])</span><br><span class="line">				&#123;</span><br><span class="line">					o += v; b[i] -= v; v = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123; o += b[i]; v -= b[i]; b[i] = <span class="number">0</span>; &#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (a[i - <span class="number">1</span>] != a[i]&amp;&amp;i!=<span class="number">0</span>) y = i;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">		v = vv; </span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (iy = y; iy &lt; i; iy++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (b[iy] != <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (v &lt;= b[iy])</span><br><span class="line">				&#123;</span><br><span class="line">					o += v; b[iy] -= v; v = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123; o += b[iy]; v -= b[iy]; b[iy] = <span class="number">0</span>; &#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; o &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+<p>&nbsp;</p>
+<hr>
+<h4 id="Codefoces_436B-Om_Nom_and_Spiders">Codefoces 436B-Om Nom and Spiders</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Om Nom really likes candies and doesn’t like spiders as they frequently steal candies. One day Om Nom fancied a walk in a park. Unfortunately, the park has some spiders and Om Nom doesn’t want to see them at all.</p>
+<p><center><img src="http://espresso.codeforces.com/5be91a371adfaffc95d78b5f3caf8c1149be2c29.png" alt=""></center>The park can be represented as a rectangular <span class="tex-span"><em>n</em> × <em>m</em></span> field. The park has <span class="tex-span"><em>k</em></span> spiders, each spider at time 0 is at some cell of the field. The spiders move all the time, and each spider always moves in one of the four directions (left, right, down, up). In a unit of time, a spider crawls from his cell to the side-adjacent cell in the corresponding direction. If there is no cell in the given direction, then the spider leaves the park. The spiders do not interfere with each other as they move. Specifically, one cell can have multiple spiders at the same time.</p>
+<p>Om Nom isn’t yet sure where to start his walk from but he definitely wants:</p>
+<ul>
+<li>to start walking at time 0 at an upper row cell of the field (it is guaranteed that the cells in this row do not contain any spiders);</li>
+<li>to walk by moving down the field towards the lowest row (the walk ends when Om Nom leaves the boundaries of the park).<br>We know that Om Nom moves by jumping. One jump takes one time unit and transports the little monster from his cell to either a side-adjacent cell on the lower row or outside the park boundaries.</li>
+</ul>
+<p>Each time Om Nom lands in a cell he sees all the spiders that have come to that cell at this moment of time. Om Nom wants to choose the optimal cell to start the walk from. That’s why he wonders: for each possible starting cell, how many spiders will he see during the walk if he starts from this cell? Help him and calculate the required value for each possible starting cell.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains three integers <span class="tex-span"><em>n</em>, <em>m</em>, <em>k</em></span><span class="tex-span">(2 ≤ <em>n</em>, <em>m</em> ≤ 2000; 0 ≤ <em>k</em> ≤ <em>m</em>(<em>n</em> - 1))</span>.</p>
+<p>Each of the next <span class="tex-span"><em>n</em></span> lines contains <span class="tex-span"><em>m</em></span> characters — the description of the park. The characters in the <span class="tex-span"><em>i</em></span>-th line describe the <span class="tex-span"><em>i</em></span>-th row of the park field. If the character in the line equals “<span class="tex-font-style-tt">.</span>“, that means that the corresponding cell of the field is empty; otherwise, the character in the line will equal one of the four characters: “<span class="tex-font-style-tt">L</span>“ (meaning that this cell has a spider at time 0, moving left), “<span class="tex-font-style-tt">R</span>“ (a spider moving right), “<span class="tex-font-style-tt">U</span>“ (a spider moving up), “<span class="tex-font-style-tt">D</span>“ (a spider moving down).</p>
+<p>It is guaranteed that the first row doesn’t contain any spiders. It is guaranteed that the description of the field contains no extra characters. It is guaranteed that at time 0 the field contains exactly <span class="tex-span"><em>k</em></span> spiders.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print <span class="tex-span"><em>m</em></span> integers: the <span class="tex-span"><em>j</em></span>-th integer must show the number of spiders Om Nom will see if he starts his walk from the <span class="tex-span"><em>j</em></span>-th cell of the first row. The cells in any row of the field are numbered from left to right.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3 3 4<br>…<br>R.L<br>R.U</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 2 2</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>RL</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>1 1</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>LR</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 0</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3 4 8<br>….<br>RRLL<br>UUUU</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>1 3 3 1</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2 2 2<br>..<br>UU</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>0 0</pre><br><br><br></p>
+<div id="vj_hint" class="hiddable">
+
+<p>Hint</p>
+<div class="textBG">
+
+<p>Consider the first sample. The notes below show how the spider arrangement changes on the field over time:</p>
+<p><pre>…        …        ..U       …<br>R.L   -&gt;   .*U   -&gt;   L.R   -&gt;  …<br>R.U        .R.        ..R       …</pre></p>
+<p><br>Character “<span class="tex-font-style-tt">*</span>“ represents a cell that contains two spiders at the same time.</p>
+<ul>
+<li>If Om Nom starts from the first cell of the first row, he won’t see any spiders.</li>
+<li>If he starts from the second cell, he will see two spiders at time 1.</li>
+<li>If he starts from the third cell, he will see two spiders: one at time 1, the other one at time 2.<br></li></ul></div><br></div><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m, k,i,j,fuck;</span><br><span class="line">	<span class="keyword">char</span> in[<span class="number">2002</span>][<span class="number">2002</span>];</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;n,&amp;m,&amp;k) != EOF)</span><br><span class="line">	&#123;	</span><br><span class="line">		fuck = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">			<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; in[i][j];</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(i+i&lt;n)<span class="keyword">if</span> (in[i + i][j] == <span class="string">'U'</span>)fuck++;</span><br><span class="line">				<span class="keyword">if</span> (j - i&gt;=<span class="number">0</span>&amp;&amp;j-i&lt;m)<span class="keyword">if</span> (in[i][j - i] == <span class="string">'R'</span>)fuck++;</span><br><span class="line">				<span class="keyword">if</span> (j + i&lt;m)<span class="keyword">if</span> (in[i][j + i] == <span class="string">'L'</span>)fuck++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; fuck &lt;&lt; <span class="string">' '</span>; fuck = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>&nbsp;</p>
+<hr>
+<h4 id="Codeforces_435B_Pasha_Maximizes">Codeforces 435B Pasha Maximizes</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Pasha has a positive integer <span class="tex-span"><em>a</em></span> without leading zeroes. Today he decided that the number is too small and he should make it larger. Unfortunately, the only operation Pasha can do is to swap two adjacent decimal digits of the integer.</p>
+<p>Help Pasha count the maximum number he can get if he has the time to make at most <span class="tex-span"><em>k</em></span> swaps.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The single line contains two integers <span class="tex-span"><em>a</em></span> and <span class="tex-span"><em>k</em></span><span class="tex-span">(1 ≤ <em>a</em> ≤ 10<sup class="upper-index">18</sup>; 0 ≤ <em>k</em> ≤ 100)</span>.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print the maximum number that Pasha can get if he makes at most <span class="tex-span"><em>k</em></span> swaps.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>1990 1</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>9190</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>300 0</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>300</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>1034 2</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>3104</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre class="">9090000078001234 6</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">9907000008001234<br></pre><br><br><br><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> n, x[<span class="number">100008</span>], y[<span class="number">100008</span>],  i = <span class="number">0</span>, j,xxx[<span class="number">100008</span>],yyy[<span class="number">100008</span>],u;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));</span><br><span class="line">		<span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; x[i] &gt;&gt; y[i];</span><br><span class="line"></span><br><span class="line">			xxx[x[i]]++;</span><br><span class="line">			yyy[y[i]]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			u = n - xxx[y[i]] - <span class="number">1</span>;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &lt;&lt; <span class="string">' '</span> &lt;&lt; u &lt;&lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
+<hr>
+<h4 id="codeforce_432B_-_Football_Kit">codeforce 432B - Football Kit</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Consider a football tournament where <span class="tex-span"><em>n</em></span> teams participate. Each team has two football kits: for home games, and for away games. The kit for home games of the <span class="tex-span"><em>i</em></span>-th team has color <span class="tex-span"><em>x</em><sub class="lower-index"><em>i</em></sub></span> and the kit for away games of this team has color <span class="tex-span"><em>y</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(<em>x</em><sub class="lower-index"><em>i</em></sub> ≠ <em>y</em><sub class="lower-index"><em>i</em></sub>)</span>.</p>
+<p>In the tournament, each team plays exactly one home game and exactly one away game with each other team (<span class="tex-span"><em>n</em>(<em>n</em> - 1)</span> games in total). The team, that plays the home game, traditionally plays in its home kit. The team that plays an away game plays in its away kit. However, if two teams has the kits of the same color, they cannot be distinguished. In this case the away team plays in its home kit.</p>
+<p>Calculate how many games in the described tournament each team plays in its home kit and how many games it plays in its away kit.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The first line contains a single integer <span class="tex-span"><em>n</em></span><span class="tex-span">(2 ≤ <em>n</em> ≤ 10<sup class="upper-index">5</sup>)</span> — the number of teams. Next <span class="tex-span"><em>n</em></span> lines contain the description of the teams. The <span class="tex-span"><em>i</em></span>-th line contains two space-separated numbers <span class="tex-span"><em>x</em><sub class="lower-index"><em>i</em></sub></span>, <span class="tex-span"><em>y</em><sub class="lower-index"><em>i</em></sub></span><span class="tex-span">(1 ≤ <em>x</em><sub class="lower-index"><em>i</em></sub>, <em>y</em><sub class="lower-index"><em>i</em></sub> ≤ 10<sup class="upper-index">5</sup>; <em>x</em><sub class="lower-index"><em>i</em></sub> ≠ <em>y</em><sub class="lower-index"><em>i</em></sub>)</span> — the color numbers for the home and away kits of the<span class="tex-span"><em>i</em></span>-th team.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>For each team, print on a single line two space-separated integers — the number of games this team is going to play in home and away kits, correspondingly. Print the answers for the teams in the order they appeared in the input.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>2<br>1 2<br>2 1</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>2 0<br>2 0</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>3<br>1 2<br>2 1<br>1 3</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">3 1<br>4 0<br>2 2</pre><br><br><br><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> n, x[<span class="number">100008</span>], y[<span class="number">100008</span>],  i = <span class="number">0</span>, j,xxx[<span class="number">100008</span>],yyy[<span class="number">100008</span>],u;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">memset</span>(xxx, <span class="number">0</span>, <span class="keyword">sizeof</span>(xxx));</span><br><span class="line">		<span class="built_in">memset</span>(yyy, <span class="number">0</span>, <span class="keyword">sizeof</span>(yyy));</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; x[i] &gt;&gt; y[i];</span><br><span class="line"></span><br><span class="line">			xxx[x[i]]++;</span><br><span class="line">			yyy[y[i]]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			u = n - xxx[y[i]] - <span class="number">1</span>;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="number">2</span>*n - <span class="number">2</span> - u  &lt;&lt; <span class="string">' '</span> &lt;&lt; u &lt;&lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
+<hr>
+<h4 id="Codeforces_431B_Shower_Line">Codeforces 431B Shower Line</h4><div id="vj_description" class="hiddable">
+
+<p>Description</p>
+<div class="textBG">
+
+<p>Many students live in a dormitory. A dormitory is a whole new world of funny amusements and possibilities but it does have its drawbacks.</p>
+<p>There is only one shower and there are multiple students who wish to have a shower in the morning. That’s why every morning there is a line of five people in front of the dormitory shower door. As soon as the shower opens, the first person from the line enters the shower. After a while the first person leaves the shower and the next person enters the shower. The process continues until everybody in the line has a shower.</p>
+<p>Having a shower takes some time, so the students in the line talk as they wait. At each moment of time the students talk in pairs: the<span class="tex-span">(2<em>i</em> - 1)</span>-th man in the line (for the current moment) talks with the <span class="tex-span">(2<em>i</em>)</span>-th one.</p>
+<p>Let’s look at this process in more detail. Let’s number the people from 1 to 5. Let’s assume that the line initially looks as 23154 (person number 2 stands at the beginning of the line). Then, before the shower opens, 2 talks with 3, 1 talks with 5, 4 doesn’t talk with anyone. Then 2 enters the shower. While 2 has a shower, 3 and 1 talk, 5 and 4 talk too. Then, 3 enters the shower. While 3 has a shower, 1 and 5 talk, 4 doesn’t talk to anyone. Then 1 enters the shower and while he is there, 5 and 4 talk. Then 5 enters the shower, and then 4 enters the shower.</p>
+<p>We know that if students <span class="tex-span"><em>i</em></span> and <span class="tex-span"><em>j</em></span> talk, then the <span class="tex-span"><em>i</em></span>-th student’s happiness increases by <span class="tex-span"><em>g</em><sub class="lower-index"><em>ij</em></sub></span> and the <span class="tex-span"><em>j</em></span>-th student’s happiness increases by <span class="tex-span"><em>g</em><sub class="lower-index"><em>ji</em></sub></span>. Your task is to find such initial order of students in the line that the total happiness of all students will be maximum in the end. Please note that some pair of students may have a talk several times. In the example above students 1 and 5 talk while they wait for the shower to open and while 3 has a shower.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_input" class="hiddable">
+
+<p>Input</p>
+<div class="textBG">
+
+<p>The input consists of five lines, each line contains five space-separated integers: the <span class="tex-span"><em>j</em></span>-th number in the <span class="tex-span"><em>i</em></span>-th line shows <span class="tex-span"><em>g</em><sub class="lower-index"><em>ij</em></sub></span> (<span class="tex-span">0 ≤ <em>g</em><sub class="lower-index"><em>ij</em></sub> ≤ 10<sup class="upper-index">5</sup></span>). It is guaranteed that <span class="tex-span"><em>g</em><sub class="lower-index"><em>ii</em></sub> = 0</span> for all <span class="tex-span"><em>i</em></span>.</p>
+<p>Assume that the students are numbered from 1 to 5.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_output" class="hiddable">
+
+<p>Output</p>
+<div class="textBG">
+
+<p>Print a single integer — the maximum possible total happiness of the students.</p>
+<p></p></div><br></div><p></p>
+<div id="vj_sampleInput" class="hiddable">
+
+<p>Sample Input</p>
+<p><div class="textBG"></div></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>0 0 0 0 9<br>0 0 0 0 0<br>0 0 0 0 0<br>0 0 0 0 0<br>7 0 0 0 0</pre><br></p></div><p></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre>32</pre><br></p>
+<p><div class="input"></div></p>
+<p><div class="title">Input</div></p>
+<p><pre>0 43 21 18 2<br>3 0 21 11 65<br>5 2 0 1 4<br>54 62 12 0 99<br>87 64 81 33 0</pre><br></p>
+<p><div class="output"></div></p>
+<p><div class="title">Output</div></p>
+<p><pre class="">620</pre><br><br><br><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">int</span> o[<span class="number">5</span>][<span class="number">5</span>], i,j, ii, iii, a, b, c, d, e,m=<span class="number">0</span>,max=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;o[<span class="number">0</span>][<span class="number">0</span>]) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">			<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>)j++;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; o[i][j];</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">for</span> (a = <span class="number">0</span>; a &lt; <span class="number">5</span>; a++)</span><br><span class="line">			<span class="keyword">for</span> (b = <span class="number">0</span>; b &lt; <span class="number">5</span>;b++)</span><br><span class="line">				<span class="keyword">for</span> (c = <span class="number">0</span>; c &lt; <span class="number">5</span>; c++)</span><br><span class="line">					<span class="keyword">for</span> (d = <span class="number">0</span>; d &lt; <span class="number">5</span>; d++)</span><br><span class="line">						<span class="keyword">for</span> (e = <span class="number">0</span>; e &lt; <span class="number">5</span>; e++)</span><br><span class="line">						&#123;</span><br><span class="line">							<span class="keyword">if</span>(a!=b&amp;&amp;a!=c&amp;&amp;a!=d&amp;&amp;a!=e&amp;&amp;b!=c&amp;&amp;b!=d&amp;&amp;b!=e&amp;&amp;c!=d&amp;&amp;c!=e&amp;&amp;d!=e)</span><br><span class="line">							m = o[a][b] + o[b][a] + o[b][c] + o[c][b] + (o[c][d] + o[d][c]) * <span class="number">2</span> + (o[d][e] + o[e][d]) * <span class="number">2</span>;</span><br><span class="line">							<span class="keyword">if</span> (m&gt;max) max = m;</span><br><span class="line">						&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; max&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;</p>
+</div></article><article><header><h2><a href="/大一秋游1——中南百草原.html">大一秋游1——中南百草原</a></h2></header><div class="article-meta clearfix"><time class="left">2014-10-26</time><ul class="tags left"><li><a href="/categories/未分类/">未分类</a></li></ul><ul class="tags right"></ul></div><div class="markdown-body"><p>这是大学里的第一次班级活动，特发此文以示纪念。</p>
 <p>真尽兴，整个景区几乎走遍了，娱乐设施玩遍了，中间还吃了顿自助烧烤，一天下来好累呀。</p>
 <p>没有拍照的习惯，只拍了几张，都是些失去本性的动物们，有的我也叫不出名字来。</p>
 <p><a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_104940.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_104940-300x225.jpg" alt="IMG_20141025_104940"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_102325-e1415334508927.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_102325-e1415334508927-300x225.jpg" alt="IMG_20141025_102325"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_102257-e1415334434711.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_102257-e1415334434711-300x225.jpg" alt="IMG_20141025_102257"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_101355-e1415334543795.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_101355-e1415334543795-300x225.jpg" alt="IMG_20141025_101355"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_101239.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_101239-300x225.jpg" alt="IMG_20141025_101239"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_095709-e1415334687827.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_095709-e1415334687827-300x225.jpg" alt="IMG_20141025_095709"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_095339.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_095339-300x225.jpg" alt="IMG_20141025_095339"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094433-e1415334812956.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094433-e1415334812956-225x300.jpg" alt="IMG_20141025_094433"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094317.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094317-300x225.jpg" alt="IMG_20141025_094317"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094305.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094305-300x225.jpg" alt="IMG_20141025_094305"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094256.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_094256-300x225.jpg" alt="IMG_20141025_094256"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_093947.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_093947-300x225.jpg" alt="IMG_20141025_093947"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_093858.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_093858-300x225.jpg" alt="IMG_20141025_093858"></a> <a href="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_093640.jpg" target="_blank" rel="external"><img src="http://7u2p8s.com1.z0.glb.clouddn.com/blog/img/2014/11/IMG_20141025_093640-300x225.jpg" alt="IMG_20141025_093640"></a></p>
@@ -24,70 +297,7 @@
 </div></article><article><header><h2><a href="/电影《活着》观后感.html">电影《活着》观后感</a></h2></header><div class="article-meta clearfix"><time class="left">2014-08-09</time><ul class="tags left"><li><a href="/categories/未分类/">未分类</a></li></ul><ul class="tags right"></ul></div><div class="markdown-body"><p>「两个福贵的脚上都沾满了泥,走去时都微微晃动着身体。」从几个月前的试卷上，我对余华先生的《活着》产生了兴趣。今天看了张艺谋先生据此拍的电影，简单写写感受。</p>
 <p>电影相比原著，少了些超脱，多了点入世；少了些刻薄尖锐，多了点黑色幽默。温和的讽刺，让人哭笑不得，一次次的生死离别，让活着越来越有了分量。活着，真好！电影没有讲到最后，以祖孙三代四人剧终。ps：配乐实在大赞！</p>
 <p>几十年的动荡，将沧桑写在每个人物的脸上，一个个大时代小人物的身上，则浓缩了历史的发展。「小鸡长大了就是鹅，鹅长大了就是羊，羊长大了就是牛」，牛之后，日子真的会越来越好。这不仅是其所表达的，更是每个人的希冀。</p>
-</div></article><article><header><h2><a href="/初日 AKB48.html">初日 AKB48</a></h2></header><div class="article-meta clearfix"><time class="left">2014-07-22</time><ul class="tags left"><li><a href="/categories/未分类/">未分类</a></li></ul><ul class="tags right"></ul></div><div class="markdown-body"><p><strong>歌，不燃，但歌词很好。</strong></p>
-<p><strong>谨以此歌，赠与即将迈入大学校门的自己。</strong></p>
-<iframe src="http://player.youku.com/embed/XMzAzNzk5OTY0" width="510" height="498" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-
-<pre><code>我正伫立在 
-憧憬已久的舞台上 
-被欢呼与掌声的热烈气氛所围绕 
-透过严格课程 
-克服自我极限 
-所迎来的今日 
-机会的帷幕在此刻揭开 
-
-曾有著只有自己跳不好
-在回家的路上 哭泣的日子 
-也有著唱不出自己的期许
-而失去自信的日子 
-每逢此刻 眼中只有钦羡著 
-对手所散发出的光芒 
-
-梦想就如同在汗水中 
-渐渐绽放的花朵 
-这份努力 
-绝对要贯彻始终 
-梦想就如同在汗水中 
-一直等待萌发的嫩芽 
-总有一天 
-美梦终会成真 
-
-聚光灯
-如此明亮眩目 
-好似经过漫漫长夜破晓而出的朝阳 
-对於前辈们 
-有著绝对不想输给她们的意志 
-期待编织出属於我们的表演 
-
-曾有著因为受伤而休养 
-懊悔哭泣的日子 
-也有著课业跟剧场训练 
-无法兼顾而想放弃的日子 
-但是总有从远方传来的安可声 
-默默支持著我 
-
-梦想就在那泪水尽头 
-破涕而笑的花朵 
-在奋斗之后终将盛开绽放 
-梦想就在那泪水尽头 
-坚持著不输风雨的信念 
-直到祈求的晴空展现天际 
-
-用生命奋力跳舞！ 
-用生命努力唱歌！ 
-铭记著初心
-全力投球！ 
-Oh！
-
-梦想就如同在汗水中 
-渐渐绽放的花朵 
-这份努力 
-绝对要贯彻始终 
-梦想就如同在汗水中 
-一直等待萌发的嫩芽 
-总有一天 
-美梦终会成真
-</code></pre></div></article><div class="archive-pagination"><div class="paginator"><a class="extend prev" rel="prev" href="/archives/page/3/">&laquo;</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/5/">&raquo;</a></div></div></div><div class="block-sidebar column one-fourth"><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul></div><div class="widget text-content"><p>链接</p>
+</div></article><div class="archive-pagination"><div class="paginator"><a class="extend prev" rel="prev" href="/archives/page/3/">&laquo;</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/5/">&raquo;</a></div></div></div><div class="block-sidebar column one-fourth"><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul></div><div class="widget text-content"><p>链接</p>
 <ul>
 <li><a href="http://www.liangdick.com/" target="_blank">Dick的博客</a> </li>
 <li><a href="http://www.ishengyu.com/" target="_blank">盛宇家纺官方旗舰店</a> </li>
